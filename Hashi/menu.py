@@ -2,6 +2,8 @@ import random
 import sys, pygame
 from pygame import font
 
+
+
 pygame.init()
 
 size = width, height = 800, 500
@@ -33,6 +35,8 @@ def gameloop():
                 quit()
         gameDisplay.fill(white)
         textDisplay("Let's game begin...", 40, red, (width/2, height/2))
+        pygame.display.update()
+        clock.tick(15)
         pygame.display.update()
         clock.tick(60)
 
@@ -92,11 +96,12 @@ def menu():
         buttonPlay.backlight(mouse)
         if(buttonPlay.isClicked()):
             gameloop()
-
         pygame.display.update()
         clock.tick(15)
 
+
 menu()
+
 
 
 
