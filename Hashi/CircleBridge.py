@@ -2,8 +2,7 @@
 import pygame
 import sys
 import random
-
-
+print("alo")
 
 pygame.init()
 
