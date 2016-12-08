@@ -1,4 +1,4 @@
-from Hashi.settings import *
+from Kakuro.settings import *
 
 
 def textDisplay(text, size, color, position):
@@ -6,6 +6,7 @@ def textDisplay(text, size, color, position):
     rect = t.get_rect()
     rect.center = position
     gameDisplay.blit(t, rect)
+
 
 def textObject(text, size, color):
     font = pygame.font.Font(None, size)

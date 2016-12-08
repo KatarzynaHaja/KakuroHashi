@@ -1,28 +1,10 @@
 import random
-import sys, pygame
 from pygame import font
-
+from Kakuro.node import *
+from Kakuro.display import *
 pygame.init()
 
-size = width, height = 800, 500
-gameDisplay = pygame.display.set_mode(size)
-pygame.display.set_caption('Kakuro') #nazwa okienka
 
-
-white = (255, 255, 255)
-black = (0, 0, 0)
-red = (200,0,0)
-green = (0,200,0)
-bright_red = (255,0,0)
-bright_green = (0,255,0)
-
-clock = pygame.time.Clock()
-
-
-def textObject(text, size, color):
-    font = pygame.font.Font(None, size)
-    textSurface = font.render(text, True, color)
-    return textSurface
 
 
 def gameloop():
@@ -33,15 +15,11 @@ def gameloop():
                 quit()
         gameDisplay.fill(white)
         textDisplay("Let's game begin...", 40, red, (width/2, height/2))
+        kwadracik = Node(1, 20, 30)
+        kwadracik.show(gameDisplay)
         pygame.display.update()
         clock.tick(60)
 
-
-def textDisplay(text, size, color, position):
-    t = textObject(text, size, color)
-    rect = t.get_rect()
-    rect.center = position
-    gameDisplay.blit(t, rect)
 
 class Button:
     def __init__(self,xleft, yleft, width, height, color, text, sizeOfLetters):
@@ -92,6 +70,7 @@ def menu():
         buttonPlay.backlight(mouse)
         if(buttonPlay.isClicked()):
             gameloop()
+
 
         pygame.display.update()
         clock.tick(15)

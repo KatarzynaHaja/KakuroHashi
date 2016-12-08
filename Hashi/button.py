@@ -1,6 +1,8 @@
 import pygame
 from Hashi.settings import *
 from Hashi.display import *
+
+
 class Button:
     def __init__(self,xleft, yleft, width, height, color, text, sizeOfLetters):
         self.x = xleft
