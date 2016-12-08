@@ -8,6 +8,8 @@ class Circle():
         self.x = x
         self.y = y
         self.r = 30
+        self.conections=0
+        self.value=0
 
 
     def show(self):
@@ -24,6 +26,8 @@ class Circle():
     def addBridge(self, secondCircle):
         bridge = Bridge(self, secondCircle)
         self.bridges.append(bridge)
+        self.conections+=1
+        secondCircle.conections+=1
         bridge.show()
 
 
