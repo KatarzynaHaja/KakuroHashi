@@ -8,3 +8,9 @@ class Bridge():
     def show(self):
         pygame.draw.line(gameDisplay, black, self.circle1.getEnd(), self.circle2.getStart())
 
+
+
+
+
+
+
