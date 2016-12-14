@@ -1,6 +1,6 @@
 import pygame
-from Hashi.settings import *
-from Hashi.display import *
+from Kakuro.settings import *
+from Kakuro.display import *
 
 
 class Button:
@@ -25,6 +25,9 @@ class Button:
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
             self.changeColor(bright_green)
             self.show()
+            return True
+        else:
+            return False
 
     def isClicked(self):
         click = pygame.mouse.get_pressed()

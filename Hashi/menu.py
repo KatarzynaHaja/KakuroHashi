@@ -49,6 +49,10 @@ def menu():
         pygame.display.update()
         clock.tick(15)
 
+    def isFinished():
+        #jesli liczba połączeń jest równa wartości we wszystkich kółkach zakończ
+        pass
+
 
 menu()
 
