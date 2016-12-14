@@ -27,9 +27,7 @@ class Circle():
         bridge = Bridge(self, secondCircle)
         self.bridges.append(bridge)
         self.conections+=1
-        secondCircle.conections+=1
+        secondCircle.conections += 1
         bridge.show()
-
-
 
 

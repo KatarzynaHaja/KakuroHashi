@@ -5,23 +5,19 @@ from Hashi.button import *
 from Hashi.circle import *
 from Hashi.settings import *
 from Hashi.display import *
+from Hashi.game import *
 pygame.init()
 
 
-def gameloop():
+def gameloop(g):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: #Quit to zamkniecie okna przez uzytkownika
                 pygame.quit()
                 quit()
         gameDisplay.fill(white)
-        textDisplay("Let's game begin...", 40, red, (width/2, height/2))
-
-        c = Circle(10, 100, 100)
-        c.show()
-        c2 = Circle(2, 200, 100)
-        c2.show()
-        c.addBridge(c2)
+        #textDisplay("Let's game begin...", 40, red, (width/2, height/2))
+        g.generate_board()
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()
@@ -45,7 +41,11 @@ def menu():
         buttonPlay.show()
         buttonPlay.backlight(mouse)
         if(buttonPlay.isClicked()):
-            gameloop()
+            g = Game()
+            g.generate_default_board()
+            g.random_circle()
+            g.random_board()
+            gameloop(g)
         pygame.display.update()
         clock.tick(15)
 
