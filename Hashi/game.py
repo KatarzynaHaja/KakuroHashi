@@ -39,7 +39,7 @@ class Game():
             for j in range(len(self.board)):
                 if (self.board[j].x == n.x or self.board[j].y == n.y) and self.board[j] not in self.possible and self.board[j] not in self.list_circle:
                     self.possible.append(self.board[j])
-            print('listaaaa')
+            print('possible')
             for z in range(len(self.possible)):
                 print(self.possible[z].x, self.possible[z].y)
                 print()
