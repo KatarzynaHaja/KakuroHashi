@@ -54,10 +54,6 @@ class Game():
             print()
 
 
-
-
-
-
     def is_finished(self):
         finished=False
         for i in self.list_circle:
