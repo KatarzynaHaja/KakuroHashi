@@ -16,5 +16,5 @@ class Sum_of_column:
         rect.center = (self.x[0] + (self.z[0] - self.x[0])/3, self.x[1] + 4*(self.y[1] - self.x[1]) / 5)
         gameDisplay.blit(t, rect)
 
-    def check(self):
-        pass
+    def update(self, number):
+        self.number += number
