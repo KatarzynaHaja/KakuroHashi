@@ -5,6 +5,7 @@ from Kakuro.display import *
 from Kakuro.button import *
 from Kakuro.settings import *
 from Kakuro.Sum_of_column import *
+import os
 
 class Game:
     def __init__(self):
@@ -44,12 +45,19 @@ class Game:
             click = pygame.mouse.get_pressed()
             buttonPlay = Button(350, 300, 100, 50, green, "Graj", 30)
             buttonPlay.show()
+            buttonInstruction = Button(350, 400, 100, 50, green, "Instrukcja", 30)
+            buttonInstruction.show()
+            buttonInstruction.backlight(mouse)
             if buttonPlay.backlight(mouse):
                 if(buttonPlay.isClicked()):
                     gameDisplay.fill(white)
                     kwadracik = Node(1, 100, 100)
                     self.nodes.append(kwadracik)
                     self.gameloop()
+            if buttonInstruction.backlight(mouse):
+                if(buttonInstruction.isClicked()):
+                    os.startfile("Instruction.txt")
+
 
             pygame.display.update()
             clock.tick(15)
