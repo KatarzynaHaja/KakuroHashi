@@ -44,8 +44,6 @@ def menu():
         buttonInstruction.show()
         buttonInstruction.backlight(mouse)
 
-        print(buttonInstruction.isClicked(mouse))
-        print(buttonPlay.isClicked(mouse))
 
 
         if (buttonInstruction.isClicked(mouse)):
@@ -56,13 +54,14 @@ def menu():
             g.generate_default_board()
             g.random_circle()
             g.random_board()
+            g.set_neighbors()
             gameloop(g)
+            # tak zrobic : klikniecie graj uruchamia gameloop z wybraniem levelu itd
+
 
         pygame.display.update()
         clock.tick(15)
-    def isFinished():
-        #jesli liczba połączeń jest równa wartości we wszystkich kółkach zakończ
-        pass
+
 
 
 menu()

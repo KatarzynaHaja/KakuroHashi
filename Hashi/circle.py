@@ -10,6 +10,7 @@ class Circle():
         self.r = 30
         self.conections=0
         self.value=0
+        self.neighbors = list()
 
 
     def show(self):
