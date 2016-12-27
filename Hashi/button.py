@@ -4,7 +4,7 @@ from Hashi.display import *
 
 
 class Button:
-    def __init__(self,xleft, yleft, width, height, color, text, sizeOfLetters):
+    def __init__(self,xleft, yleft, width, height, color, text, sizeOfLetters,i):
         self.x = xleft
         self.y = yleft
         self.w = width
@@ -12,6 +12,8 @@ class Button:
         self.color = color
         self.text = text
         self.size = sizeOfLetters
+        self.is_cliked = False
+        self.position = i
 
     def show(self):
         pygame.draw.rect(gameDisplay, self.color, (self.x, self.y, self.w, self.h))
@@ -26,9 +28,10 @@ class Button:
             self.changeColor(bright_green)
             self.show()
 
-    def isClicked(self):
+    def isClicked(self,mouse):
         click = pygame.mouse.get_pressed()
-        if click[0] == 1:
+        if click[0] == 1 and self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
+            self.is_cliked = True
             return True
         else:
             return False

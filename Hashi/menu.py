@@ -6,6 +6,7 @@ from Hashi.circle import *
 from Hashi.settings import *
 from Hashi.display import *
 from Hashi.game import *
+import os
 pygame.init()
 
 
@@ -36,11 +37,21 @@ def menu():
         position = ((width / 2), (height / 3))
         textDisplay("Hashi", 100, black, position)
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
-        buttonPlay =Button(350, 300, 100, 50, green, "Graj", 30)
+        buttonPlay =Button(350, 300, 100, 50, green, "Graj", 30,0)
         buttonPlay.show()
         buttonPlay.backlight(mouse)
-        if(buttonPlay.isClicked()):
+        buttonInstruction = Button(350,400,100,50, green , "Instrukcja", 30,1)
+        buttonInstruction.show()
+        buttonInstruction.backlight(mouse)
+
+        print(buttonInstruction.isClicked(mouse))
+        print(buttonPlay.isClicked(mouse))
+
+
+        if (buttonInstruction.isClicked(mouse)):
+            os.startfile("Instruction.txt")
+
+        if(buttonPlay.isClicked(mouse)):
             g = Game()
             g.generate_default_board()
             g.random_circle()
@@ -48,6 +59,11 @@ def menu():
             gameloop(g)
         pygame.display.update()
         clock.tick(15)
+
+
+
+
+
 
     def isFinished():
         #jesli liczba połączeń jest równa wartości we wszystkich kółkach zakończ
