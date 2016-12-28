@@ -79,6 +79,7 @@ def choose_level():
             g.random_circle()
             g.random_board()
             g.set_neighbors()
+            g.print_circle()
             gameloop(g)
 
         if button_hard.isClicked(mouse):
