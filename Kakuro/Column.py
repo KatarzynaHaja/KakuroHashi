@@ -1,11 +1,11 @@
 from Kakuro.node import *
-from Kakuro.Sum_of_column import *
+from Kakuro.SumOfColumn import *
 
 
 class Column:
     def __init__(self, x, y, z):
         self.column = list()
-        self.sum = Sum_of_column(x, y, z, 0)
+        self.sum = SumOfColumn(x, y, z, 0)
         self.x = x
         self.y = y
         self.z = z
@@ -28,27 +28,26 @@ class Column:
     def show(self):
         self.sum.show()
         for c in self.column:
+            c.show()
 
-               c.show()
-
-    def update(self, event, surface):
+    def update(self, event):
         for c in self.column:
-            c.update(event, surface)
+            c.update(event)
 
     def check(self):
         s = 0
-        newList = list()
+        new_list = list()
         for c in self.column:
             s += int(c.number)
-            newList.append(int(c.number))
-        nnList = set(newList)
-        nnList = list(nnList)
-        if s == self.sum.number and sorted(nnList) == sorted(newList):
+            new_list.append(int(c.number))
+        set_list = set(new_list)
+        set_list = list(set_list)
+        if s == self.sum.number and sorted(set_list) == sorted(new_list):
             return True
         else:
             return False
 
-    def isFilled(self):
+    def is_filled(self):
         filled = True
         for c in self.column:
             if c.number == "":
