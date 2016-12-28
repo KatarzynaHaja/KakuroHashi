@@ -1,5 +1,6 @@
 import random
 from Hashi.circle import *
+from operator import itemgetter, attrgetter, methodcaller
 
 
 class Game():
@@ -84,3 +85,11 @@ class Game():
 
 
 
+    def sort_circle(self):
+        list_circle = sorted(self.list_circle,key=attrgetter('x', 'y') )
+        return list_circle
+
+    def print_circle(self):
+        self.list_circle = self.sort_circle()
+        for i in range(len(self.list_circle)):
+            print(self.list_circle[i].x , self.list_circle[i].y)
