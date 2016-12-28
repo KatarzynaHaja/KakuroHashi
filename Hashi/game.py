@@ -4,15 +4,31 @@ from Hashi.circle import *
 
 class Game():
     def __init__(self):
-        self.number_of_circle = self.random_circle()
         self.list_circle = list()
         self.list_bridge = list()
         self.board = list()
         self.possible = list()
 
+    def set_number_of_circle(self):
+        self.number_of_circle = self.random_circle()
+
     def random_circle(self):
-        value = random.randint(5, 10)
+        print("to jest level",self.level)
+        if self.level ==0:
+            value = random.randint(5, 10)
+        if self.level == 1:
+            value = random.randint(11, 20)
+        if self.level == 2:
+            value = random.randint(21, 30)
         return value
+
+    def set_level(self,s):
+        if s == 'easy':
+            self.level =0
+        if s == 'midi':
+            self.level =1
+        if s == 'hard':
+            self.level =2
 
     def random_brigde(self):
         value = random.randint(1, 5)
@@ -30,7 +46,7 @@ class Game():
             self.board[i].show()
 
     def random_board(self):
-        print(self.number_of_circle)
+        print("znowu kółka" , self.number_of_circle)
         n = random.choice(self.board)
         self.list_circle.append(n)
         for i in range(1,self.number_of_circle):
