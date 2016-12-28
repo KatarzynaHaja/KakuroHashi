@@ -61,10 +61,8 @@ class Game:
             if buttonPlay.backlight(mouse):
                 if(buttonPlay.isClicked()):
                     gameDisplay.fill(white)
-                    #kwadracik = Node(1, 100, 100)
-                    #self.nodes.append(kwadracik)
                     self.board = Board()
-                    self.board.add()
+                    self.board.generate()
                     self.result = ""
                     self.gameloop()
             if buttonInstruction.backlight(mouse):

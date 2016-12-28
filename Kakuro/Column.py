@@ -10,12 +10,20 @@ class Column:
         self.y = y
         self.z = z
         self.count = 0
+        self.available_numbers = list(range(1, 10))
 
-    def add(self, number):
-        node = Node(number, self.x[0], self.y[1] + self.count * 40)
+    def add(self, number, direction):      # v - pionowy    h - poziomy
+        if isinstance(number, int):
+            if direction == 'v':
+                node = Node(number, self.x[0], self.y[1] + self.count * 40)
+            else:
+                node = Node(number, self.x[0] + self.count * 40, self.y[1])
+        else:
+            node = number
         self.column.append(node)
         self.count += 1
-        self.sum.update(number)
+        self.sum.update(node.hidden_number)
+        return node
 
     def show(self):
         self.sum.show()
@@ -35,9 +43,7 @@ class Column:
             newList.append(int(c.number))
         nnList = set(newList)
         nnList = list(nnList)
-        print(newList)
-        print(nnList)
-        if s == self.sum.number and nnList == sorted(newList):
+        if s == self.sum.number and sorted(nnList) == sorted(newList):
             return True
         else:
             return False
