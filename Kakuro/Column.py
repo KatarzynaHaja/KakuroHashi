@@ -3,9 +3,9 @@ from Kakuro.SumOfColumn import *
 
 
 class Column:
-    def __init__(self, x, y, z):
+    def __init__(self, x, y, z, o):
         self.column = list()
-        self.sum = SumOfColumn(x, y, z, 0)
+        self.sum = SumOfColumn(x, y, z, 0, o)
         self.x = x
         self.y = y
         self.z = z

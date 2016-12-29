@@ -54,7 +54,7 @@ class Game:
             if button_play.backlight(mouse):
                 if button_play.is_clicked():
                     gameDisplay.fill(white)
-                    self.board.generate()
+                    self.board.generate2()
                     self.result = ""
                     self.gameloop()
             if button_instruction.backlight(mouse):
