@@ -1,6 +1,9 @@
 import random
+from operator import attrgetter
+
+from pygments.lexer import include
+
 from Hashi.circle import *
-from operator import itemgetter, attrgetter, methodcaller
 
 
 class Game():
@@ -10,13 +13,14 @@ class Game():
         self.board = list()
         self.possible = list()
 
+
     def set_number_of_circle(self):
         self.number_of_circle = self.random_circle()
 
     def random_circle(self):
         print("to jest level",self.level)
         if self.level ==0:
-            value = random.randint(5, 10)
+            value = random.randint(10,16)
         if self.level == 1:
             value = random.randint(11, 20)
         if self.level == 2:
@@ -37,6 +41,7 @@ class Game():
 
     def generate_board(self):
         for i in self.list_circle:
+            i = Circle(i.value,i.x , i.y)
             i.show()
 
     def generate_default_board(self):
@@ -75,21 +80,69 @@ class Game():
         print("bleee", len(self.list_circle))
         for i in range(len(self.list_circle)):
             for j in range(len(self.list_circle)):
-                if(self.board[j]!=self.board[i]):
-                    if((self.list_circle[i].x == self.list_circle[j].x or self.list_circle[i].y == self.list_circle[j].y)):
-                        self.list_circle[i].neighbors.append(self.list_circle[j])
-            print("lista",len(self.list_circle[i].neighbors))
-            for z in range(len(self.list_circle[i].neighbors)):
-                print(self.list_circle[i].neighbors[z].x , self.list_circle[i].neighbors[z].y)
-            print()
+                #if(self.list_circle[j]!=self.list_circle[i]):
+                    if self.list_circle[i].x == self.list_circle[j].x:
+                        self.list_circle[i].neighbors_x.append(self.list_circle[j])
+                    if  self.list_circle[i].y == self.list_circle[j].y:
+                        self.list_circle[i].neighbors_y.append(self.list_circle[j])
 
 
-
-    def sort_circle(self):
-        list_circle = sorted(self.list_circle,key=attrgetter('x', 'y') )
+    def sort_circle_x(self,l):
+        list_circle = sorted(l, key=attrgetter('x'))
         return list_circle
 
+    def sort_circle_y(self,l):
+        list_circle = sorted(l, key = attrgetter('y'))
+        return list_circle
+
+    def print_list(self,l):
+        for i in range(len(l)):
+            print(l[i].x, l[i].y)
+
+
+
+    def set_close_neighbors(self):
+
+        for i in range(len(self.list_circle)):
+            value = 0
+            sorted_y = self.sort_circle_y(self.list_circle[i].neighbors_x)
+            sorted_x = self.sort_circle_x(self.list_circle[i].neighbors_y)
+            # pętla po wszystkich sasiadach . Gdy x równe to sprawdzamy na liscie y pozycje i jesli mamy indeks+1 lub indeks-1 zaznaczamy jako sasiad
+            # analogicznie gdy y są równe
+            for j in range(0,len(self.list_circle[i].neighbors_x)):
+                    index_y = sorted_y.index(self.list_circle[i])
+                    if sorted_y.index(self.list_circle[i].neighbors_x[j]) == index_y - 1 or sorted_y.index(self.list_circle[i].neighbors_x[j]) == index_y +1:
+                            self.list_circle[i].close_neighbors.append(self.list_circle[i].neighbors_x[j])
+                            value += 1
+                            print("blee x")
+            for j in range(0,len(self.list_circle[i].neighbors_y)):
+                    index_x = sorted_x.index(self.list_circle[i])
+                    if sorted_x.index(self.list_circle[i].neighbors_y[j]) == index_x - 1 or sorted_x.index(self.list_circle[i].neighbors_y[j]) == index_x +1:
+                            self.list_circle[i].close_neighbors.append(self.list_circle[i].neighbors_y[j])
+                            value += 1
+                            print("blee x")
+
+
+            self.list_circle[i].set_value(value)
+
+
     def print_circle(self):
-        self.list_circle = self.sort_circle()
+        self.list_circle = self.sort_circle_x(self.list_circle)
         for i in range(len(self.list_circle)):
             print(self.list_circle[i].x , self.list_circle[i].y)
+            print(self.list_circle.index(self.list_circle[i]))
+
+    def print_neighbors(self):
+        for i in range(len(self.list_circle)):
+            print("wierzcholek",self.list_circle[i].x, self.list_circle[i].y)
+            print("ilosc sasiadow",len(self.list_circle[i].close_neighbors))
+            for j in range(len(self.list_circle[i].close_neighbors)):
+                print( "to jest sasiad",self.list_circle[i].close_neighbors[j].x,self.list_circle[i].close_neighbors[j].y)
+
+
+
+    def set_bridge(self):
+        for i in range(len(self.list_circle)):
+            for j in range(len(self.list_circle[i].close_neighbors)):
+                    self.list_circle[i].addBridge(self.list_circle[i].close_neighbors[j], green)
+

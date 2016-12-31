@@ -10,7 +10,10 @@ class Circle():
         self.r = 30
         self.conections=0
         self.value=0
+        self.neighbors_x = list()
+        self.neighbors_y = list()
         self.neighbors = list()
+        self.close_neighbors = list()
 
 
     def show(self):
@@ -18,14 +21,18 @@ class Circle():
         textDisplay(str(self.number), 30, black, (self.x, self.y))
 
     def getEnd(self):  # skad linie mamy prowadzic
-        return (self.x + self.r, self.y)
+        return (self.x , self.y)
 
     def getStart(self):
-        return (self.x - self.r, self.y)
+        return (self.x , self.y)
+
+    def set_value(self, value):
+        self.value = value
 
 
-    def addBridge(self, secondCircle):
-        bridge = Bridge(self, secondCircle)
+
+    def addBridge(self, secondCircle,color):
+        bridge = Bridge(self, secondCircle,color)
         self.bridges.append(bridge)
         self.conections+=1
         secondCircle.conections += 1

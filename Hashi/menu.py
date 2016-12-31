@@ -69,8 +69,12 @@ def choose_level():
             g.random_circle()
             g.random_board()
             g.set_neighbors()
+            g.set_close_neighbors()
+            g.print_neighbors()
+            g.print_circle()
+            #g.print_n()
             gameloop(g)
-
+        """"
         if button_medium.isClicked(mouse):
             g = Game()
             g.set_level('midi')
@@ -79,8 +83,9 @@ def choose_level():
             g.random_circle()
             g.random_board()
             g.set_neighbors()
-            g.print_circle()
-            gameloop(g)
+            #g.print_circle()
+
+            #gameloop(g)
 
         if button_hard.isClicked(mouse):
             g = Game()
@@ -90,8 +95,8 @@ def choose_level():
             g.random_circle()
             g.random_board()
             g.set_neighbors()
-            gameloop(g)
-
+            #gameloop(g)
+        """
         pygame.display.update()
         clock.tick(15)
 
@@ -103,7 +108,9 @@ def gameloop(g):
                 pygame.quit()
                 quit()
         gameDisplay.fill(white)
+        g.set_bridge()
         g.generate_board()
+
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()
