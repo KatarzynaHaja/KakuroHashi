@@ -51,7 +51,7 @@ class Board:
                 row.available_numbers.remove(n)
 
     def generate2(self):
-        self.number_of_columns = 8
+        self.number_of_columns = 2
         for i in range(1, self.number_of_columns + 1):
             if i % 2 == 1:
                 number_of_nodes = randint(3, 5)
