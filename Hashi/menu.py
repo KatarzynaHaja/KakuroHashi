@@ -1,22 +1,20 @@
-import random
-import sys, pygame
-from Hashi.bridge import *
+
 from Hashi.button import *
-from Hashi.circle import *
-from Hashi.settings import *
 from Hashi.display import *
 from Hashi.game import *
 import os
 pygame.init()
+
 
 def kind_of_game():
     pygame.display.update()
     clock.tick(15)
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT :
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
 
         gameDisplay.fill(white)
         position = ((width / 2), (height / 3))
@@ -33,10 +31,11 @@ def kind_of_game():
             choose_level()
 
         if button_myself.isClicked(mouse):
-          choose_level()
+            choose_level()
 
         pygame.display.update()
         clock.tick(15)
+
 
 def choose_level():
     pygame.display.update()
@@ -46,6 +45,8 @@ def choose_level():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.event.post(event)
 
         gameDisplay.fill(white)
         position = ((width / 2), (height / 3))
@@ -62,41 +63,29 @@ def choose_level():
         button_hard.backlight(mouse)
 
         if button_easy.isClicked(mouse):
-            g = Game()
-            g.set_level('easy')
-            g.set_number_of_circle()
-            g.generate_default_board()
-            g.random_circle()
-            g.random_board()
-            g.set_neighbors()
-            g.set_close_neighbors()
-            g.print_neighbors()
-            g.print_circle()
-            #g.print_n()
+            g = Game('easy')
+            g.board.generate_default_board()
+            g.board.random_board()
+            g.board.set_neighbors()
+            g.board.set_close_neighbors()
             gameloop(g)
-        """"
-        if button_medium.isClicked(mouse):
-            g = Game()
-            g.set_level('midi')
-            g.set_number_of_circle()
-            g.generate_default_board()
-            g.random_circle()
-            g.random_board()
-            g.set_neighbors()
-            #g.print_circle()
 
-            #gameloop(g)
+        if button_medium.isClicked(mouse):
+            g = Game('medium')
+            g.board.generate_default_board()
+            g.board.random_board()
+            g.board.set_neighbors()
+            g.board.set_close_neighbors()
+            gameloop(g)
 
         if button_hard.isClicked(mouse):
-            g = Game()
-            g.set_level('hard')
-            g.set_number_of_circle()
-            g.generate_default_board()
-            g.random_circle()
-            g.random_board()
-            g.set_neighbors()
-            #gameloop(g)
-        """
+            g = Game('hard')
+            g.board.generate_default_board()
+            g.board.random_board()
+            g.board.set_neighbors()
+            g.board.set_close_neighbors()
+            gameloop(g)
+
         pygame.display.update()
         clock.tick(15)
 
@@ -104,13 +93,12 @@ def choose_level():
 def gameloop(g):
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: #Quit to zamkniecie okna przez uzytkownika
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
         gameDisplay.fill(white)
-        g.set_bridge()
-        g.generate_board()
-
+        g.board.set_bridge()
+        g.board.generate_board()
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()
@@ -124,38 +112,29 @@ def menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.event.post(event)
 
         gameDisplay.fill(white)
         position = ((width / 2), (height / 3))
         textDisplay("Hashi", 100, black, position)
         mouse = pygame.mouse.get_pos()
-        buttonPlay =Button(350, 300, 100, 50, green, "Graj", 30,0)
-        buttonPlay.show()
-        buttonPlay.backlight(mouse)
-        buttonInstruction = Button(350,400,100,50, green , "Instrukcja", 30,1)
-        buttonInstruction.show()
-        buttonInstruction.backlight(mouse)
+        button_play = Button(350, 300, 100, 50, green, "Graj", 30, 0)
+        button_play.show()
+        button_play.backlight(mouse)
+        button_instruction = Button(350, 400, 100, 50, green, "Instrukcja", 30, 1)
+        button_instruction.show()
+        button_instruction.backlight(mouse)
 
-
-
-        if (buttonInstruction.isClicked(mouse)):
+        if (button_instruction.isClicked(mouse)):
             os.startfile("Instruction.txt")
 
-        if(buttonPlay.isClicked(mouse)):
-            kind_of_game()
-            # tak zrobic : klikniecie graj uruchamia gameloop z wybraniem levelu itd
 
+        if(button_play.isClicked(mouse)):
+            kind_of_game()
 
         pygame.display.update()
         clock.tick(15)
 
 
-
 menu()
-
-
-
-
-
-
-

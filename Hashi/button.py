@@ -28,10 +28,9 @@ class Button:
             self.changeColor(bright_green)
             self.show()
 
-    def isClicked(self,mouse):
-        click = pygame.mouse.get_pressed()
-        if click[0] == 1 and self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
-            self.is_cliked = True
+    def isClicked(self, mouse):
+        if pygame.event.peek(pygame.MOUSEBUTTONDOWN) and self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
+            pygame.event.clear()
             return True
         else:
             return False
