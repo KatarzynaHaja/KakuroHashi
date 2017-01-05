@@ -25,7 +25,7 @@ class Game:
             if button_check.backlight(pygame.mouse.get_pos()):
                 if button_check.is_clicked():
                     self.result = self.board.check()
-            text_display(self.result, 40, black, (250, 250))
+            text_display(self.result, 40, black, (420, 30))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
