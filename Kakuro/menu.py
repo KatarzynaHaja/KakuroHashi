@@ -22,10 +22,15 @@ class Game:
             self.board.show()
             button_check = Button(500, 300, 100, 50, red, "Sprawdz", 30)
             button_check.show()
+            button_hint = Button(500, 400, 100, 50, red, "Hint", 30)
+            button_hint.show()
             if button_check.backlight(pygame.mouse.get_pos()):
                 if button_check.is_clicked():
                     self.result = self.board.check()
             text_display(self.result, 40, black, (420, 30))
+            if button_hint.backlight(pygame.mouse.get_pos()):
+                if button_hint.is_clicked():
+                    self.board.hint()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

@@ -64,7 +64,9 @@ class Board:
                                  new + number_of_nodes + 1, number_of_nodes, i)
 
     def hint(self):
-        pass
+        column = random.choice(list(self.columns.keys()))
+        row = random.randint(0, len(self.columns[column].column)-1)
+        self.columns[column].column[row].number = self.columns[column].column[row].hidden_number
 
     def show(self):
         for column in self.columns.values():
