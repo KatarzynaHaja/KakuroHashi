@@ -2,6 +2,7 @@ import random
 from Hashi.circle import Circle
 from Hashi.settings import *
 from operator import attrgetter
+from Hashi.bridge import Bridge
 
 
 class Board():
@@ -68,21 +69,41 @@ class Board():
                 if sorted_y.index(self.list_circle[i].neighbors_x[j]) == index_y - 1 or sorted_y.index(
                         self.list_circle[i].neighbors_x[j]) == index_y + 1:
                     self.list_circle[i].close_neighbors.append(self.list_circle[i].neighbors_x[j])
-                    value += 1
-                    print("blee x")
+                   # value += 1
             for j in range(0, len(self.list_circle[i].neighbors_y)):
                 index_x = sorted_x.index(self.list_circle[i])
                 if sorted_x.index(self.list_circle[i].neighbors_y[j]) == index_x - 1 or sorted_x.index(
                         self.list_circle[i].neighbors_y[j]) == index_x + 1:
                     self.list_circle[i].close_neighbors.append(self.list_circle[i].neighbors_y[j])
-                    value += 1
-                    print("blee x")
+                    #value += 1
 
-            self.list_circle[i].set_value(value)
 
-    def set_bridge(self):
+    def set_bridges(self):
         for i in range(len(self.list_circle)):
+            self.list_circle[i].visited = True
+            number_of_bridge = 0
             for j in range(len(self.list_circle[i].close_neighbors)):
-                self.list_circle[i].addBridge(self.list_circle[i].close_neighbors[j], green)
+                if self.list_circle[i].close_neighbors[j].visited == False:
+                    if len(self.list_circle[i].close_neighbors) == 1:
+                        value = random.randint(1, 2)
+                    else:
+                        value = random.randint(0, 2)
+                    self.list_circle[i].value += value
+                    self.list_circle[i].close_neighbors[j].value += value
+                    self.list_bridge.append(
+                        Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], green, value))
+            if self.list_circle[i].value == 0:
+                for j in range(len(self.list_circle[i].close_neighbors)):
+                    value = random.randint(1, 2)
+                    self.list_circle[i].value += value
+                    self.list_circle[i].close_neighbors[j].value += value
+                    self.list_bridge.append(
+                        Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], green, value))
 
+    def print_bridge(self):
+        for i in range(len(self.list_bridge)):
+            if self.list_bridge[i].number == 1:
+                self.list_bridge[i].show()
+            if self.list_bridge[i].number == 2:
+                self.list_bridge[i].show_more()
 

@@ -68,6 +68,7 @@ def choose_level():
             g.board.random_board()
             g.board.set_neighbors()
             g.board.set_close_neighbors()
+            g.board.set_bridges()
             gameloop(g)
 
         if button_medium.isClicked(mouse):
@@ -97,8 +98,8 @@ def gameloop(g):
                 pygame.quit()
                 quit()
         gameDisplay.fill(white)
-        g.board.set_bridge()
         g.board.generate_board()
+        g.board.print_bridge()
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()

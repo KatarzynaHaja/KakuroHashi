@@ -14,6 +14,7 @@ class Circle():
         self.neighbors_y = list()
         self.neighbors = list()
         self.close_neighbors = list()
+        self.visited = False
 
 
     def show(self):
