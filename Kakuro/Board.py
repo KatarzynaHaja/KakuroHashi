@@ -8,6 +8,7 @@ class Board:
         self.columns = dict()
         self.rows = dict()
         self.number_of_columns = 0
+        self.number_of_hints = 0
 
     def generate(self):
         self.number_of_columns = randint(2, 4)
@@ -64,10 +65,17 @@ class Board:
                                  new + number_of_nodes + 1, number_of_nodes, i)
 
     def hint(self):
-        column = random.choice(list(self.columns.keys()))
-        row = random.randint(0, len(self.columns[column].column)-1)
-        self.columns[column].column[row].number = self.columns[column].column[row].hidden_number
-        print("halo")
+        if self.number_of_hints == 3:
+            return "Wykorzystano wszystkie podpowiedzi"
+        else:
+            self.number_of_hints += 1
+            column = random.choice(list(self.columns.keys()))
+            row = random.randint(0, len(self.columns[column].column)-1)
+            while self.columns[column].column[row].number != "":
+                column = random.choice(list(self.columns.keys()))
+                row = random.randint(0, len(self.columns[column].column) - 1)
+            self.columns[column].column[row].number = self.columns[column].column[row].hidden_number
+            return ""
 
     def show(self):
         for column in self.columns.values():
@@ -98,6 +106,6 @@ class Board:
                 if c.check() is False:
                     end = False
             if end:
-                return "Wygrales"
+                return "Wygrana"
             else:
                 return "Blad"
