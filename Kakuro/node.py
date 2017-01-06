@@ -22,7 +22,7 @@ class Node:
             pygame.draw.rect(gameDisplay, self.color, self.rect, 2)
         else:
             pygame.draw.rect(gameDisplay, self.color, self.rect, 1)
-        t = text_object(str(self.number), 25, self.color)
+        t = text_object(str(self.hidden_number), 25, self.color)
         rect = t.get_rect()
         rect.center = (self.left + (self.width/2), self.top + (self.height/2))
         gameDisplay.blit(t, rect)

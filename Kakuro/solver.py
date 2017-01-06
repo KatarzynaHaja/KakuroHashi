@@ -12,52 +12,53 @@ class Solver:
     def __init__(self):
         pygame.init()
         self.board = Board()
-
-    def factorise(self, number, count):
-        available_numbers = list(range(1, 10))
-        factorisation = list()
-        while available_numbers:
-            temp = list()
-            temp_counter = count
-            temp_number = number
-            for i in reversed(available_numbers):
-                if (i < temp_number and temp_counter > 1) or (i == temp_number and temp_counter == 1):
-                    temp.append(i)
-                    temp_number -= i
-                    temp_counter -= 1
-            if temp_number == 0:
-                factorisation.append(temp)
-            del available_numbers[-1]
-            if temp[0] in available_numbers:
-                available_numbers.remove(temp[0])
-        for e in factorisation:
-            print(e)
+        self.list_of_all = list()
+        self.count = 0
+        self.temp_list = list()
 
     def f(self, number, count):
         available_numbers = list(range(1, 10))
-        self.factor(number, count, available_numbers)
+        self.count = count
+        self.factor(number, count, 9, available_numbers)
+        print("wyswietlam liste")
+        for e in self.list_of_all:
+            print(e)
 
-    def factor(self, number, count, available_numbers):
+    def factor(self, number, count, start, available_numbers):
         if count == 1:
             l = list()
             if number in available_numbers:
                 available_numbers.remove(number)
-                print(number)
                 l.append(number)
             return l
         else:
             available_numbers_copy = copy.copy(available_numbers)
-            list_of_all = list()
+            l = list()
+            lista = list()
             for i in reversed(available_numbers_copy):
-                if i < number and i in available_numbers:
+                if i <= start and i <= number and i in available_numbers:
                     temp_number = number - i
+                    a = copy.copy(available_numbers)
+                    a.remove(i)
                     available_numbers.remove(i)
-                    l = self.factor(temp_number, count - 1, available_numbers)
+                    l = self.factor(temp_number, count - 1, temp_number, a)  #lista list
                     if l:
-                        print(i)
-                        l.append(i)
-                        list_of_all.append(l)
+                        if count == 2:
+                            l.append(i)
+                            if len(l) == self.count:
+                                self.list_of_all.append(l)
+                        else:
+                            for e in l:
+                                e.append(i)
+                                if len(e) == self.count:
+                                    self.list_of_all.append(e)
+                        if count != 2:
+                            for e in l:
+                                lista.append(e)
+                        else:
+                            lista.append(l)
 
+        return lista
 
 
 
@@ -67,7 +68,7 @@ class Solver:
         self.board.generate2()
         for c in self.board.columns.values():
             print(c.sum.number)
-            self.factorise(c.sum.number, len(c.column))
+            self.f(c.sum.number, len(c.column))
         while True:
             gameDisplay.fill(white)
             self.board.show()
@@ -84,5 +85,4 @@ class Solver:
 
 
 s = Solver()
-s.f(10, 3)
-
+s.solve()
