@@ -1,9 +1,9 @@
 import pygame
-size = width, height = 800, 500
+size = width, height = 1000, 500
 gameDisplay = pygame.display.set_mode(size)
 pygame.display.set_caption('Hashi') #nazwa okienka
 
-
+image = pygame.image.load("background.png")
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (200,0,0)

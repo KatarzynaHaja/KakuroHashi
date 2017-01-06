@@ -2,6 +2,7 @@ from Hashi.randomize import Randomize
 from Hashi.board import Board
 
 
+
 class Game():
     def __init__(self, s):
         self.level = self.set_level(s)
