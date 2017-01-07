@@ -11,6 +11,9 @@ class Column:
         self.z = z
         self.count = 0
         self.available_numbers = list(range(1, 10))
+        self.factors = list()
+        self.current_factorisation = 0
+        self.index_of_factorisation = 0
 
     def add(self, number, direction):      # v - pionowy    h - poziomy
         if isinstance(number, int):
