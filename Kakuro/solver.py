@@ -104,7 +104,7 @@ class Solver:
                 row.current_factorisation.remove(factor)
                 if nrskladnika + 1 == len(column.column):
                     nrskladnika -= 1
-            
+
         return index
 
     def funkcja2(self, column, nrpodzialu, nrskladnika, ind):

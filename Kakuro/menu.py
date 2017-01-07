@@ -7,6 +7,8 @@ from Kakuro.settings import *
 from Kakuro.SumOfColumn import *
 from Kakuro.Board import *
 import os
+from datetime import datetime
+import datetime
 
 
 class Game:
@@ -20,11 +22,15 @@ class Game:
     def gameloop(self):
         while True:
             gameDisplay.fill(white)
+            r = pygame.Rect(0, 0, 450, 500)
+            sub = gameDisplay.subsurface(r)
             self.board.show()
             button_check = Button(500, 300, 100, 50, red, "Sprawdz", 30)
             button_check.show()
             button_hint = Button(500, 400, 100, 50, red, "Hint", 30)
             button_hint.show()
+            button_save = Button(500, 200, 100, 50, green, "Zapisz plansze", 30)
+            button_save.show()
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
                 if button_check.is_clicked(mouse):
@@ -34,6 +40,16 @@ class Game:
                 if button_hint.is_clicked(mouse):
                     self.hints = self.board.hint()
             text_display(self.hints, 25, black, (520, 470))
+            if button_save.backlight(mouse):
+                if button_save.is_clicked(mouse):
+                    a = datetime.datetime(2013, 12, 30, 23, 59, 59)
+                    b = datetime.datetime.now()
+                    d = b - a
+                    fname = str(d.seconds)
+                    position = (700, 450)
+                    text_display("Zapisano do pliku", 30, black, position)
+                    pygame.display.update()
+                    pygame.image.save(sub, "generated_boards/" + fname + ".png")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -60,7 +76,6 @@ class Game:
             button_play.show()
             button_instruction = Button(350, 400, 100, 50, green, "Instrukcja", 30)
             button_instruction.show()
-            button_instruction.backlight(mouse)
             if button_play.backlight(mouse):
                 if button_play.is_clicked(mouse):
                     gameDisplay.fill(white)
