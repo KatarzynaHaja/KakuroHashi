@@ -7,11 +7,11 @@ class Randomize():
 
     def random_circle(self):
         if self.level == 0:
-            value = random.randint(10, 16)
+            value = random.randint(4, 8)
         if self.level == 1:
-            value = random.randint(11, 20)
+            value = random.randint(9, 14)
         if self.level == 2:
-            value = random.randint(21, 30)
+            value = random.randint(15, 20)
         return value
 
     def set_number_of_circle(self):

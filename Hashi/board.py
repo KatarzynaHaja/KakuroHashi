@@ -16,7 +16,7 @@ class Board():
 
     def generate_default_board(self):
         for i in range(5):
-            for j in range(8):
+            for j in range(6):
                 self.board.append(Circle(0, j * 100 + 50, i * 100 + 50))
         return self.board
 
