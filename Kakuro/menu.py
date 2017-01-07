@@ -96,10 +96,19 @@ class Game:
             button_hard = Button(350, 460, 100, 50, green, "Trudny", 30)
             button_hard.show()
             button_hard.backlight(mouse)
-            if button_easy.is_clicked(mouse) or button_medium.is_clicked(mouse) or button_hard.is_clicked(mouse):
-                self.board.generate2()
+            if button_easy.is_clicked(mouse):
+                self.board.generate(4)
                 self.result = ""
                 self.gameloop()
+            if button_medium.is_clicked(mouse):
+                self.board.generate(6)
+                self.result = ""
+                self.gameloop()
+            if button_hard.is_clicked(mouse):
+                self.board.generate(8)
+                self.result = ""
+                self.gameloop()
+
             pygame.display.update()
             clock.tick(15)
 

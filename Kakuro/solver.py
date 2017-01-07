@@ -65,7 +65,7 @@ class Solver:
 
     def game(self):
         gameDisplay.fill(white)
-        self.board.generate2()
+        self.board.generate(4)
         for c in self.board.columns.values():
             print(c.sum.number)
             self.f(c.sum.number, len(c.column))
