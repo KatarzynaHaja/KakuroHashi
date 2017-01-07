@@ -143,7 +143,7 @@ def gameloop(g):
             pygame.image.save(sub, "generated_boards/"+fname+".png")
         if button_solve.isClicked(mouse):
             is_show = True
-        if button_hint.isClicked(mouse):
+        if button_hint.isClicked(mouse) and g.number_of_hints<3:
             is_hint = True
             g.number_of_hints += 1
             bridge.append(g.random_bridge())

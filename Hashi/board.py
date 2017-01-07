@@ -97,8 +97,7 @@ class Board():
                     value = random.randint(1, 2)
                     self.list_circle[i].value += value
                     self.list_circle[i].close_neighbors[j].value += value
-                    self.list_bridge.append(
-                        Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], violet, value))
+                    self.list_bridge.append(Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], violet, value))
 
     def print_bridge(self):
         for i in range(len(self.list_bridge)):
