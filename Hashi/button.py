@@ -18,14 +18,14 @@ class Button:
     def show(self):
         pygame.draw.rect(gameDisplay, self.color, (self.x, self.y, self.w, self.h))
         self.positionOfText = ((self.x + (self.w / 2)), (self.y + (self.h / 2)))
-        textDisplay(self.text, self.size, black, self.positionOfText)
+        textDisplay(self.text, self.size, dark_violet, self.positionOfText)
 
     def changeColor(self,color):
         self.color = color
 
     def backlight(self, mouse):
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
-            self.changeColor(bright_green)
+            self.changeColor(bright_violet)
             self.show()
 
     def isClicked(self, mouse):
