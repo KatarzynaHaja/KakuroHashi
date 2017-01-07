@@ -18,8 +18,8 @@ class Circle():
 
 
     def show(self):
-        pygame.draw.circle(gameDisplay, black, (self.x, self.y), 30, 1)
-        textDisplay(str(self.number), 30, black, (self.x, self.y))
+        pygame.draw.circle(gameDisplay, circle_violet, (self.x, self.y), 30, 0)
+        textDisplay(str(self.number), 30, dark_violet, (self.x, self.y))
 
     def getEnd(self):  # skad linie mamy prowadzic
         return (self.x , self.y)

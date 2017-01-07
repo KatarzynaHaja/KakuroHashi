@@ -1,5 +1,6 @@
 from Hashi.randomize import Randomize
 from Hashi.board import Board
+import random
 
 
 
@@ -10,6 +11,7 @@ class Game():
         self.number_of_circle = self.randomize.set_number_of_circle()
         self.number_of_bridge = self.randomize.random_brigde()
         self.board = Board(self.number_of_bridge, self.number_of_circle)
+        self.number_of_hints = 0
 
     def set_level(self, s):
         if s == 'easy':
@@ -18,6 +20,10 @@ class Game():
             return 1
         if s == 'hard':
             return 2
+
+    def random_bridge(self):
+        n = random.choice(self.board.list_bridge)
+        return n
 
     def is_finished(self):
         finished = False
