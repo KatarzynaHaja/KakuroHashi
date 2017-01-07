@@ -14,9 +14,9 @@ class Solver:
         self.board = Board()
         self.list_of_all = list()
         self.count = 0
-        self.temp_list = list()
 
     def f(self, number, count):
+        self.list_of_all = list()
         available_numbers = list(range(1, 10))
         self.count = count
         self.factor(number, count, 9, available_numbers)
@@ -61,12 +61,13 @@ class Solver:
         return lista
 
 
-
-
     def game(self):
         gameDisplay.fill(white)
         self.board.generate(4)
         for c in self.board.columns.values():
+            print(c.sum.number)
+            self.f(c.sum.number, len(c.column))
+        for c in self.board.rows.values():
             print(c.sum.number)
             self.f(c.sum.number, len(c.column))
         while True:
@@ -76,7 +77,6 @@ class Solver:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-
             pygame.display.update()
             clock.tick(60)
 
