@@ -1,6 +1,7 @@
-from Kakuro.Column import *
+from Kakuro.column import *
 from random import randint
 import random
+import math
 
 
 class Board:
@@ -95,3 +96,40 @@ class Board:
                 return "Wygrana"
             else:
                 return "Blad"
+
+    def create_board_from_file(self):
+        with open('text_files/1.txt') as file:
+            lines = file.readlines()
+            print(lines)
+            for i, line in enumerate(lines):
+                print(i)
+                line = line.strip('\n')
+                l = line.split("\t")
+                print(l)
+                counter_of_columns = 0
+                for elem in l:
+                    k = 0
+                    while k < len(elem) - 1:
+                        if elem[k] != " ":
+                            if elem[k] != 'x' and elem[k] != 'P' and elem[k+1] != 'x' and elem[k+1] != 'P':
+                                number = ""
+                                while k < len(elem) and elem[k] != " ":
+                                    number += elem[k]
+                                    k += 1
+                                print(number, "numer")
+                                print("tworze kolumne")
+                                column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
+                                                [100 + 40 * counter_of_columns, 100 + 40 * i],
+                                                [140 + 40 * counter_of_columns, 100 + 40 * i], "column")
+                                print(i, counter_of_columns, "o takim kluczu")
+                                self.columns[(i, counter_of_columns)] = column
+                                counter_of_columns += 1
+                               
+                        k += 1
+                print(self.columns)
+
+
+b = Board()
+b.create_board_from_file()
+
+

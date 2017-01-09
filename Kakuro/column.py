@@ -1,5 +1,5 @@
 from Kakuro.node import *
-from Kakuro.SumOfColumn import *
+from Kakuro.sumofcolumn import *
 
 
 class Column:

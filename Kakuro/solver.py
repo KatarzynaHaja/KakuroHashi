@@ -3,8 +3,8 @@ from pygame import font
 from Kakuro.node import *
 from Kakuro.button import *
 from Kakuro.settings import *
-from Kakuro.SumOfColumn import *
-from Kakuro.Board import *
+from Kakuro.sumofcolumn import *
+from Kakuro.board import *
 import copy
 import operator
 
