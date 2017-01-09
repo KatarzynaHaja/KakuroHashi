@@ -124,7 +124,7 @@ class Board:
                                 print(i, counter_of_columns, "o takim kluczu")
                                 self.columns[(i, counter_of_columns)] = column
                                 counter_of_columns += 1
-                               
+
                         k += 1
                 print(self.columns)
 

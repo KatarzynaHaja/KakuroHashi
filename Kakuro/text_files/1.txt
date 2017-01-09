@@ -1,0 +1,6 @@
+x x x 10 x 9
+7 x P P P P x 6
+20 x P P P P P P
+x x 13 10 P P P P
+8 x P P P P
+x x P P
