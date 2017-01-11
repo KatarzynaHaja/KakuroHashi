@@ -31,6 +31,8 @@ class Game:
             button_hint.show()
             button_save = Button(500, 200, 100, 50, green, "Zapisz plansze", 30)
             button_save.show()
+            print("KOLUMNA", self.board.find_nearest_column(5, 5))
+            print("WIERSZ", self.board.find_nearest_row(5, 5))
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
                 if button_check.is_clicked(mouse):

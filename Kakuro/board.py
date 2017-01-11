@@ -97,6 +97,20 @@ class Board:
             else:
                 return "Blad"
 
+    def find_nearest_column(self, w, k):
+        while (w, k) not in self.columns.keys() and w != 0:
+            w -= 1
+        if w == 0 and (w, k) not in self.columns.keys():
+            return False
+        return (w, k)
+
+    def find_nearest_row(self, w, k):
+        while (w, k) not in self.rows.keys() and k != 0:
+            k -= 1
+        if k == 0 and (w, k) not in self.rows.keys():
+            return False
+        return (w, k)
+
     def create_board_from_file(self):
         with open('text_files/1.txt') as file:
             lines = file.readlines()
@@ -107,11 +121,13 @@ class Board:
                 line = line.strip('\n')
                 l = line.split(";")
                 print(l)
-                counter_of_columns = 1
+                counter_of_columns = 0
                 for elem in l:
                     print("elem", elem)
                     if elem == "P":
                         print("node")
+                        print("najblizsza kolumna",self.find_nearest_column(i, counter_of_columns))
+                        print("najblizszy wiersz", self.find_nearest_row(i, counter_of_columns))
                     elif elem != "":
                         j = 0
                         row_or_column = 0
