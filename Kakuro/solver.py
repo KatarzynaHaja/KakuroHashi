@@ -7,6 +7,7 @@ from Kakuro.sumofcolumn import *
 from Kakuro.board import *
 import copy
 import operator
+import itertools
 
 
 class Solver:
@@ -24,8 +25,13 @@ class Solver:
         self.count = count
         self.factor(number, count, 9, available_numbers)
         print("wyswietlam liste")
-        for i in range(0, len(self.list_of_all)):
-            self.list_of_all[i] = list(reversed(self.list_of_all[i]))
+        list1 = copy.copy(self.list_of_all)
+        self.list_of_all = list()
+        print(list1)
+        for elem in list1:
+            for permutation in itertools.permutations(elem):
+                self.list_of_all.append(list(permutation))
+        print("lista wszystkiego")
         print(self.list_of_all)
         return self.list_of_all
 
