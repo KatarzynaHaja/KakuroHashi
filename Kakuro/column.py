@@ -17,6 +17,7 @@ class Column:
 
     def add(self, number, direction):      # v - pionowy    h - poziomy
         if isinstance(number, int):
+            print(number)
             if direction == 'v':
                 node = Node(number, self.x[0], self.y[1] + self.count * 40)
             else:

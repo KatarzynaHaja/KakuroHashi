@@ -128,6 +128,9 @@ class Board:
                         print("node")
                         print("najblizsza kolumna",self.find_nearest_column(i, counter_of_columns))
                         print("najblizszy wiersz", self.find_nearest_row(i, counter_of_columns))
+                        (x, y) = self.find_nearest_column(i, counter_of_columns)
+                        column = self.columns[(x, y)]
+                        node = column.add(0, 'v')
                     elif elem != "":
                         j = 0
                         row_or_column = 0
@@ -143,7 +146,7 @@ class Board:
                                     print("alo1")
                                     column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
                                     [100 + 40 * counter_of_columns, 100 + 40 * i],
-                                    [140 + 40 * counter_of_columns, 100 + 40 * i], "column", number)
+                                    [140 + 40 * counter_of_columns, 100 + 40 * i], "column", int(number))
                                     self.columns[(i, counter_of_columns)] = column
                                 else:
                                     print("alo2")
@@ -156,29 +159,8 @@ class Board:
                                 j += 1
                                 row_or_column += 1
                                 print("row or column", row_or_column)
-
-
                     counter_of_columns += 1
 
-                #     while k < len(elem) - 1:
-                #         if elem[k] != " ":
-                #             if elem[k] != 'x' and elem[k] != 'P' and elem[k+1] != 'x' and elem[k+1] != 'P':
-                #                 number = ""
-                #                 while k < len(elem) and elem[k] != " ":
-                #                     number += elem[k]
-                #                     k += 1
-                #                 print(number, "numer")
-                #                 print("tworze kolumne")
-                #                 column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
-                #                                 [100 + 40 * counter_of_columns, 100 + 40 * i],
-                #                                 [140 + 40 * counter_of_columns, 100 + 40 * i], "column", number)
-                #                 print(i, counter_of_columns, "o takim kluczu")
-                #                 self.columns[(i, counter_of_columns)] = column
-                #                 counter_of_columns += 1
-                #
-                #         k += 1
-
-                #print(self.columns)
 
 
 b = Board()
