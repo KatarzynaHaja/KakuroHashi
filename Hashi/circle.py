@@ -15,6 +15,10 @@ class Circle():
         self.neighbors = list()
         self.close_neighbors = list()
         self.visited = False
+        self.is_done =False
+        self.ready = self.close_neighbors
+
+
 
 
     def show(self):
@@ -32,11 +36,8 @@ class Circle():
 
 
 
-    def addBridge(self, secondCircle,color):
-        bridge = Bridge(self, secondCircle,color)
-        self.bridges.append(bridge)
-        self.conections+=1
-        secondCircle.conections += 1
-        bridge.show()
+    def addBridge(self, secondCircle,value):
+        self.conections+=value
+        secondCircle.conections += value
 
 

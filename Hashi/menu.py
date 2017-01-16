@@ -32,16 +32,16 @@ def kind_of_game():
         button_myself.backlight(mouse)
 
         if button_computer.isClicked(mouse):
-            choose_level()
+            choose_level('c')
 
         if button_myself.isClicked(mouse):
-            choose_level()
+            choose_level('m')
 
         pygame.display.update()
         clock.tick(15)
 
 
-def choose_level():
+def choose_level(type):
     pygame.display.update()
     clock.tick(15)
     while True:
@@ -65,33 +65,57 @@ def choose_level():
         button_hard = Button(350, 390, 100, 50, violet, "trudny", 30, 1)
         button_hard.show()
         button_hard.backlight(mouse)
+        if type =='m':
+            if button_easy.isClicked(mouse):
+                g = Game('easy')
+                g.board.generate_default_board()
+                g.board.random_board()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.set_bridges()
+                gameloop(g)
 
-        if button_easy.isClicked(mouse):
-            g = Game('easy')
-            g.board.generate_default_board()
-            g.board.random_board()
-            g.board.set_neighbors()
-            g.board.set_close_neighbors()
-            g.board.set_bridges()
-            gameloop(g)
+            if button_medium.isClicked(mouse):
+                g = Game('midi')
+                g.board.generate_default_board()
+                g.board.random_board()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.set_bridges()
+                gameloop(g)
 
-        if button_medium.isClicked(mouse):
-            g = Game('midi')
-            g.board.generate_default_board()
-            g.board.random_board()
-            g.board.set_neighbors()
-            g.board.set_close_neighbors()
-            g.board.set_bridges()
-            gameloop(g)
+            if button_hard.isClicked(mouse):
+                g = Game('hard')
+                g.board.generate_default_board()
+                g.board.random_board()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.set_bridges()
+                gameloop(g)
+        if type =='c':
+            if button_easy.isClicked(mouse):
+                g = Game('easy')
+                g.board.generate_default_board()
+                g.board.random_board()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.set_bridges()
+                g.board.solve()
+                gameloop(g)
 
-        if button_hard.isClicked(mouse):
-            g = Game('hard')
-            g.board.generate_default_board()
-            g.board.random_board()
-            g.board.set_neighbors()
-            g.board.set_close_neighbors()
-            g.board.set_bridges()
-            gameloop(g)
+            if button_medium.isClicked(mouse):
+                g = Game('midi')
+                g.board.generate_by_reconition()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                gameloop(g)
+
+            if button_hard.isClicked(mouse):
+                g = Game('hard')
+                g.board.generate_by_reconition()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                gameloop(g)
 
         pygame.display.update()
         clock.tick(15)
@@ -127,8 +151,9 @@ def gameloop(g):
         button_hint.show()
         button_hint.backlight(mouse)
         g.board.generate_board()
+        g.board.print_bridge(g.board.user_list_bridge)
         if is_show ==True:
-            g.board.print_bridge()
+            g.board.print_bridge(g.board.list_bridge)
 
 
 

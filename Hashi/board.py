@@ -3,6 +3,9 @@ from Hashi.circle import Circle
 from Hashi.settings import *
 from operator import attrgetter
 from Hashi.bridge import Bridge
+from Hashi.recognize import recognize
+from Hashi.solver import solver
+import copy
 
 
 class Board():
@@ -13,6 +16,12 @@ class Board():
         self.possible = list()
         self.number_of_circle = number_of_circle
         self.number_of_bridge = number_of_bridge
+        self.recognition = list()
+        self.user_list_bridge = list()
+
+    def generate_by_reconition(self):
+        self.recognition = recognize()
+        self.list_circle = copy.deepcopy(self.recognition)
 
     def generate_default_board(self):
         for i in range(5):
@@ -24,6 +33,10 @@ class Board():
         for i in self.list_circle:
             i = Circle(i.value, i.x, i.y)
             i.show()
+
+    def solve(self):
+        self.user_list_bridge =solver(self.list_circle)
+
 
     def random_board(self):
         n = random.choice(self.board)
@@ -99,10 +112,10 @@ class Board():
                     self.list_circle[i].close_neighbors[j].value += value
                     self.list_bridge.append(Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], violet, value))
 
-    def print_bridge(self):
-        for i in range(len(self.list_bridge)):
-            if self.list_bridge[i].number == 1:
-                self.list_bridge[i].show()
-            if self.list_bridge[i].number == 2:
-                self.list_bridge[i].show_more()
+    def print_bridge(self, l):
+        for i in range(len(l)):
+            if l[i].number == 1:
+                l[i].show()
+            if l[i].number == 2:
+                l[i].show_more()
 

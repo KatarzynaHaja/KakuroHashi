@@ -25,9 +25,9 @@ class Game():
         n = random.choice(self.board.list_bridge)
         return n
 
-    def is_finished(self):
+    def is_finished(l):
         finished = False
-        for i in self.board.list_circle:
+        for i in l:
             if i.connections == i.value:
                 finished = True
             else:
