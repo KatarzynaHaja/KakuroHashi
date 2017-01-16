@@ -3,10 +3,11 @@ from pygame import font
 from Kakuro.node import *
 from Kakuro.button import *
 from Kakuro.settings import *
-from Kakuro.SumOfColumn import *
-from Kakuro.Board import *
+from Kakuro.sumofcolumn import *
+from Kakuro.board import *
 import copy
 import operator
+import itertools
 
 
 class Solver:
@@ -24,8 +25,13 @@ class Solver:
         self.count = count
         self.factor(number, count, 9, available_numbers)
         print("wyswietlam liste")
-        for i in range(0, len(self.list_of_all)):
-            self.list_of_all[i] = list(reversed(self.list_of_all[i]))
+        list1 = copy.copy(self.list_of_all)
+        self.list_of_all = list()
+        print(list1)
+        for elem in list1:
+            for permutation in itertools.permutations(elem):
+                self.list_of_all.append(list(permutation))
+        print("lista wszystkiego")
         print(self.list_of_all)
         return self.list_of_all
 
@@ -173,6 +179,49 @@ class Solver:
     def solve(self):
         self.game()
 
+    def all(self):
+        gameDisplay.fill(white)
+        self.board.generate(4)
+        self.big_list = list()
+        for c in self.board.columns.keys():
+            value = self.board.columns[c]
+            print(value.sum.number)
+            value.factors = self.factorise(value.sum.number, len(value.column))
+            self.big_list.append(value.factors)
+            #self.number_of_possibilities_columns[c] = len(value.factors)
+        for c in self.board.rows.keys():
+            value = self.board.rows[c]
+            print(value.sum.number)
+            value.factors = self.factorise(value.sum.number, len(value.column))
+            #self.number_of_possibilities_rows[c] = len(value.factors)
+        print("alo")
+        self.all = list(itertools.product(*[self.board.columns[x].factors for x in self.board.columns.keys()]))
+        #print("sciapana")
+        #print(self.all)
+        print("tyle jest kombinacji", len(self.all))
+        while True:
+            gameDisplay.fill(white)
+            self.board.show()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            index = 0
+            while self.board.check() != "Wygrana":
+                column_counter = 0
+                for key in self.board.columns.keys():
+                    column = self.board.columns[key]
+                    for i in range(0, len(column.column)):
+                        column.column[i].number = self.all[index][column_counter][i]
+                    column_counter += 1
+                index += 1
+                print(index)
+            pygame.display.update()
+            clock.tick(60)
+    def a(self):
+        print(list(itertools.product([[1,2],[3,4]],[[5],[6,7]])))
+
 
 s = Solver()
-s.solve()
+#s.solve()
+s.all()

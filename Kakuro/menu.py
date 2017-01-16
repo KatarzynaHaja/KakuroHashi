@@ -4,8 +4,8 @@ from Kakuro.node import *
 from Kakuro.display import *
 from Kakuro.button import *
 from Kakuro.settings import *
-from Kakuro.SumOfColumn import *
-from Kakuro.Board import *
+from Kakuro.sumofcolumn import *
+from Kakuro.board import *
 import os
 from datetime import datetime
 import datetime
@@ -31,6 +31,8 @@ class Game:
             button_hint.show()
             button_save = Button(500, 200, 100, 50, green, "Zapisz plansze", 30)
             button_save.show()
+            print("KOLUMNA", self.board.find_nearest_column(5, 5))
+            print("WIERSZ", self.board.find_nearest_row(5, 5))
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
                 if button_check.is_clicked(mouse):
@@ -76,6 +78,8 @@ class Game:
             button_play.show()
             button_instruction = Button(350, 400, 100, 50, green, "Instrukcja", 30)
             button_instruction.show()
+            button_create_from_text = Button(500, 400, 100, 50, green, "Stworz plansze", 30)
+            button_create_from_text.show()
             if button_play.backlight(mouse):
                 if button_play.is_clicked(mouse):
                     gameDisplay.fill(white)
@@ -83,6 +87,10 @@ class Game:
             if button_instruction.backlight(mouse):
                 if button_instruction.is_clicked(mouse):
                     os.startfile("Instruction.txt")
+            if button_create_from_text.backlight(mouse):
+                if button_create_from_text.is_clicked(mouse):
+                    self.board.create_board_from_file()
+                    self.create_board()
             pygame.display.update()
             clock.tick(15)
 
@@ -126,6 +134,18 @@ class Game:
 
             pygame.display.update()
             clock.tick(15)
+
+    def create_board(self):
+        while True:
+            gameDisplay.fill(white)
+            self.board.show()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                self.board.update(event)
+            pygame.display.update()
+            clock.tick(60)
 
 
 game = Game()

@@ -1,11 +1,11 @@
 from Kakuro.node import *
-from Kakuro.SumOfColumn import *
+from Kakuro.sumofcolumn import *
 
 
 class Column:
-    def __init__(self, x, y, z, o):
+    def __init__(self, x, y, z, o, number=0):
         self.column = list()
-        self.sum = SumOfColumn(x, y, z, 0, o)
+        self.sum = SumOfColumn(x, y, z, number, o)
         self.x = x
         self.y = y
         self.z = z
@@ -17,6 +17,7 @@ class Column:
 
     def add(self, number, direction):      # v - pionowy    h - poziomy
         if isinstance(number, int):
+            print(number)
             if direction == 'v':
                 node = Node(number, self.x[0], self.y[1] + self.count * 40)
             else:

@@ -1,6 +1,7 @@
-from Kakuro.Column import *
+from Kakuro.column import *
 from random import randint
 import random
+import math
 
 
 class Board:
@@ -95,3 +96,74 @@ class Board:
                 return "Wygrana"
             else:
                 return "Blad"
+
+    def find_nearest_column(self, w, k):
+        while (w, k) not in self.columns.keys() and w != 0:
+            w -= 1
+        if w == 0 and (w, k) not in self.columns.keys():
+            return False
+        return (w, k)
+
+    def find_nearest_row(self, w, k):
+        while (w, k) not in self.rows.keys() and k != 0:
+            k -= 1
+        if k == 0 and (w, k) not in self.rows.keys():
+            return False
+        return (w, k)
+
+    def create_board_from_file(self):
+        with open('text_files/1.txt') as file:
+            lines = file.readlines()
+            #print(lines)
+            for i, line in enumerate(lines):
+                counter_of_columns = 1
+                print(i)
+                line = line.strip('\n')
+                l = line.split(";")
+                print(l)
+                counter_of_columns = 0
+                for elem in l:
+                    print("elem", elem)
+                    if elem == "P":
+                        print("node")
+                        print("najblizsza kolumna",self.find_nearest_column(i, counter_of_columns))
+                        print("najblizszy wiersz", self.find_nearest_row(i, counter_of_columns))
+                        (x, y) = self.find_nearest_column(i, counter_of_columns)
+                        column = self.columns[(x, y)]
+                        node = column.add(0, 'v')
+                    elif elem != "":
+                        j = 0
+                        row_or_column = 0
+                        while j < len(elem):
+                            if elem[j] != 'x' and elem[j] != " ":
+                                number = ""
+                                while j < len(elem) and elem[j] != " ":
+                                    number += elem[j]
+                                    j += 1
+                                print(number, "numer")
+                                print("row or column", row_or_column)
+                                if row_or_column == 0:
+                                    print("alo1")
+                                    column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
+                                    [100 + 40 * counter_of_columns, 100 + 40 * i],
+                                    [140 + 40 * counter_of_columns, 100 + 40 * i], "column", int(number))
+                                    self.columns[(i, counter_of_columns)] = column
+                                else:
+                                    print("alo2")
+                                    column = Column([60 + 40 * (counter_of_columns +1), 100 + 40 * (i-1)], [100 + 40 * (counter_of_columns+1), 100 + 40 * (i-1)],
+                             [100 + 40 * (counter_of_columns+1), 140 + 40 * (i-1)], "row", number)
+                                    print(i, counter_of_columns, "o takim kluczu")
+                                    self.rows[(i, counter_of_columns)] = column
+
+                            else:
+                                j += 1
+                                row_or_column += 1
+                                print("row or column", row_or_column)
+                    counter_of_columns += 1
+
+
+
+b = Board()
+b.create_board_from_file()
+
+
