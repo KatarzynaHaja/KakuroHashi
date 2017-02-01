@@ -24,21 +24,21 @@ def kind_of_game():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        gameDisplay.blit(image, (0, 0))
+        game_display.blit(image, (0, 0))
         position = ((width / 2), (height / 3))
-        textDisplay("Wybierz tryb gry", 70, dark_violet, position)
+        text_display("Wybierz tryb gry", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
-        button_computer = Button(350, 250, 100, 50, violet, "solver", 30, 0)
+        button_computer = Button(350, 250, 100, 50, violet, "solver", 30)
         button_computer.show()
         button_computer.backlight(mouse)
-        button_myself = Button(350, 350, 100, 50, violet, "zwykły", 30, 1)
+        button_myself = Button(350, 350, 100, 50, violet, "zwykły", 30)
         button_myself.show()
         button_myself.backlight(mouse)
 
-        if button_computer.isClicked(mouse):
+        if button_computer.is_clicked(mouse):
             is_file('c')
 
-        if button_myself.isClicked(mouse):
+        if button_myself.is_clicked(mouse):
             is_file('m')
 
         pygame.display.update()
@@ -56,21 +56,21 @@ def choose_level(type):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        gameDisplay.blit(image, (0, 0))
+        game_display.blit(image, (0, 0))
         position = ((width / 2), (height / 3))
-        textDisplay("Wybierz poziom", 70, dark_violet, position)
+        text_display("Wybierz poziom", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
-        button_easy = Button(350, 250, 100, 50, violet, "łatwy", 30, 0)
+        button_easy = Button(350, 250, 100, 50, violet, "łatwy", 30)
         button_easy.show()
         button_easy.backlight(mouse)
-        button_medium = Button(350, 320, 100, 50, violet, "średni", 30, 1)
+        button_medium = Button(350, 320, 100, 50, violet, "średni", 30)
         button_medium.show()
         button_medium.backlight(mouse)
-        button_hard = Button(350, 390, 100, 50, violet, "trudny", 30, 1)
+        button_hard = Button(350, 390, 100, 50, violet, "trudny", 30)
         button_hard.show()
         button_hard.backlight(mouse)
         if type == 'm':
-            if button_easy.isClicked(mouse):
+            if button_easy.is_clicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -79,7 +79,7 @@ def choose_level(type):
                 g.board.set_bridges()
                 gameloop(g)
 
-            if button_medium.isClicked(mouse):
+            if button_medium.is_clicked(mouse):
                 g = Game('midi')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -88,7 +88,7 @@ def choose_level(type):
                 g.board.set_bridges()
                 gameloop(g)
 
-            if button_hard.isClicked(mouse):
+            if button_hard.is_clicked(mouse):
                 g = Game('hard')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -97,7 +97,7 @@ def choose_level(type):
                 g.board.set_bridges()
                 gameloop(g)
         if type == 'c':
-            if button_easy.isClicked(mouse):
+            if button_easy.is_clicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -107,7 +107,7 @@ def choose_level(type):
                 g.board.solve()
                 gameloop(g)
 
-            if button_medium.isClicked(mouse):
+            if button_medium.is_clicked(mouse):
                 g = Game('midi')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -117,7 +117,7 @@ def choose_level(type):
                 g.board.solve()
                 gameloop(g)
 
-            if button_hard.isClicked(mouse):
+            if button_hard.is_clicked(mouse):
                 g = Game('hard')
                 g.board.generate_default_board()
                 g.board.random_board()
@@ -142,19 +142,19 @@ def is_file(type):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        gameDisplay.blit(image, (0, 0))
+        game_display.blit(image, (0, 0))
         position = ((width / 2), (height / 3))
-        textDisplay("Czy chcesz wczytać z pliku", 70, dark_violet, position)
+        text_display("Czy chcesz wczytać z pliku", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
-        button_yes = Button(350, 250, 100, 50, violet, "TAK", 30, 0)
+        button_yes = Button(350, 250, 100, 50, violet, "TAK", 30)
         button_yes.show()
         button_yes.backlight(mouse)
-        button_no = Button(350, 350, 100, 50, violet, "NIE", 30, 1)
+        button_no = Button(350, 350, 100, 50, violet, "NIE", 30)
         button_no.show()
         button_no.backlight(mouse)
 
         if type == 'c':
-            if button_yes.isClicked(mouse):
+            if button_yes.is_clicked(mouse):
                 g = Game()
                 g.board.generate_by_reconition()
                 g.board.set_neighbors()
@@ -162,17 +162,17 @@ def is_file(type):
                 g.board.solve()
                 gameloop(g)
 
-            if button_no.isClicked(mouse):
+            if button_no.is_clicked(mouse):
                 choose_level('c')
         else:
-            if button_yes.isClicked(mouse):
+            if button_yes.is_clicked(mouse):
                 g = Game()
                 g.board.generate_by_reconition()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 gameloop(g)
 
-            if button_no.isClicked(mouse):
+            if button_no.is_clicked(mouse):
                 choose_level('m')
 
         pygame.display.update()
@@ -197,16 +197,16 @@ def gameloop(g):
                 clicked_list.append(z)
 
         mouse = pygame.mouse.get_pos()
-        gameDisplay.fill(blur_violet)
+        game_display.fill(blur_violet)
         r = pygame.Rect(0, 0, 600, 500)
-        sub = gameDisplay.subsurface(r)
-        button_save = Button(650, 380, 120, 50, violet, "Zapisz", 25, 1)
+        sub = game_display.subsurface(r)
+        button_save = Button(650, 380, 120, 50, violet, "Zapisz", 25)
         button_save.show()
         button_save.backlight(mouse)
-        button_solve = Button(650, 280, 120, 50, violet, "Rozwiązanie", 25, 1)
+        button_solve = Button(650, 280, 120, 50, violet, "Rozwiązanie", 25)
         button_solve.show()
         button_solve.backlight(mouse)
-        button_hint = Button(650, 180, 120, 50, violet, "Wskazówka", 25, 1)
+        button_hint = Button(650, 180, 120, 50, violet, "Wskazówka", 25)
         button_hint.show()
         button_hint.backlight(mouse)
 
@@ -217,18 +217,18 @@ def gameloop(g):
         if is_show == True:
             g.board.print_bridge(g.board.list_bridge)
 
-        if button_save.isClicked(mouse):
+        if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
             b = datetime.datetime.now()
             d = b - a
             fname = str(d.seconds)
             position = (700, 450)
-            textDisplay("Zapisano do pliku", 30, dark_violet, position)
+            text_display("Zapisano do pliku", 30, dark_violet, position)
             pygame.display.update()
             pygame.image.save(sub, "generated_boards/" + fname + ".png")
-        if button_solve.isClicked(mouse):
+        if button_solve.is_clicked(mouse):
             is_show = True
-        if button_hint.isClicked(mouse) and g.number_of_hints < 3:
+        if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
             is_hint = True
             g.number_of_hints += 1
             bridge.append(g.random_bridge())
@@ -255,21 +255,21 @@ def menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        gameDisplay.blit(image, (0, 0))
+        game_display.blit(image, (0, 0))
         position = ((width / 2), (height / 3))
-        textDisplay("Hashi", 70, dark_violet, position)
+        text_display("Hashi", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
-        button_play = Button(350, 250, 100, 50, violet, "Graj", 30, 0)
+        button_play = Button(350, 250, 100, 50, violet, "Graj", 30)
         button_play.show()
         button_play.backlight(mouse)
-        button_instruction = Button(350, 350, 100, 50, violet, "Instrukcja", 30, 1)
+        button_instruction = Button(350, 350, 100, 50, violet, "Instrukcja", 30)
         button_instruction.show()
         button_instruction.backlight(mouse)
 
-        if (button_instruction.isClicked(mouse)):
+        if (button_instruction.is_clicked(mouse)):
             os.startfile("Instruction.txt")
 
-        if (button_play.isClicked(mouse)):
+        if (button_play.is_clicked(mouse)):
             kind_of_game()
 
         pygame.display.update()
@@ -303,10 +303,10 @@ def check(z, g):
                 z[0].conections -= 1
                 z[1].conections -= 1
                 g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 2))
-                z[0].addBridge(z[1], 2)
+                z[0].add_bridge(z[1], 2)
             if w[0] is False:
                 g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
-                z[0].addBridge(z[1], 1)
+                z[0].add_bridge(z[1], 1)
             if s[0]:
                 g.board.user_list_bridge.remove(g.board.user_list_bridge[s[1]])
                 z[0].conections -= 2

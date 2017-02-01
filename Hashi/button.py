@@ -2,7 +2,17 @@ from Hashi.display import *
 
 
 class Button:
-    def __init__(self, xleft, yleft, width, height, color, text, size_of_letters, i):
+    def __init__(self, xleft, yleft, width, height, color, text, size_of_letters):
+        """
+
+        :param xleft: x position
+        :param yleft: y position
+        :param width: weight of button
+        :param height: height of button
+        :param color: color of button
+        :param text: text which is on the button
+        :param size_of_letters: size_of letter
+        """
         self.x = xleft
         self.y = yleft
         self.w = width
@@ -10,17 +20,16 @@ class Button:
         self.color = color
         self.text = text
         self.size = size_of_letters
-        self.is_clicked = False
-        self.position = i
+        self.position_of_text = (0, 0)
 
     def show(self):
         """
         This function is responsible to show button on the screen
         :return:
         """
-        pygame.draw.rect(gameDisplay, self.color, (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(game_display, self.color, (self.x, self.y, self.w, self.h))
         self.position_of_text = ((self.x + (self.w / 2)), (self.y + (self.h / 2)))
-        textDisplay(self.text, self.size, dark_violet, self.position_of_text)
+        text_display(self.text, self.size, dark_violet, self.position_of_text)
 
     def change_color(self, color):
         """
@@ -40,7 +49,7 @@ class Button:
             self.change_color(bright_violet)
             self.show()
 
-    def isClicked(self, mouse):
+    def is_clicked(self, mouse):
         """
         This function says if button is clicked. Peek of the queue is checked
         :param mouse: position of mouse

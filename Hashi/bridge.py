@@ -21,17 +21,17 @@ class Bridge:
         """
         if self.circle1.x == self.circle2.x:
             if self.circle1.y > self.circle2.y:
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x, self.circle1.y - self.circle1.r),
+                pygame.draw.line(game_display, self.color, (self.circle1.x, self.circle1.y - self.circle1.r),
                                  (self.circle2.x, self.circle2.y + self.circle2.r))
             else:
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x, self.circle2.y - self.circle2.r),
+                pygame.draw.line(game_display, self.color, (self.circle2.x, self.circle2.y - self.circle2.r),
                                  (self.circle1.x, self.circle1.y + self.circle1.r))
         if self.circle1.y == self.circle2.y:
             if self.circle1.x > self.circle2.x:
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x - self.circle1.r, self.circle1.y),
+                pygame.draw.line(game_display, self.color, (self.circle1.x - self.circle1.r, self.circle1.y),
                                  (self.circle2.x + self.circle2.r, self.circle2.y))
             else:
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x - self.circle2.r, self.circle2.y),
+                pygame.draw.line(game_display, self.color, (self.circle2.x - self.circle2.r, self.circle2.y),
                                  (self.circle1.x + self.circle1.r, self.circle1.y))
 
     def show_more(self):
@@ -40,24 +40,23 @@ class Bridge:
         """
         if self.circle1.x == self.circle2.x:
             if self.circle1.y > self.circle2.y:
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x - 10, self.circle1.y - self.circle1.r),
+                pygame.draw.line(game_display, self.color, (self.circle1.x - 10, self.circle1.y - self.circle1.r),
                                  (self.circle2.x - 10, self.circle2.y + self.circle2.r))
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x + 10, self.circle1.y - self.circle1.r),
+                pygame.draw.line(game_display, self.color, (self.circle1.x + 10, self.circle1.y - self.circle1.r),
                                  (self.circle2.x + 10, self.circle2.y + self.circle2.r))
             else:
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x - 10, self.circle2.y - self.circle2.r),
+                pygame.draw.line(game_display, self.color, (self.circle2.x - 10, self.circle2.y - self.circle2.r),
                                  (self.circle1.x - 10, self.circle1.y + self.circle1.r))
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x + 10, self.circle2.y - self.circle2.r),
+                pygame.draw.line(game_display, self.color, (self.circle2.x + 10, self.circle2.y - self.circle2.r),
                                  (self.circle1.x + 10, self.circle1.y + self.circle1.r))
         if self.circle1.y == self.circle2.y:
             if self.circle1.x > self.circle2.x:
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x - self.circle1.r, self.circle1.y - 10),
+                pygame.draw.line(game_display, self.color, (self.circle1.x - self.circle1.r, self.circle1.y - 10),
                                  (self.circle2.x + self.circle2.r, self.circle2.y - 10))
-                pygame.draw.line(gameDisplay, self.color, (self.circle1.x - self.circle1.r, self.circle1.y + 10),
+                pygame.draw.line(game_display, self.color, (self.circle1.x - self.circle1.r, self.circle1.y + 10),
                                  (self.circle2.x + self.circle2.r, self.circle2.y + 10))
             else:
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x - self.circle2.r, self.circle2.y - 10),
+                pygame.draw.line(game_display, self.color, (self.circle2.x - self.circle2.r, self.circle2.y - 10),
                                  (self.circle1.x + self.circle1.r, self.circle1.y - 10))
-                pygame.draw.line(gameDisplay, self.color, (self.circle2.x - self.circle2.r, self.circle2.y + 10),
+                pygame.draw.line(game_display, self.color, (self.circle2.x - self.circle2.r, self.circle2.y + 10),
                                  (self.circle1.x + self.circle1.r, self.circle1.y + 10))
-
