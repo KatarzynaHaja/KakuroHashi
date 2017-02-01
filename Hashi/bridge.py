@@ -60,3 +60,4 @@ class Bridge:
                                  (self.circle1.x + self.circle1.r, self.circle1.y - 10))
                 pygame.draw.line(gameDisplay, self.color, (self.circle2.x - self.circle2.r, self.circle2.y + 10),
                                  (self.circle1.x + self.circle1.r, self.circle1.y + 10))
+

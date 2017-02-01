@@ -8,6 +8,7 @@ from Hashi.game import *
 import os
 import random
 import datetime
+
 pygame.init()
 from Hashi.bridge import *
 
@@ -68,7 +69,7 @@ def choose_level(type):
         button_hard = Button(350, 390, 100, 50, violet, "trudny", 30, 1)
         button_hard.show()
         button_hard.backlight(mouse)
-        if type =='m':
+        if type == 'm':
             if button_easy.isClicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
@@ -95,7 +96,7 @@ def choose_level(type):
                 g.board.set_close_neighbors()
                 g.board.set_bridges()
                 gameloop(g)
-        if type =='c':
+        if type == 'c':
             if button_easy.isClicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
@@ -128,6 +129,7 @@ def choose_level(type):
 
         pygame.display.update()
         clock.tick(15)
+
 
 def is_file(type):
     pygame.display.update()
@@ -177,7 +179,6 @@ def is_file(type):
         clock.tick(15)
 
 
-
 def gameloop(g):
     pygame.display.update()
     clock.tick(15)
@@ -194,8 +195,6 @@ def gameloop(g):
             z = g.board.update(event)
             if z is not None:
                 clicked_list.append(z)
-            print(clicked_list)
-
 
         mouse = pygame.mouse.get_pos()
         gameDisplay.fill(blur_violet)
@@ -213,25 +212,23 @@ def gameloop(g):
 
         g.board.generate_board()
 
-        check(clicked_list,g)
+        check(clicked_list, g)
         g.board.print_bridge(g.board.user_list_bridge)
-        if is_show ==True:
+        if is_show == True:
             g.board.print_bridge(g.board.list_bridge)
-
-
 
         if button_save.isClicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
             b = datetime.datetime.now()
-            d = b-a
+            d = b - a
             fname = str(d.seconds)
             position = (700, 450)
             textDisplay("Zapisano do pliku", 30, dark_violet, position)
             pygame.display.update()
-            pygame.image.save(sub, "generated_boards/"+fname+".png")
+            pygame.image.save(sub, "generated_boards/" + fname + ".png")
         if button_solve.isClicked(mouse):
             is_show = True
-        if button_hint.isClicked(mouse) and g.number_of_hints<3:
+        if button_hint.isClicked(mouse) and g.number_of_hints < 3:
             is_hint = True
             g.number_of_hints += 1
             bridge.append(g.random_bridge())
@@ -242,13 +239,11 @@ def gameloop(g):
                 if i.number == 2:
                     i.show_more()
 
-
-
-
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()
         clock.tick(60)
+
 
 def menu():
     intro = True
@@ -260,7 +255,7 @@ def menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        gameDisplay.blit(image,(0,0))
+        gameDisplay.blit(image, (0, 0))
         position = ((width / 2), (height / 3))
         textDisplay("Hashi", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -274,19 +269,51 @@ def menu():
         if (button_instruction.isClicked(mouse)):
             os.startfile("Instruction.txt")
 
-
-        if(button_play.isClicked(mouse)):
+        if (button_play.isClicked(mouse)):
             kind_of_game()
 
         pygame.display.update()
         clock.tick(15)
 
-def check(z,g):
+
+def is_in(l, source, dest):
+    for b in l:
+        if ((b.circle1 == source and b.circle2 == dest) or (b.circle1 == dest and b.circle2 == source)):
+            return True, int(l.index(b))
+
+    return False, 0
+
+
+def if_remove(l, source, dest):
+    for b in l:
+        if ((b.circle1 == source and b.circle2 == dest) or (
+                        b.circle1 == dest and b.circle2 == source)) and b.number == 2:
+            return True, int(l.index(b))
+
+    return False, 0
+
+
+def check(z, g):
     if len(z) == 2:
         if z[0] in z[1].close_neighbors:
-          g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
-          z[0].addBridge(z[1], 1)
-          z.clear()
-    
+            w = is_in(g.board.user_list_bridge, z[0], z[1])
+            s = if_remove(g.board.user_list_bridge, z[0], z[1])
+            if w[0]:
+                g.board.user_list_bridge.remove(g.board.user_list_bridge[w[1]])
+                z[0].conections -= 1
+                z[1].conections -= 1
+                g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 2))
+                z[0].addBridge(z[1], 2)
+            if w[0] is False:
+                g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
+                z[0].addBridge(z[1], 1)
+            if s[0]:
+                g.board.user_list_bridge.remove(g.board.user_list_bridge[s[1]])
+                z[0].conections -= 2
+                z[1].conections -= 2
+            print(len(g.board.user_list_bridge))
+
+        z.clear()
+
 
 menu()
