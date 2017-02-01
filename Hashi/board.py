@@ -3,7 +3,7 @@ from Hashi.circle import Circle
 from Hashi.settings import *
 from operator import attrgetter
 from Hashi.bridge import Bridge
-from Hashi.recognize import recognize
+from Hashi.recognize import *
 from Hashi.solver import solver
 import copy
 
@@ -20,7 +20,7 @@ class Board():
         self.user_list_bridge = list()
 
     def generate_by_reconition(self):
-        self.recognition = recognize()
+        self.recognition = which_file()
         self.list_circle = copy.deepcopy(self.recognition)
 
     def generate_default_board(self):
@@ -103,8 +103,7 @@ class Board():
                         value = random.randint(0, 2)
                     self.list_circle[i].value += value
                     self.list_circle[i].close_neighbors[j].value += value
-                    self.list_bridge.append(
-                        Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], violet, value))
+                    self.list_bridge.append(Bridge(self.list_circle[i], self.list_circle[i].close_neighbors[j], violet, value))
             if self.list_circle[i].value == 0:
                 for j in range(len(self.list_circle[i].close_neighbors)):
                     value = random.randint(1, 2)

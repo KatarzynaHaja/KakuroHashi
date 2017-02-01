@@ -32,10 +32,10 @@ def kind_of_game():
         button_myself.backlight(mouse)
 
         if button_computer.isClicked(mouse):
-            choose_level('c')
+            is_file('c')
 
         if button_myself.isClicked(mouse):
-            choose_level('m')
+            is_file('m')
 
         pygame.display.update()
         clock.tick(15)
@@ -105,20 +105,74 @@ def choose_level(type):
 
             if button_medium.isClicked(mouse):
                 g = Game('midi')
-                g.board.generate_by_reconition()
+                g.board.generate_default_board()
+                g.board.random_board()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
+                g.board.set_bridges()
+                g.board.solve()
                 gameloop(g)
 
             if button_hard.isClicked(mouse):
                 g = Game('hard')
+                g.board.generate_default_board()
+                g.board.random_board()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.set_bridges()
+                g.board.solve()
+                gameloop(g)
+
+        pygame.display.update()
+        clock.tick(15)
+
+def is_file(type):
+    pygame.display.update()
+    clock.tick(15)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.event.post(event)
+
+        gameDisplay.blit(image, (0, 0))
+        position = ((width / 2), (height / 3))
+        textDisplay("Czy chcesz wczytać z pliku", 70, dark_violet, position)
+        mouse = pygame.mouse.get_pos()
+        button_yes = Button(350, 250, 100, 50, violet, "TAK", 30, 0)
+        button_yes.show()
+        button_yes.backlight(mouse)
+        button_no = Button(350, 350, 100, 50, violet, "NIE", 30, 1)
+        button_no.show()
+        button_no.backlight(mouse)
+
+        if type == 'c':
+            if button_yes.isClicked(mouse):
+                g = Game()
+                g.board.generate_by_reconition()
+                g.board.set_neighbors()
+                g.board.set_close_neighbors()
+                g.board.solve()
+                gameloop(g)
+
+            if button_no.isClicked(mouse):
+                choose_level('c')
+        else:
+            if button_yes.isClicked(mouse):
+                g = Game()
                 g.board.generate_by_reconition()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 gameloop(g)
 
+            if button_no.isClicked(mouse):
+                choose_level('c')
+
         pygame.display.update()
         clock.tick(15)
+
 
 
 def gameloop(g):

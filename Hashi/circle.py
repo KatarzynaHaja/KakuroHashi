@@ -9,7 +9,7 @@ class Circle():
         self.y = y
         self.r = 30
         self.conections=0
-        self.value=0
+        self.value=number
         self.neighbors_x = list()
         self.neighbors_y = list()
         self.neighbors = list()
@@ -39,5 +39,7 @@ class Circle():
     def addBridge(self, secondCircle,value):
         self.conections+=value
         secondCircle.conections += value
+        if(secondCircle.conections == secondCircle.value):
+            secondCircle.is_done = True
 
 

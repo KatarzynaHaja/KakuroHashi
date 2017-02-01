@@ -5,7 +5,7 @@ import random
 
 
 class Game():
-    def __init__(self, s):
+    def __init__(self, s='easy'):
         self.level = self.set_level(s)
         self.randomize = Randomize(self.level)
         self.number_of_circle = self.randomize.set_number_of_circle()
