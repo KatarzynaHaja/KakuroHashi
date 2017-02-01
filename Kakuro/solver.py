@@ -1,39 +1,37 @@
-import random
-from pygame import font
-from Kakuro.node import *
-from Kakuro.button import *
-from Kakuro.settings import *
-from Kakuro.sumofcolumn import *
 from Kakuro.board import *
 import copy
-import operator
 import itertools
 
 
 class Solver:
-    def __init__(self):
+    def __init__(self, board):
         pygame.init()
-        self.board = Board()
-        self.list_of_all = list()
+        self.board = board
         self.count = 0
         self.number_of_possibilities_columns = dict()
         self.number_of_possibilities_rows = dict()
+        self.list_of_all = list()
 
     def factorise(self, number, count):
+        """
+        Function makes a list of all factorisations with permutations
+        :param number: number which we want to factorise
+        :param count: number of factors on which we want to factorise
+        :return:
+        """
         self.list_of_all = list()
         available_numbers = list(range(1, 10))
         self.count = count
         self.factor(number, count, 9, available_numbers)
         print("wyswietlam liste")
         list1 = copy.copy(self.list_of_all)
-        self.list_of_all = list()
         print(list1)
         for elem in list1:
             for permutation in itertools.permutations(elem):
                 self.list_of_all.append(list(permutation))
         print("lista wszystkiego")
         print(self.list_of_all)
-        return self.list_of_all
+        return
 
     def factor(self, number, count, start, available_numbers):
         if count == 1:
@@ -70,78 +68,46 @@ class Solver:
                             lista.append(l)
         return lista
 
-    def all(self):
-        gameDisplay.fill(white)
-        self.board.generate(4)
-        self.big_list = list()
+    def solve(self):
+        """
+        Function
+        :return:
+        """
+        print("dzialam")
         for c in self.board.columns.keys():
             value = self.board.columns[c]
-            print(value.sum.number)
-            value.factors = self.factorise(value.sum.number, len(value.column))
-            self.big_list.append(value.factors)
-            #self.number_of_possibilities_columns[c] = len(value.factors)
-        for c in self.board.rows.keys():
-            value = self.board.rows[c]
-            print(value.sum.number)
-            value.factors = self.factorise(value.sum.number, len(value.column))
-            #self.number_of_possibilities_rows[c] = len(value.factors)
-        print("alo")
-        lista = [self.board.columns[x].factors for x in self.board.columns.keys()]
-        #self.all = list(itertools.product(*[self.board.columns[x].factors for x in self.board.columns.keys()]))
-        #print("sciapana")
-        #print(self.all)
-        #print("tyle jest kombinacji", len(self.all))
-        while True:
-            gameDisplay.fill(white)
-            self.board.show()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
+            self.factorise(value.sum.number, len(value.column))
+            value.factors = self.list_of_all
+        list_of_columns = [x for x in self.board.columns.keys()]
+        print(list_of_columns)
+        self.recursion(list_of_columns)
+        print("koniec")
+
+    def recursion(self, l):
+        """
+        Recursive function which fills board with next possible values
+        :param l: list of columns which are not filled
+        :return: True - if current solution is correct
+                 False - if current solution is not correct
+        """
+        if l:
             index = 0
-            for e in self.gen(lista):
-                print(e)
-                if self.board.check() != "Wygrana":
-                    column_counter = 0
-                    for key in self.board.columns.keys():
-                        column = self.board.columns[key]
-                        for i in range(0, len(column.column)):
-                            #column.column[i].number = self.all[index][column_counter][i]
-                            column.column[i].number = e[column_counter][i]
-                        column_counter += 1
-                    index += 1
-                    print(index)
-                else:
-                    print("znaleziono")
-                    break
-            print("wyszlam")
-
-            pygame.display.update()
-            clock.tick(60)
-
-    def a(self):
-        print(list(itertools.product([[1,2],[3,4]],[[5],[6,7]])))
-
-    def gen(self, lista):
-        for e in list(itertools.product(*lista)):
-            yield e
-
-    def p(self, *args):
-        pools = [tuple(pool) for pool in args]
-        result = [[]]
-        for pool in pools:
-            result = [x + [y] for x in result for y in pool]
-            print(result)
-        #for prod in result:
-            #print(tuple(prod))
-
-    def test(self):
-        self.p('ABC','xyz')
-        print("halo")
-
-
-
-
-s = Solver()
-#s.solve()
-s.test()
+            while index < len(self.board.columns[l[0]].factors):
+                column = self.board.columns[l[0]]
+                print("jestem w kolumnie ", l[0], "i wpisuje liczby")
+                for i in range(0, len(column.column)):
+                    column.column[i].number = self.board.columns[l[0]].factors[index][i]
+                print("ududu")
+                for i in range(0, len(column.column)):
+                    print(self.board.columns[l[0]].column[i].number)
+                if self.board.check_partial():
+                    if self.recursion(l[1::]):
+                        return True
+                print("NIEEE")
+                index += 1
+            if index == len(self.board.columns[l[0]].factors):
+                for i in range(0, len(column.column)):
+                    column.column[i].number = ""
+                return False
+        else:
+            return True

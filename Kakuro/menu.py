@@ -9,6 +9,7 @@ from Kakuro.board import *
 import os
 from datetime import datetime
 import datetime
+from Kakuro.solver import *
 
 
 class Game:
@@ -31,8 +32,6 @@ class Game:
             button_hint.show()
             button_save = Button(500, 200, 100, 50, green, "Zapisz plansze", 30)
             button_save.show()
-            print("KOLUMNA", self.board.find_nearest_column(5, 5))
-            print("WIERSZ", self.board.find_nearest_row(5, 5))
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
                 if button_check.is_clicked(mouse):
@@ -139,6 +138,13 @@ class Game:
         while True:
             gameDisplay.fill(white)
             self.board.show()
+            button_solve = Button(500, 300, 100, 50, green, "Rozwiąż", 30)
+            button_solve.show()
+            mouse = pygame.mouse.get_pos()
+            if button_solve.backlight(mouse):
+                if button_solve.is_clicked(mouse):
+                    solver = Solver(self.board)
+                    solver.solve()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

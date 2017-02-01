@@ -15,7 +15,7 @@ class Column:
         self.current_factorisation = 0
         self.index_of_factorisation = 0
 
-    def add(self, number, direction):      # v - pionowy    h - poziomy
+    def add(self, number, direction='v'):      # v - pionowy    h - poziomy
         if isinstance(number, int):
             print(number)
             if direction == 'v':
@@ -49,6 +49,24 @@ class Column:
         if s == self.sum.number and sorted(set_list) == sorted(new_list):
             return True
         else:
+            return False
+
+    def check_partial(self):
+        s = 0
+        new_list = list()
+        for c in self.column:
+            if c.number != "":
+                s += int(c.number)
+                new_list.append(int(c.number))
+        set_list = set(new_list)
+        set_list = list(set_list)
+        print(set_list)
+        print(sorted(new_list))
+        if s <= self.sum.number and sorted(set_list) == sorted(new_list):
+            print("jest ok")
+            return True
+        else:
+            print("nie jest ok")
             return False
 
     def is_filled(self):
