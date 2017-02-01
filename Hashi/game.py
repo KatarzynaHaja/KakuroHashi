@@ -1,7 +1,8 @@
 from Hashi.randomize import Randomize
 from Hashi.board import Board
 import random
-
+from Hashi.bridge import *
+from Hashi.settings import *
 
 
 class Game():
@@ -25,12 +26,15 @@ class Game():
         n = random.choice(self.board.list_bridge)
         return n
 
-    def is_finished(l):
+    def is_finished(self, l):
         finished = False
         for i in l:
-            if i.connections == i.value:
+            if i.conections == i.value:
                 finished = True
             else:
                 return False
         if finished is True:
             return True
+
+    def game(self,clicked_list):
+       pass

@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from docutils.nodes import classifier
+
 from Hashi.button import *
 from Hashi.display import *
 from Hashi.game import *
@@ -7,6 +9,7 @@ import os
 import random
 import datetime
 pygame.init()
+from Hashi.bridge import *
 
 
 def kind_of_game():
@@ -168,7 +171,7 @@ def is_file(type):
                 gameloop(g)
 
             if button_no.isClicked(mouse):
-                choose_level('c')
+                choose_level('m')
 
         pygame.display.update()
         clock.tick(15)
@@ -181,15 +184,18 @@ def gameloop(g):
     is_show = False
     is_hint = False
     bridge = list()
-
+    clicked_list = list()
     while True:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.event.post(event)
+            z = g.board.update(event)
+            if z is not None:
+                clicked_list.append(z)
+            print(clicked_list)
+
 
         mouse = pygame.mouse.get_pos()
         gameDisplay.fill(blur_violet)
@@ -204,7 +210,10 @@ def gameloop(g):
         button_hint = Button(650, 180, 120, 50, violet, "Wskazówka", 25, 1)
         button_hint.show()
         button_hint.backlight(mouse)
+
         g.board.generate_board()
+
+        check(clicked_list,g)
         g.board.print_bridge(g.board.user_list_bridge)
         if is_show ==True:
             g.board.print_bridge(g.board.list_bridge)
@@ -272,5 +281,12 @@ def menu():
         pygame.display.update()
         clock.tick(15)
 
+def check(z,g):
+    if len(z) == 2:
+        if z[0] in z[1].close_neighbors:
+          g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
+          z[0].addBridge(z[1], 1)
+          z.clear()
+    
 
 menu()

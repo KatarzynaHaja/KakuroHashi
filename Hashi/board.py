@@ -26,12 +26,12 @@ class Board():
     def generate_default_board(self):
         for i in range(5):
             for j in range(6):
-                self.board.append(Circle(0, j * 100 + 50, i * 100 + 50))
+                self.board.append(Circle(0, j * 100 + 50, i * 100 + 50, circle_violet))
         return self.board
 
     def generate_board(self):
         for i in self.list_circle:
-            i = Circle(i.value, i.x, i.y)
+            i = Circle(i.value, i.x, i.y, i.color)
             i.show()
 
     def solve(self):
@@ -117,4 +117,14 @@ class Board():
                 l[i].show()
             if l[i].number == 2:
                 l[i].show_more()
+
+
+    def update(self, event):
+        for circle in self.list_circle:
+            z = circle.update(event)
+            if z is not None:
+                return z
+
+
+
 

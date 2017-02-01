@@ -3,6 +3,7 @@ import cv2
 from Hashi.circle import Circle
 from Hashi.folders_display import *
 import re
+from Hashi.settings import *
 
 def which_file():
     z = open_common_dialog()
@@ -47,7 +48,7 @@ def recognize_txt():
             for j, chars in enumerate(l):
                 if chars!='x':
                     print("to jest j",chars)
-                    circle_list.append(Circle(int(chars),j*int(jump_x)+50,i*int(jump_y)+50))
+                    circle_list.append(Circle(int(chars),j*int(jump_x)+50,i*int(jump_y)+50, circle_violet))
         for i in range(len(circle_list)):
             print(circle_list[i].value)
     return circle_list
