@@ -22,7 +22,7 @@ class Game:
 
     def gameloop(self):
         while True:
-            gameDisplay.fill(white)
+            gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
             r = pygame.Rect(0, 0, 450, 500)
             sub = gameDisplay.subsurface(r)
             self.board.show()
@@ -69,7 +69,7 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.event.post(event)
 
-            gameDisplay.blit(image, (0, 0))
+            gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
             position = ((width / 2), (height / 3))
             text_display("Kakuro", 70, black, position)
             mouse = pygame.mouse.get_pos()
@@ -81,7 +81,7 @@ class Game:
             button_create_from_text.show()
             if button_play.backlight(mouse):
                 if button_play.is_clicked(mouse):
-                    gameDisplay.fill(white)
+                    gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
                     self.choose_level()
             if button_instruction.backlight(mouse):
                 if button_instruction.is_clicked(mouse):
@@ -105,7 +105,7 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.event.post(event)
 
-            gameDisplay.blit(image, (0, 0))
+            gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
             position = ((width / 2), (height / 3))
             text_display("Wybierz poziom", 70, black, position)
             mouse = pygame.mouse.get_pos()
@@ -136,7 +136,7 @@ class Game:
 
     def create_board(self):
         while True:
-            gameDisplay.fill(green)
+            game_display.blit(pygame.image.load("background.png"), (0, 0))
             self.board.show()
             button_solve = Button(500, 300, 100, 50, button_green, "Rozwiąż", 30)
             button_solve.show()
