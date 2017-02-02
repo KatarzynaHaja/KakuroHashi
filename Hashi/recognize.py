@@ -54,23 +54,19 @@ def recognize_txt(file):
     Recognition from txt. It scales distance between each pair of circles
     :return: list of circles
     """
-    print("odpalono txt")
     circle_list = list()
     with open(file) as file:
         lines = file.readlines()
-        print(lines)
         lenght_y = len(lines)
         jump_y = 500 / lenght_y
         for i, line in enumerate(lines):
-            print(i)
             line = line.strip('\n')
             l = line.split(";")
             lenght_x = len(l)
             jump_x = 600 / lenght_x
             for j, chars in enumerate(l):
                 if chars != 'x':
-                    print("to jest j", chars)
                     circle_list.append(Circle(int(chars), j * int(jump_x) + 50, i * int(jump_y) + 50, circle_violet))
-        for i in range(len(circle_list)):
-            print(circle_list[i].value)
+        for i in range(4):
+            print(circle_list[i].x , '  ', circle_list[i].y)
     return circle_list

@@ -1,7 +1,5 @@
 import copy
-from Hashi.game import *
-
-from operator import attrgetter
+from Hashi.bridge import *
 
 
 class Solver():
@@ -37,6 +35,8 @@ def clear_all(l):
         i.is_done = False
         i.conections = 0
 
+def solver(circles):
+    pass
 
 def solver(circles):
     list_of_bridge = list()
