@@ -5,7 +5,6 @@ import itertools
 
 class Solver:
     def __init__(self, board):
-        pygame.init()
         self.board = board
         self.count = 0
         self.number_of_possibilities_columns = dict()
@@ -28,8 +27,10 @@ class Solver:
         print(list1)
         for elem in list1:
             for permutation in itertools.permutations(elem):
-                self.list_of_all.append(list(permutation))
+                if list(permutation) != elem:
+                    self.list_of_all.append(list(permutation))
         print("lista wszystkiego")
+        self.list_of_all
         print(self.list_of_all)
         return
 

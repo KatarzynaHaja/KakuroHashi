@@ -6,7 +6,6 @@ class Node:
     def __init__(self, number, left, top):
         self.hidden_number = number
         self.number = ""
-        #self.font = pygame.font.SysFont('Arial', 15)
         self.color = (0, 0, 0)
         self.left = left
         self.top = top
