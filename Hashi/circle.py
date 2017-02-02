@@ -63,7 +63,7 @@ class Circle:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if (pygame.mouse.get_pos()[0] - self.x) ** 2 + (pygame.mouse.get_pos()[1] - self.y) ** 2 <= self.r ** 2:
                 self.is_clicked = True
-                self.change_color(white)
+                self.change_color(max_circle)
                 return self
 
     def update_color(self):

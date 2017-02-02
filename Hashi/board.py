@@ -17,7 +17,7 @@ def sort_circle(l, key):
 
 
 class Board:
-    def __init__(self ,number_of_circle):
+    def __init__(self, number_of_circle):
         """
         :param: how many bridges
         :param number_of_circle: how many circles are on the board

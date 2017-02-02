@@ -25,7 +25,7 @@ def kind_of_game():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(image, (0, 0))
+        game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Wybierz tryb gry", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -56,7 +56,7 @@ def is_again(s):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(image, (0, 0))
+        game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Czy chcesz zagrać ponownie?", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -91,7 +91,7 @@ def choose_level(type):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(image, (0, 0))
+        game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Wybierz poziom", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -174,7 +174,7 @@ def is_file(type):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(image, (0, 0))
+        game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Czy chcesz wczytać z pliku", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -258,7 +258,7 @@ def gameloop(g):
         if is_finished(g.board.list_circle):
             pygame.display.update()
             clock.tick(15)
-            pygame.time.delay(1000)
+            pygame.time.delay(800)
             is_again('m')
 
         if button_save.is_clicked(mouse):
@@ -331,7 +331,7 @@ def gameloop_solver(g):
             print_bridge(g.board.user_list_bridge)
             pygame.display.update()
             clock.tick(15)
-            pygame.time.delay(1000)
+            pygame.time.delay(800)
 
         if is_finished(g.board.list_circle):
 
@@ -367,7 +367,7 @@ def menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(image, (0, 0))
+        game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Hashi", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()

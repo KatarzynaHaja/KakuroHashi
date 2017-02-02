@@ -23,7 +23,7 @@ def which_file():
     pattern = re.compile('.*txt')
     pattern1 = re.compile('.*png')
     if re.match(pattern, z):
-        circle = recognize_txt()
+        circle = recognize_txt(z)
     if re.match(pattern1, z):
         circle = recognize()
     return circle
@@ -49,14 +49,13 @@ def recognize():
     return circle_list
 
 
-def recognize_txt():
+def recognize_txt(file):
     """
     Recognition from txt. It scales distance between each pair of circles
     :return: list of circles
     """
     print("odpalono txt")
     circle_list = list()
-    file = 'generated_boards/plansza1.txt'
     with open(file) as file:
         lines = file.readlines()
         print(lines)
