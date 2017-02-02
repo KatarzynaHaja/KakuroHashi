@@ -2,21 +2,20 @@ from Hashi.display import *
 
 
 class Button:
-    def __init__(self, xleft, yleft, width, height, color, text, size_of_letters):
+    def __init__(self, x_left, y_left, w, h, color, text, size_of_letters):
         """
-
-        :param xleft: x position
-        :param yleft: y position
-        :param width: weight of button
-        :param height: height of button
+        :param x_left: x position
+        :param y_left: y position
+        :param w: weight of button
+        :param h: height of button
         :param color: color of button
         :param text: text which is on the button
-        :param size_of_letters: size_of letter
+        :param size_of_letters: size of letter
         """
-        self.x = xleft
-        self.y = yleft
-        self.w = width
-        self.h = height
+        self.x = x_left
+        self.y = y_left
+        self.w = w
+        self.h = h
         self.color = color
         self.text = text
         self.size = size_of_letters
@@ -35,7 +34,6 @@ class Button:
         """
         This method change a color of button
         :param color: name of color
-        :return:
         """
         self.color = color
 
@@ -43,7 +41,6 @@ class Button:
         """
         This method highlight button when position of mouse is in button, square
         :param mouse:Position of mouse
-        :return:
         """
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
             self.change_color(bright_violet)

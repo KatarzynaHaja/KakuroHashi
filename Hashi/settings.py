@@ -3,8 +3,9 @@ import pygame
 size = width, height = 800, 500
 game_display = pygame.display.set_mode(size)
 pygame.display.set_caption('Hashi')
-
+# background
 image = pygame.image.load("background.png")
+# colors
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (200, 0, 0)

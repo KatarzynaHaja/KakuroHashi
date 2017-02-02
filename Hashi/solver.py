@@ -1,6 +1,3 @@
-from Hashi.circle import Circle
-from Hashi.settings import *
-from Hashi.bridge import Bridge
 import copy
 from Hashi.game import *
 
@@ -8,19 +5,8 @@ from operator import attrgetter
 
 
 class Solver():
-    def __init__(self, g):
+    def __init__(self):
         self.list_of_bridge = list()
-
-
-def is_finished(l):
-    finished = False
-    for i in l:
-        if i.conections == i.value:
-            finished = True
-        else:
-            return False
-    if finished is True:
-        return True
 
 
 def diff(x, y):
@@ -113,19 +99,19 @@ def solver(circles):
                             sort_value(ready(circle[j].close_neighbors))[z].conections >= 2:
                         list_of_bridge.append(
                             Bridge(circle[j], sort_value(ready(circle[j].close_neighbors))[z], violet, 2))
-                        circle[j].addBridge(sort_value(ready(circle[j].close_neighbors))[z], 2)
+                        circle[j].add_bridge(sort_value(ready(circle[j].close_neighbors))[z], 2)
                         diff -= 2
                     else:
                         list_of_bridge.append(
                             Bridge(circle[j], sort_value(ready(circle[j].close_neighbors))[z], violet, 1))
-                        circle[j].addBridge(sort_value(ready(circle[j].close_neighbors))[z], 1)
+                        circle[j].add_bridge(sort_value(ready(circle[j].close_neighbors))[z], 1)
 
                         diff -= 1
                     z += 1
             if iter == 1:
                 for i in range(len(ready(circle[j].close_neighbors))):
                     list_of_bridge.append(Bridge(circle[j], ready(circle[j].close_neighbors)[i], violet, 1))
-                    circle[j].addBridge((ready(circle[j].close_neighbors))[i], 1)
+                    circle[j].add_bridge((ready(circle[j].close_neighbors))[i], 1)
 
             print("tyle samo sasiadow co wartosc")
             if diff <= 0:
@@ -134,7 +120,7 @@ def solver(circles):
         if diff > 0 and diff % 2 == 0 and diff == len(ready(circle[j].close_neighbors)) * 2:
             for z in range(len(ready(circle[j].close_neighbors))):
                 list_of_bridge.append(Bridge(circle[j], ready(circle[j].close_neighbors)[z], violet, 2))
-                circle[j].addBridge(ready(circle[j].close_neighbors)[z], 2)
+                circle[j].add_bridge(ready(circle[j].close_neighbors)[z], 2)
 
             print("podwojne mosty")
             diff = circle[j].value - circle[j].conections
@@ -143,7 +129,7 @@ def solver(circles):
                 circle[j].is_done = True
         if diff > 0 and len(ready(circle[j].close_neighbors)) == 1:
             list_of_bridge.append(Bridge(circle[j], ready(circle[j].close_neighbors)[0], violet, diff))
-            circle[j].addBridge(ready(circle[j].close_neighbors)[0], diff)
+            circle[j].add_bridge(ready(circle[j].close_neighbors)[0], diff)
 
             print("tylko jedne sasiad")
             diff = circle[j].value - circle[j].conections

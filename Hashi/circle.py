@@ -12,7 +12,6 @@ class Circle:
         :param color: color of circle
         """
         self.number = number
-        # self.bridges = list()
         self.x = x
         self.y = y
         self.r = 30
@@ -55,11 +54,6 @@ class Circle:
         if second_circle.conections == second_circle.value:
             second_circle.is_done = True
 
-    # def backlight(self,mouse):
-    #     if (mouse[0] - self.x)**2 + (mouse[1]-self.y)**2 > self.r:
-    #         self.change_color(red)
-    #         self.show()
-
     def update(self, event):
         """
         This method update color of circle.  If it is clicked (event == MOUSEBUTTONDOWN) it changes color
@@ -69,5 +63,12 @@ class Circle:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if (pygame.mouse.get_pos()[0] - self.x) ** 2 + (pygame.mouse.get_pos()[1] - self.y) ** 2 <= self.r ** 2:
                 self.is_clicked = True
-                self.change_color(red)
+                self.change_color(white)
                 return self
+
+    def update_color(self):
+        """
+        It updates color when circle has all bridges
+        """
+        if self.conections == self.value:
+            self.change_color(white)
