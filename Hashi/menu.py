@@ -11,6 +11,7 @@ import datetime
 
 pygame.init()
 from Hashi.bridge import *
+import copy
 
 
 def kind_of_game():
@@ -43,6 +44,40 @@ def kind_of_game():
 
         pygame.display.update()
         clock.tick(15)
+
+def is_again(s):
+    pygame.display.update()
+    clock.tick(15)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.event.post(event)
+
+        game_display.blit(image, (0, 0))
+        position = ((width / 2), (height / 3))
+        text_display("Czy chcesz zagrać ponownie?", 70, dark_violet, position)
+        mouse = pygame.mouse.get_pos()
+        button_yes = Button(350, 250, 100, 50, violet, "tak", 30)
+        button_yes.show()
+        button_yes.backlight(mouse)
+        button_no = Button(350, 350, 100, 50, violet, "nie", 30)
+        button_no.show()
+        button_no.backlight(mouse)
+
+        if button_yes.is_clicked(mouse):
+            choose_level(s)
+
+        pygame.display.update()
+        clock.tick(15)
+
+        if button_no.is_clicked(mouse):
+            pygame.quit()
+            quit()
+
+
 
 
 def choose_level(type):
@@ -104,8 +139,7 @@ def choose_level(type):
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 g.board.set_bridges()
-                g.board.solve()
-                gameloop(g)
+                gameloop_solver(g)
 
             if button_medium.is_clicked(mouse):
                 g = Game('midi')
@@ -114,8 +148,7 @@ def choose_level(type):
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 g.board.set_bridges()
-                g.board.solve()
-                gameloop(g)
+                gameloop_solver(g)
 
             if button_hard.is_clicked(mouse):
                 g = Game('hard')
@@ -124,8 +157,7 @@ def choose_level(type):
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 g.board.set_bridges()
-                g.board.solve()
-                gameloop(g)
+                gameloop_solver(g)
 
         pygame.display.update()
         clock.tick(15)
@@ -156,18 +188,17 @@ def is_file(type):
         if type == 'c':
             if button_yes.is_clicked(mouse):
                 g = Game()
-                g.board.generate_by_reconition()
+                g.board.generate_by_recognition()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
-                g.board.solve()
-                gameloop(g)
+                gameloop_solver(g)
 
             if button_no.is_clicked(mouse):
                 choose_level('c')
         else:
             if button_yes.is_clicked(mouse):
                 g = Game()
-                g.board.generate_by_reconition()
+                g.board.generate_by_recognition()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
                 gameloop(g)
@@ -209,13 +240,103 @@ def gameloop(g):
         button_hint = Button(650, 180, 120, 50, violet, "Wskazówka", 25)
         button_hint.show()
         button_hint.backlight(mouse)
+        button_clear = Button(650, 80, 120, 50, violet, "Wyczyść", 25)
+        button_clear.show()
+        button_clear.backlight(mouse)
+
+        g.board.generate_board()
+        check(clicked_list, g)
+        print_bridge(g.board.user_list_bridge)
+
+
+        if is_show == True:
+            g.board.user_list_bridge.clear()
+            print_bridge(g.board.user_list_bridge)
+            print_bridge(g.board.list_bridge)
+
+
+        if is_finished(g.board.list_circle):
+            pygame.display.update()
+            clock.tick(15)
+            pygame.time.delay(1000)
+            is_again('m')
+
+        if button_save.is_clicked(mouse):
+            a = datetime.datetime(2013, 12, 30, 23, 59, 59)
+            b = datetime.datetime.now()
+            d = b - a
+            fname = str(d.seconds)
+            position = (700, 450)
+            text_display("Zapisano do pliku", 30, dark_violet, position)
+            pygame.display.update()
+            pygame.image.save(sub, "generated_boards/" + fname + ".png")
+
+        if button_solve.is_clicked(mouse):
+            is_show = True
+            show_solution(g.board.list_circle)
+
+
+        if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
+            is_hint = True
+            g.number_of_hints += 1
+            bridge.append(g.random_bridge())
+
+        if is_hint == True:
+            for i in bridge:
+                if i.number == 1:
+                    i.show()
+                if i.number == 2:
+                    i.show_more()
+        if button_clear.is_clicked(mouse):
+           clear_bridges(g.board.user_list_bridge)
+           g.board.user_list_bridge.clear()
+
+
+        pygame.display.update()
+        clock.tick(15)
+        pygame.display.update()
+        clock.tick(60)
+
+def gameloop_solver(g):
+    pygame.display.update()
+    clock.tick(15)
+    bridge = list()
+    is_show = False
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+
+        mouse = pygame.mouse.get_pos()
+        game_display.fill(blur_violet)
+        r = pygame.Rect(0, 0, 600, 500)
+        sub = game_display.subsurface(r)
+        button_save = Button(650, 380, 120, 50, violet, "Zapisz", 25)
+        button_save.show()
+        button_save.backlight(mouse)
+        button_solve = Button(650, 280, 120, 50, violet, "Rozwiąż", 25)
+        button_solve.show()
+        button_solve.backlight(mouse)
 
         g.board.generate_board()
 
-        check(clicked_list, g)
-        g.board.print_bridge(g.board.user_list_bridge)
+        if button_solve.is_clicked(mouse):
+            g.board.solve()
+            is_show = True
+
         if is_show == True:
-            g.board.print_bridge(g.board.list_bridge)
+            print_bridge(g.board.user_list_bridge)
+            pygame.display.update()
+            clock.tick(15)
+            pygame.time.delay(1000)
+
+        if is_finished(g.board.list_circle):
+
+            is_again('c')
+
 
         if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
@@ -228,16 +349,7 @@ def gameloop(g):
             pygame.image.save(sub, "generated_boards/" + fname + ".png")
         if button_solve.is_clicked(mouse):
             is_show = True
-        if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
-            is_hint = True
-            g.number_of_hints += 1
-            bridge.append(g.random_bridge())
-        if is_hint == True:
-            for i in bridge:
-                if i.number == 1:
-                    i.show()
-                if i.number == 2:
-                    i.show_more()
+
 
         pygame.display.update()
         clock.tick(15)
@@ -276,44 +388,6 @@ def menu():
         clock.tick(15)
 
 
-def is_in(l, source, dest):
-    for b in l:
-        if ((b.circle1 == source and b.circle2 == dest) or (b.circle1 == dest and b.circle2 == source)):
-            return True, int(l.index(b))
-
-    return False, 0
-
-
-def if_remove(l, source, dest):
-    for b in l:
-        if ((b.circle1 == source and b.circle2 == dest) or (
-                        b.circle1 == dest and b.circle2 == source)) and b.number == 2:
-            return True, int(l.index(b))
-
-    return False, 0
-
-
-def check(z, g):
-    if len(z) == 2:
-        if z[0] in z[1].close_neighbors:
-            w = is_in(g.board.user_list_bridge, z[0], z[1])
-            s = if_remove(g.board.user_list_bridge, z[0], z[1])
-            if w[0]:
-                g.board.user_list_bridge.remove(g.board.user_list_bridge[w[1]])
-                z[0].conections -= 1
-                z[1].conections -= 1
-                g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 2))
-                z[0].add_bridge(z[1], 2)
-            if w[0] is False:
-                g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
-                z[0].add_bridge(z[1], 1)
-            if s[0]:
-                g.board.user_list_bridge.remove(g.board.user_list_bridge[s[1]])
-                z[0].conections -= 2
-                z[1].conections -= 2
-            print(len(g.board.user_list_bridge))
-
-        z.clear()
 
 
 menu()
