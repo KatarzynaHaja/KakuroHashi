@@ -9,7 +9,7 @@ import copy
 def sort_circle(l, key):
     """
     :param l: list which should be sorted
-    :param key: which walue is key of sorting
+    :param key: which value is key of sorting
     :return:list of sorted circle
     """
     list_circle = sorted(l, key=attrgetter(key))
