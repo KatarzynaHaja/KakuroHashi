@@ -7,6 +7,7 @@ pygame.display.set_caption('Hashi')
 image = pygame.image.load("background.png")
 # colors
 white = (255, 255, 255)
+max_circle =(220,227,245)
 black = (0, 0, 0)
 red = (200, 0, 0)
 green = (0, 200, 0)

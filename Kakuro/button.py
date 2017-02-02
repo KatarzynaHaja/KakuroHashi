@@ -24,7 +24,7 @@ class Button:
 
     def backlight(self, mouse):
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
-            self.change_color(bright_green)
+            self.change_color(highlight_green)
             self.show()
             return True
         else:

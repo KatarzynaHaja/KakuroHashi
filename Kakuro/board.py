@@ -64,6 +64,7 @@ class Board:
             return ""
 
     def show(self):
+        gameDisplay.fill(back_green)
         for column in self.columns.values():
             column.show()
         for row in self.rows.values():

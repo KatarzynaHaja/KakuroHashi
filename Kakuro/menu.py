@@ -26,11 +26,11 @@ class Game:
             r = pygame.Rect(0, 0, 450, 500)
             sub = gameDisplay.subsurface(r)
             self.board.show()
-            button_check = Button(500, 300, 100, 50, red, "Sprawdz", 30)
+            button_check = Button(650, 380, 120, 50, button_green, "Sprawdz", 25)
             button_check.show()
-            button_hint = Button(500, 400, 100, 50, red, "Hint", 30)
+            button_hint = Button(650, 280, 120, 50, button_green, "Hint", 25)
             button_hint.show()
-            button_save = Button(500, 200, 100, 50, green, "Zapisz plansze", 30)
+            button_save = Button(650, 180, 120, 50, button_green, "Zapisz", 25)
             button_save.show()
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
@@ -69,15 +69,15 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.event.post(event)
 
-            gameDisplay.fill(white)
+            gameDisplay.blit(image, (0, 0))
             position = ((width / 2), (height / 3))
-            text_display("Kakuro", 100, black, position)
+            text_display("Kakuro", 70, black, position)
             mouse = pygame.mouse.get_pos()
-            button_play = Button(350, 300, 100, 50, green, "Graj", 30)
+            button_play = Button(320, 250, 150, 50, button_green, "Graj", 30)
             button_play.show()
-            button_instruction = Button(350, 400, 100, 50, green, "Instrukcja", 30)
+            button_instruction = Button(320, 320, 150, 50, button_green, "Instrukcja", 30)
             button_instruction.show()
-            button_create_from_text = Button(500, 400, 100, 50, green, "Stworz plansze", 30)
+            button_create_from_text = Button(320, 390, 150, 50, button_green, "Stworz plansze", 30)
             button_create_from_text.show()
             if button_play.backlight(mouse):
                 if button_play.is_clicked(mouse):
@@ -105,17 +105,17 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.event.post(event)
 
-            gameDisplay.fill(white)
+            gameDisplay.blit(image, (0, 0))
             position = ((width / 2), (height / 3))
-            text_display("Wybierz poziom", 100, black, position)
+            text_display("Wybierz poziom", 70, black, position)
             mouse = pygame.mouse.get_pos()
-            button_easy = Button(350, 300, 100, 50, green, "Latwy", 30)
+            button_easy = Button(320, 250, 150, 50, button_green, "Latwy", 30)
             button_easy.show()
             button_easy.backlight(mouse)
-            button_medium = Button(350, 380, 100, 50, green, "Średni", 30)
+            button_medium = Button(320, 320, 150, 50, button_green, "Średni", 30)
             button_medium.show()
             button_medium.backlight(mouse)
-            button_hard = Button(350, 460, 100, 50, green, "Trudny", 30)
+            button_hard = Button(320, 390, 150, 50, button_green, "Trudny", 30)
             button_hard.show()
             button_hard.backlight(mouse)
             if button_easy.is_clicked(mouse):
@@ -136,9 +136,9 @@ class Game:
 
     def create_board(self):
         while True:
-            gameDisplay.fill(white)
+            gameDisplay.fill(green)
             self.board.show()
-            button_solve = Button(500, 300, 100, 50, green, "Rozwiąż", 30)
+            button_solve = Button(500, 300, 100, 50, button_green, "Rozwiąż", 30)
             button_solve.show()
             mouse = pygame.mouse.get_pos()
             if button_solve.backlight(mouse):

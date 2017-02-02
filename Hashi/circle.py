@@ -71,4 +71,4 @@ class Circle:
         It updates color when circle has all bridges
         """
         if self.conections == self.value:
-            self.change_color(white)
+            self.change_color(max_circle)
