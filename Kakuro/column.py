@@ -63,10 +63,8 @@ class Column:
         print(set_list)
         print(sorted(new_list))
         if s <= self.sum.number and sorted(set_list) == sorted(new_list):
-            print("jest ok")
             return True
         else:
-            print("nie jest ok")
             return False
 
     def is_filled(self):
