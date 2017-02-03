@@ -107,7 +107,7 @@ class Game:
                     os.startfile("Instruction.txt")
             if button_create_from_text.backlight(mouse):
                 if button_create_from_text.is_clicked(mouse):
-                    self.board.create_board_from_file()
+                    self.board.create_board_from_file(r'C:\Users\Ewunia\Documents\Studia\III rok\Python\KakuroHashi\Kakuro\text_files\test.txt')
                     self.gameloop()
             pygame.display.update()
             clock.tick(15)

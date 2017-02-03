@@ -178,31 +178,23 @@ class Board:
                     return True
         return False
 
-    def create_board_from_file(self):
+    def create_board_from_file(self, file_path):
         """
         Functions creates board from text file
+        :param file_path: path to file where board is
         :return:
         """
-        with open('text_files/2.txt') as file:
+        with open(file_path) as file:
             lines = file.readlines()
             for i, line in enumerate(lines):
-                print(i)
                 line = line.strip('\n')
                 l = line.split(";")
                 l = l[:-1]
-                print(l)
                 counter_of_columns = 0
                 digits = re.compile('\d')
                 for elem in l:
-                    print("klucze")
-                    for key in self.columns.keys():
-                        print("key")
-                    print("elem", elem)
                     if elem != "":
                         if not bool(digits.search(elem)) and i != 0  and counter_of_columns != 0:
-                            print("node")
-                            print("najblizsza kolumna", self.find_nearest_column(i, counter_of_columns))
-                            print("najblizszy wiersz", self.find_nearest_row(i, counter_of_columns))
                             (x, y) = self.find_nearest_column(i, counter_of_columns)
                             column = self.columns[(x, y)]
                             node = column.add(0, 'v')
@@ -218,23 +210,17 @@ class Board:
                                     while j < len(elem) and elem[j] != " ":
                                         number += elem[j]
                                         j += 1
-                                    print(number, "numer")
-                                    print("row or column", row_or_column)
                                     if row_or_column == 0:
-                                        print("alo1")
                                         column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
                                             [100 + 40 * counter_of_columns, 100 + 40 * i],
                                             [140 + 40 * counter_of_columns, 100 + 40 * i], "column", int(number))
                                         self.columns[(i, counter_of_columns)] = column
                                     else:
-                                        print("alo2")
                                         column = Column([60 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)], [100 +
-                                                40 * (counter_of_columns + 1), 100 + 40 * (i - 1)], [100 + 40 *
-                                                (counter_of_columns + 1), 140 + 40 * (i - 1)], "row", int(number))
-                                        print(i, counter_of_columns, "o takim kluczu")
+                                            40 * (counter_of_columns + 1), 100 + 40 * (i - 1)], [100 + 40 *
+                                            (counter_of_columns + 1), 140 + 40 * (i - 1)], "row", int(number))
                                         self.rows[(i, counter_of_columns)] = column
                                 else:
                                     j += 1
                                     row_or_column += 1
-                                    print("row or column", row_or_column)
                     counter_of_columns += 1

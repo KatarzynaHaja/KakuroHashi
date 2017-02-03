@@ -1,4 +1,5 @@
 import unittest
+import os
 from Kakuro.board import *
 
 
@@ -76,10 +77,12 @@ class TestBoard(unittest.TestCase):
         self.assertFalse(self.board.check_partial())
 
     def test_create_board_from_file(self):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        print(dir_path)
         b = Board()
-        b.create_board_from_file()
-        self.assertEquals(b.columns.keys, self.board.columns.keys)
-        self.assertEquals(b.rows.keys, self.board.rows.keys)
+        b.create_board_from_file(os.path.join(os.path.dirname(dir_path), 'text_files', 'test.txt'))
+        self.assertEquals(b.columns.keys(), self.board.columns.keys())
+        self.assertEquals(b.rows.keys(), self.board.rows.keys())
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestBoard)

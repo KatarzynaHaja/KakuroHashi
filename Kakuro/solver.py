@@ -25,16 +25,11 @@ class Solver:
         available_numbers = list(range(1, 10))
         self.count = count
         self.factor(number, count, 9, available_numbers)
-        print("wyswietlam liste")
         list1 = copy.copy(self.list_of_all)
-        #print(list1)
         for elem in list1:
             for permutation in itertools.permutations(elem):
                 if list(permutation) != elem:
                     self.list_of_all.append(list(permutation))
-        #print("lista wszystkiego")
-        self.list_of_all
-        print(self.list_of_all)
         return
 
     def factor(self, number, count, start, available_numbers):
@@ -55,7 +50,7 @@ class Solver:
         else:
             available_numbers_copy = copy.copy(available_numbers)
             l = list()
-            lista = list()
+            result = list()
             for i in reversed(available_numbers_copy):
                 if i <= start and i <= number and i in available_numbers:
                     temp_number = number - i
@@ -75,10 +70,10 @@ class Solver:
                                     self.list_of_all.append(e)
                         if count != 2:
                             for e in l:
-                                lista.append(e)
+                                result.append(e)
                         else:
-                            lista.append(l)
-        return lista
+                            result.append(l)
+        return result
 
     def solve(self):
         """
