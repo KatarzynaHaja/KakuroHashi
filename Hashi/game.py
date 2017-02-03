@@ -93,19 +93,20 @@ def check(z, g):
         if z[0] in z[1].close_neighbors:
             w = is_in(g.board.user_list_bridge, z[0], z[1])
             s = if_remove(g.board.user_list_bridge, z[0], z[1])
-            if w[0]:
+            if s[0]:
+                g.board.user_list_bridge.remove(g.board.user_list_bridge[s[1]])
+                z[0].conections -= 2
+                z[1].conections -= 2
+            elif w[0]:
                 g.board.user_list_bridge.remove(g.board.user_list_bridge[w[1]])
                 z[0].conections -= 1
                 z[1].conections -= 1
                 g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 2))
                 z[0].add_bridge(z[1], 2)
-            if w[0] is False:
+            elif w[0] is False:
                 g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
                 z[0].add_bridge(z[1], 1)
-            if s[0]:
-                g.board.user_list_bridge.remove(g.board.user_list_bridge[s[1]])
-                z[0].conections -= 2
-                z[1].conections -= 2
+
             print(len(g.board.user_list_bridge))
 
         z[0].change_color(circle_violet)

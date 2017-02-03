@@ -248,6 +248,11 @@ def gameloop(g):
         check(clicked_list, g)
         print_bridge(g.board.user_list_bridge)
 
+        if is_finished(g.board.list_circle):
+            pygame.display.update()
+            clock.tick(15)
+            pygame.time.delay(800)
+            is_again('m')
 
         if is_show == True:
             g.board.user_list_bridge.clear()
@@ -255,11 +260,7 @@ def gameloop(g):
             print_bridge(g.board.list_bridge)
 
 
-        if is_finished(g.board.list_circle):
-            pygame.display.update()
-            clock.tick(15)
-            pygame.time.delay(800)
-            is_again('m')
+
 
         if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
