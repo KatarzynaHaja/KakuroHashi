@@ -6,7 +6,7 @@ class Button:
         """
         :param x_left: x position
         :param y_left: y position
-        :param w: weight of button
+        :param w: width of button
         :param h: height of button
         :param color: color of button
         :param text: text which is on the button

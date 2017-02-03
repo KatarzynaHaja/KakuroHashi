@@ -78,8 +78,6 @@ def is_again(s):
             quit()
 
 
-
-
 def choose_level(type):
     pygame.display.update()
     clock.tick(15)

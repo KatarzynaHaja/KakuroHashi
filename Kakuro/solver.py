@@ -5,6 +5,9 @@ import itertools
 
 class Solver:
     def __init__(self, board):
+        """
+        :param board: board which solver will solve
+        """
         self.board = board
         self.count = 0
         self.number_of_possibilities_columns = dict()
@@ -22,19 +25,22 @@ class Solver:
         available_numbers = list(range(1, 10))
         self.count = count
         self.factor(number, count, 9, available_numbers)
-        print("wyswietlam liste")
         list1 = copy.copy(self.list_of_all)
-        print(list1)
         for elem in list1:
             for permutation in itertools.permutations(elem):
                 if list(permutation) != elem:
                     self.list_of_all.append(list(permutation))
-        print("lista wszystkiego")
-        self.list_of_all
-        print(self.list_of_all)
         return
 
     def factor(self, number, count, start, available_numbers):
+        """
+        Function finds all factorisations
+        :param number: number which factors we are searching
+        :param count: number of factors
+        :param start: the biggest factor
+        :param available_numbers: list of available numbers to use
+        :return: list of factorisations
+        """
         if count == 1:
             l = list()
             if number in available_numbers:
@@ -44,7 +50,7 @@ class Solver:
         else:
             available_numbers_copy = copy.copy(available_numbers)
             l = list()
-            lista = list()
+            result = list()
             for i in reversed(available_numbers_copy):
                 if i <= start and i <= number and i in available_numbers:
                     temp_number = number - i
@@ -64,14 +70,14 @@ class Solver:
                                     self.list_of_all.append(e)
                         if count != 2:
                             for e in l:
-                                lista.append(e)
+                                result.append(e)
                         else:
-                            lista.append(l)
-        return lista
+                            result.append(l)
+        return result
 
     def solve(self):
         """
-        Function
+        Function which solves the board
         :return:
         """
         print("dzialam")
@@ -79,9 +85,12 @@ class Solver:
             value = self.board.columns[c]
             self.factorise(value.sum.number, len(value.column))
             value.factors = self.list_of_all
-        list_of_columns = [x for x in self.board.columns.keys()]
-        print(list_of_columns)
-        self.recursion(list_of_columns)
+        list_of_columns = [(x, len(self.board.columns[x].factors)) for x in self.board.columns.keys()]
+        sorted_list = sorted(list_of_columns, key=lambda x: x[1])
+        sorted_list = [x for (x, y) in sorted_list]
+        print("lista posortowana")
+        print(sorted_list)
+        self.recursion(sorted_list)
         print("koniec")
 
     def recursion(self, l):
@@ -95,16 +104,16 @@ class Solver:
             index = 0
             while index < len(self.board.columns[l[0]].factors):
                 column = self.board.columns[l[0]]
-                print("jestem w kolumnie ", l[0], "i wpisuje liczby")
+                #print("jestem w kolumnie ", l[0], "i wpisuje liczby")
                 for i in range(0, len(column.column)):
                     column.column[i].number = self.board.columns[l[0]].factors[index][i]
-                print("ududu")
-                for i in range(0, len(column.column)):
-                    print(self.board.columns[l[0]].column[i].number)
+                #print("ududu")
+                #for i in range(0, len(column.column)):
+                    #print(self.board.columns[l[0]].column[i].number)
                 if self.board.check_partial():
                     if self.recursion(l[1::]):
                         return True
-                print("NIEEE")
+                #print("NIEEE")
                 index += 1
             if index == len(self.board.columns[l[0]].factors):
                 for i in range(0, len(column.column)):

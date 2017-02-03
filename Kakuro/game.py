@@ -21,17 +21,24 @@ class Game:
         self.hints = ""
 
     def gameloop(self):
+        """
+        Function
+        :return:
+        """
+        color_of_solve = button_green
         while True:
             gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
             r = pygame.Rect(0, 0, 450, 500)
             sub = gameDisplay.subsurface(r)
             self.board.show()
-            button_check = Button(650, 380, 120, 50, button_green, "Sprawdz", 25)
+            button_check = Button(650, 380, 120, 50, button_green, "Sprawdź", 25)
             button_check.show()
             button_hint = Button(650, 280, 120, 50, button_green, "Hint", 25)
             button_hint.show()
             button_save = Button(650, 180, 120, 50, button_green, "Zapisz", 25)
             button_save.show()
+            button_solve = Button(650, 80, 120, 50, color_of_solve, "Rozwiąż", 25)
+            button_solve.show()
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
                 if button_check.is_clicked(mouse):
@@ -51,6 +58,15 @@ class Game:
                     text_display("Zapisano do pliku", 30, black, position)
                     pygame.display.update()
                     pygame.image.save(sub, "generated_boards/" + fname + ".png")
+            if self.board.is_filled():
+                color_of_solve = (247, 111, 117)
+                button_solve.change_color(color_of_solve)
+            else:
+                color_of_solve = button_green
+                if button_solve.backlight(mouse):
+                    if button_solve.is_clicked(mouse):
+                        solver = Solver(self.board)
+                        solver.solve()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -60,8 +76,11 @@ class Game:
             clock.tick(60)
 
     def menu(self):
-        intro = True
-        while intro:
+        """
+        Function shows menu
+        :return:
+        """
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -88,8 +107,8 @@ class Game:
                     os.startfile("Instruction.txt")
             if button_create_from_text.backlight(mouse):
                 if button_create_from_text.is_clicked(mouse):
-                    self.board.create_board_from_file()
-                    self.create_board()
+                    self.board.create_board_from_file(r'C:\Users\Ewunia\Documents\Studia\III rok\Python\KakuroHashi\Kakuro\text_files\test.txt')
+                    self.gameloop()
             pygame.display.update()
             clock.tick(15)
 
@@ -97,6 +116,10 @@ class Game:
         self.menu()
 
     def choose_level(self):
+        """
+        Function which lets user choose level
+        :return:
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -133,25 +156,6 @@ class Game:
 
             pygame.display.update()
             clock.tick(15)
-
-    def create_board(self):
-        while True:
-            game_display.blit(pygame.image.load("background.png"), (0, 0))
-            self.board.show()
-            button_solve = Button(500, 300, 100, 50, button_green, "Rozwiąż", 30)
-            button_solve.show()
-            mouse = pygame.mouse.get_pos()
-            if button_solve.backlight(mouse):
-                if button_solve.is_clicked(mouse):
-                    solver = Solver(self.board)
-                    solver.solve()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                self.board.update(event)
-            pygame.display.update()
-            clock.tick(60)
 
 
 game = Game()

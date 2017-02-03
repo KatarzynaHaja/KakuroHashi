@@ -1,6 +1,7 @@
 from Kakuro.column import *
 from random import randint
 import random
+import re
 
 
 class Board:
@@ -12,6 +13,17 @@ class Board:
         self.empty = list()
 
     def generate_column(self, x, y, z, range_from, range_to, id_row, id_column):
+        """
+        Function generates one column
+        :param x: first coordinate of column
+        :param y: second coordinate of column
+        :param z: third coordinate of column
+        :param range_from: the smallest number of nodes in column
+        :param range_to: the bigest number of nodes in column
+        :param id_row: number of row where column begins
+        :param id_column: number of column
+        :return:
+        """
         column = Column(x, y, z, "column")
         self.columns[(id_row, id_column)] = column
         for j in range(range_from, range_to):
@@ -34,6 +46,11 @@ class Board:
                 row.available_numbers.remove(n)
 
     def generate(self, number_of_columns):
+        """
+        Function generates board
+        :param number_of_columns: number of columns that will be in a board
+        :return:
+        """
         self.number_of_columns = number_of_columns
         for i in range(1, self.number_of_columns + 1):
             if i % 2 == 1:
@@ -51,6 +68,10 @@ class Board:
                     self.empty.append((j, i))
 
     def hint(self):
+        """
+        Function chooses random node which is not written by user to show as a hint
+        :return: text which is shown on the screen: message that user used all hints or empty when they did not
+        """
         if self.number_of_hints == 3:
             return "Wykorzystano wszystkie podpowiedzi"
         else:
@@ -64,6 +85,10 @@ class Board:
             return ""
 
     def show(self):
+        """
+        Function displays board
+        :return:
+        """
         gameDisplay.fill(back_green)
         for column in self.columns.values():
             column.show()
@@ -71,10 +96,19 @@ class Board:
             row.show()
 
     def update(self, event):
+        """
+        Functions update board due to event
+        :param event: event sent by user
+        :return:
+        """
         for column in self.columns.values():
             column.update(event)
 
     def check(self):
+        """
+        Function checks if board is correctly filled
+        :return: text which says that: not all nodes are filled or user won or user lost
+        """
         end = True
         for c in self.columns.values():
             if c.is_filled() is False:
@@ -98,18 +132,22 @@ class Board:
                 return "Blad"
 
     def check_partial(self):
-        print("jestem w bordzie")
+        """
+        Function checks if board is filled correctly when not all nodes are filled
+        :return: True or False
+        """
         for key in self.rows.keys():
-            for c in self.rows[key].column:
-                print( c.number )
-                #print("dlugosc", len(c))
-            print("rzad", key)
             if not self.rows[key].check_partial():
-                print("zle")
                 return False
         return True
 
     def find_nearest_column(self, w, k):
+        """
+        Function finds key of nearest column of node
+        :param w: number of row in which node is
+        :param k: number of column in which node is
+        :return: key of column
+        """
         while (w, k) not in self.columns.keys() and w != 0:
             w -= 1
         if w == 0 and (w, k) not in self.columns.keys():
@@ -117,65 +155,72 @@ class Board:
         return w, k
 
     def find_nearest_row(self, w, k):
+        """
+        Function finds key of nearest row of node
+        :param w: number of row in which node is
+        :param k: number of column in which node is
+        :return: key of row
+        """
         while (w, k) not in self.rows.keys() and k != 0:
             k -= 1
         if k == 0 and (w, k) not in self.rows.keys():
             return False
         return w, k
 
-    def create_board_from_file(self):
-        with open('text_files/2.txt') as file:
+    def is_filled(self):
+        """
+        Function checks if any node is filled in board
+        :return: True or False
+        """
+        for c in self.columns.values():
+            for node in c.column:
+                if node.number != "":
+                    return True
+        return False
+
+    def create_board_from_file(self, file_path):
+        """
+        Functions creates board from text file
+        :param file_path: path to file where board is
+        :return:
+        """
+        with open(file_path) as file:
             lines = file.readlines()
-            #print(lines)
             for i, line in enumerate(lines):
-                print(i)
                 line = line.strip('\n')
                 l = line.split(";")
-                print(l)
+                l = l[:-1]
                 counter_of_columns = 0
+                digits = re.compile('\d')
                 for elem in l:
-                    print("elem", elem)
-                    if "P" in elem:
-                        print("node")
-                        print("najblizsza kolumna",self.find_nearest_column(i, counter_of_columns))
-                        print("najblizszy wiersz", self.find_nearest_row(i, counter_of_columns))
-                        (x, y) = self.find_nearest_column(i, counter_of_columns)
-                        column = self.columns[(x, y)]
-                        node = column.add(0, 'v')
-                        row = self.rows[(self.find_nearest_row(i, counter_of_columns))]
-                        row.add(node)
+                    if elem != "":
+                        if not bool(digits.search(elem)) and i != 0  and counter_of_columns != 0:
+                            (x, y) = self.find_nearest_column(i, counter_of_columns)
+                            column = self.columns[(x, y)]
+                            node = column.add(0, 'v')
+                            row = self.rows[(self.find_nearest_row(i, counter_of_columns))]
+                            row.add(node)
 
-                    elif elem != "":
-                        j = 0
-                        row_or_column = 0
-                        while j < len(elem):
-                            if elem[j] != 'x' and elem[j] != " ":
-                                number = ""
-                                while j < len(elem) and elem[j] != " ":
-                                    number += elem[j]
-                                    j += 1
-                                print(number, "numer")
-                                print("row or column", row_or_column)
-                                if row_or_column == 0:
-                                    print("alo1")
-                                    column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
-                                        [100 + 40 * counter_of_columns, 100 + 40 * i],
-                                        [140 + 40 * counter_of_columns, 100 + 40 * i], "column", int(number))
-                                    self.columns[(i, counter_of_columns)] = column
+                        else:
+                            j = 0
+                            row_or_column = 0
+                            while j < len(elem):
+                                if elem[j] != 'x' and elem[j] != " ":
+                                    number = ""
+                                    while j < len(elem) and elem[j] != " ":
+                                        number += elem[j]
+                                        j += 1
+                                    if row_or_column == 0:
+                                        column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
+                                            [100 + 40 * counter_of_columns, 100 + 40 * i],
+                                            [140 + 40 * counter_of_columns, 100 + 40 * i], "column", int(number))
+                                        self.columns[(i, counter_of_columns)] = column
+                                    else:
+                                        column = Column([60 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)], [100 +
+                                            40 * (counter_of_columns + 1), 100 + 40 * (i - 1)], [100 + 40 *
+                                            (counter_of_columns + 1), 140 + 40 * (i - 1)], "row", int(number))
+                                        self.rows[(i, counter_of_columns)] = column
                                 else:
-                                    print("alo2")
-                                    column = Column([60 + 40 * (counter_of_columns +1), 100 + 40 * (i-1)], [100 + 40 * (counter_of_columns+1), 100 + 40 * (i-1)],
-                                        [100 + 40 * (counter_of_columns+1), 140 + 40 * (i-1)], "row", int(number))
-                                    print(i, counter_of_columns, "o takim kluczu")
-                                    self.rows[(i, counter_of_columns)] = column
-
-                            else:
-                                j += 1
-                                row_or_column += 1
-                                print("row or column", row_or_column)
+                                    j += 1
+                                    row_or_column += 1
                     counter_of_columns += 1
-
-
-
-
-

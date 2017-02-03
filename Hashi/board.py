@@ -40,7 +40,7 @@ class Board:
 
     def generate_default_board(self):
         """
-        This is generation of defalut board which has size : 600x500 and it arranges circle
+        This is generation of default board which has size : 600x500 and it arranges circle
         every 100 pixels
         :return:list of default circle
         """
@@ -108,7 +108,7 @@ class Board:
 
     def set_close_neighbors(self):
         """
-        This function set close neighbours of circle. Close neighbors is when circle has neigbour on the left or on the
+        This function set close neighbours of circle. Close neighbors is when circle has neighbour on the left or on the
         right but this neighbour cannot be behind another one which is also a neighbour of our circle
         :return: List of close neighbour of circle for each circle in our list
         """
