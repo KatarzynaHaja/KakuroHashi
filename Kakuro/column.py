@@ -90,8 +90,8 @@ class Column:
                 new_list.append(int(c.number))
         set_list = set(new_list)
         set_list = list(set_list)
-        print(set_list)
-        print(sorted(new_list))
+        #print(set_list)
+        #print(sorted(new_list))
         if s <= self.sum.number and sorted(set_list) == sorted(new_list):
             return True
         else:

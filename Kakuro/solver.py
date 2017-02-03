@@ -27,12 +27,12 @@ class Solver:
         self.factor(number, count, 9, available_numbers)
         print("wyswietlam liste")
         list1 = copy.copy(self.list_of_all)
-        print(list1)
+        #print(list1)
         for elem in list1:
             for permutation in itertools.permutations(elem):
                 if list(permutation) != elem:
                     self.list_of_all.append(list(permutation))
-        print("lista wszystkiego")
+        #print("lista wszystkiego")
         self.list_of_all
         print(self.list_of_all)
         return
@@ -90,9 +90,12 @@ class Solver:
             value = self.board.columns[c]
             self.factorise(value.sum.number, len(value.column))
             value.factors = self.list_of_all
-        list_of_columns = [x for x in self.board.columns.keys()]
-        print(list_of_columns)
-        self.recursion(list_of_columns)
+        list_of_columns = [(x, len(self.board.columns[x].factors)) for x in self.board.columns.keys()]
+        sorted_list = sorted(list_of_columns, key=lambda x: x[1])
+        sorted_list = [x for (x, y) in sorted_list]
+        print("lista posortowana")
+        print(sorted_list)
+        self.recursion(sorted_list)
         print("koniec")
 
     def recursion(self, l):
@@ -106,16 +109,16 @@ class Solver:
             index = 0
             while index < len(self.board.columns[l[0]].factors):
                 column = self.board.columns[l[0]]
-                print("jestem w kolumnie ", l[0], "i wpisuje liczby")
+                #print("jestem w kolumnie ", l[0], "i wpisuje liczby")
                 for i in range(0, len(column.column)):
                     column.column[i].number = self.board.columns[l[0]].factors[index][i]
-                print("ududu")
-                for i in range(0, len(column.column)):
-                    print(self.board.columns[l[0]].column[i].number)
+                #print("ududu")
+                #for i in range(0, len(column.column)):
+                    #print(self.board.columns[l[0]].column[i].number)
                 if self.board.check_partial():
                     if self.recursion(l[1::]):
                         return True
-                print("NIEEE")
+                #print("NIEEE")
                 index += 1
             if index == len(self.board.columns[l[0]].factors):
                 for i in range(0, len(column.column)):
