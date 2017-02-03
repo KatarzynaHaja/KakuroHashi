@@ -8,16 +8,16 @@ class TestBoard(unittest.TestCase):
         self.board = Board()
         column = Column(0, 0, 0, 'column', 4)
         self.board.columns[(0, 1)] = column
-        column = Column(0, 0, 0, 'column', 6)
-        self.board.columns[(0, 2)] = column
+        column1 = Column(0, 0, 0, 'column', 6)
+        self.board.columns[(0, 2)] = column1
         row = Column(0, 0, 0, 'row', 3)
         self.board.rows[(1, 0)] = row
-        row = Column(0, 0, 0, 'row', 7)
-        self.board.rows[(2, 0)] = row
-        node = Node("", 0,  0)
+        row2 = Column(0, 0, 0, 'row', 7)
+        self.board.rows[(2, 0)] = row2
         for key in self.board.columns.keys():
             for i in range(0, 2):
                 w, k = key
+                node = Node("", 0, 0)
                 self.board.columns[key].column.append(node)
                 self.board.rows[(k, w)].column.append(node)
 
@@ -59,8 +59,27 @@ class TestBoard(unittest.TestCase):
         self.board.rows[(2, 0)].column[0].number = ""
         self.board.rows[(1, 0)].column[1].number = 3
         self.board.rows[(2, 0)].column[1].number = ""
-        
         self.assertFalse(self.board.check_partial())
+
+    def test_check_true(self):
+        self.board.rows[(1, 0)].column[0].number = 1
+        self.board.rows[(1, 0)].column[1].number = 2
+        self.board.rows[(2, 0)].column[0].number = 3
+        self.board.rows[(2, 0)].column[1].number = 4
+        self.assertTrue(self.board.check_partial())
+
+    def test_check_false(self):
+        self.board.rows[(1, 0)].column[0].number = 1
+        self.board.rows[(1, 0)].column[1].number = 7
+        self.board.rows[(2, 0)].column[0].number = 3
+        self.board.rows[(2, 0)].column[1].number = 4
+        self.assertFalse(self.board.check_partial())
+
+    def test_create_board_from_file(self):
+        b = Board()
+        b.create_board_from_file()
+        self.assertEquals(b.columns.keys, self.board.columns.keys)
+        self.assertEquals(b.rows.keys, self.board.rows.keys)
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestBoard)

@@ -5,6 +5,15 @@ from Kakuro.display import *
 
 class Button:
     def __init__(self, xleft, yleft, w, h, color, text, size_of_letters):
+        """
+        :param xleft: coordinate of left
+        :param yleft:
+        :param w:
+        :param h:
+        :param color:
+        :param text:
+        :param size_of_letters:
+        """
         self.x = xleft
         self.y = yleft
         self.w = w

@@ -136,7 +136,7 @@ class Game:
 
     def create_board(self):
         while True:
-            game_display.blit(pygame.image.load("background.png"), (0, 0))
+            gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
             self.board.show()
             button_solve = Button(500, 300, 100, 50, button_green, "Rozwiąż", 30)
             button_solve.show()

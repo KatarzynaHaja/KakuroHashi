@@ -40,7 +40,7 @@ class Board:
 
     def generate_default_board(self):
         """
-        This is generation of defalut board which has size : 600x500 and it arranges circle
+        This is generation of default board which has size : 600x500 and it arranges circle
         every 100 pixels
         :return:list of default circle
         """

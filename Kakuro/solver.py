@@ -5,6 +5,9 @@ import itertools
 
 class Solver:
     def __init__(self, board):
+        """
+        :param board: board which solver will solve
+        """
         self.board = board
         self.count = 0
         self.number_of_possibilities_columns = dict()
@@ -35,6 +38,14 @@ class Solver:
         return
 
     def factor(self, number, count, start, available_numbers):
+        """
+        Function finds all factorisations
+        :param number: number which factors we are searching
+        :param count: number of factors
+        :param start: the biggest factor
+        :param available_numbers: list of available numbers to use
+        :return: list of factorisations
+        """
         if count == 1:
             l = list()
             if number in available_numbers:
@@ -71,7 +82,7 @@ class Solver:
 
     def solve(self):
         """
-        Function
+        Function which solves the board
         :return:
         """
         print("dzialam")
