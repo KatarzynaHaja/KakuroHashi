@@ -101,7 +101,7 @@ class Board:
         print("jestem w bordzie")
         for key in self.rows.keys():
             for c in self.rows[key].column:
-                print( c.number )
+                print(c.number)
                 #print("dlugosc", len(c))
             print("rzad", key)
             if not self.rows[key].check_partial():
