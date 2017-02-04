@@ -1,21 +1,18 @@
 from datetime import datetime
-
-from docutils.nodes import classifier
-
 from Hashi.button import *
-from Hashi.display import *
 from Hashi.game import *
 import os
-import random
 import datetime
+from Hashi.solver import *
 
 pygame.init()
-from Hashi.bridge import *
-from Hashi.solver import *
-import copy
 
 
 def kind_of_game():
+    """
+    This function start screen where you can choose kind of game.
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
     while True:
@@ -48,6 +45,11 @@ def kind_of_game():
 
 
 def is_again(s):
+    """
+    After you win you can start again. This function starts screen where you can choose
+    :param s: kind of game
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
     while True:
@@ -80,7 +82,12 @@ def is_again(s):
             quit()
 
 
-def choose_level(type):
+def choose_level(typ):
+    """
+    This function allows to choose level
+    :param typ: type of game
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
     while True:
@@ -104,7 +111,7 @@ def choose_level(type):
         button_hard = Button(350, 390, 100, 50, violet, "trudny", 30)
         button_hard.show()
         button_hard.backlight(mouse)
-        if type == 'm':
+        if typ == 'm':
             if button_easy.is_clicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
@@ -131,7 +138,7 @@ def choose_level(type):
                 g.board.set_close_neighbors()
                 g.board.set_bridges()
                 gameloop(g)
-        if type == 'c':
+        if typ == 'c':
             if button_easy.is_clicked(mouse):
                 g = Game('easy')
                 g.board.generate_default_board()
@@ -163,7 +170,12 @@ def choose_level(type):
         clock.tick(15)
 
 
-def is_file(type):
+def is_file(typ):
+    """
+    This function allows to choose if you want to read from file
+    :param typ: type of game
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
     while True:
@@ -185,7 +197,7 @@ def is_file(type):
         button_no.show()
         button_no.backlight(mouse)
 
-        if type == 'c':
+        if typ == 'c':
             if button_yes.is_clicked(mouse):
                 g = Game()
                 g.board.generate_by_recognition()
@@ -211,6 +223,11 @@ def is_file(type):
 
 
 def gameloop(g):
+    """
+    Main game for normal game ( user and generation)
+    :param g: game
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
     is_show = False
@@ -254,7 +271,7 @@ def gameloop(g):
             pygame.time.delay(800)
             is_again('m')
 
-        if is_show == True:
+        if is_show is True:
             g.board.user_list_bridge.clear()
             print_bridge(g.board.user_list_bridge)
             print_bridge(g.board.list_bridge)
@@ -278,7 +295,7 @@ def gameloop(g):
             g.number_of_hints += 1
             bridge.append(g.random_bridge())
 
-        if is_hint == True:
+        if is_hint is True:
             for i in bridge:
                 if i.number == 1:
                     i.show()
@@ -295,9 +312,13 @@ def gameloop(g):
 
 
 def gameloop_solver(g):
+    """
+    Main game for solver
+    :param g: game
+    :return:
+    """
     pygame.display.update()
     clock.tick(15)
-    bridge = list()
     is_show = False
     while True:
 
@@ -323,7 +344,7 @@ def gameloop_solver(g):
             g.board.solve()
             is_show = True
 
-        if is_show == True:
+        if is_show is True:
             print_bridge(g.board.user_list_bridge)
             pygame.display.update()
             clock.tick(15)
@@ -351,6 +372,10 @@ def gameloop_solver(g):
 
 
 def menu():
+    """
+    Start menu
+    :return:
+    """
     intro = True
     while intro:
         for event in pygame.event.get():
@@ -371,10 +396,10 @@ def menu():
         button_instruction.show()
         button_instruction.backlight(mouse)
 
-        if (button_instruction.is_clicked(mouse)):
-            os.startfile("Instruction.txt")
+        if button_instruction.is_clicked(mouse):
+            os.startfile("hashi_instruction.pdf")
 
-        if (button_play.is_clicked(mouse)):
+        if button_play.is_clicked(mouse):
             kind_of_game()
 
         pygame.display.update()

@@ -17,7 +17,7 @@ class Randomize:
         if self.level == 0:
             value = random.randint(4, 7)
         if self.level == 1:
-            value = random.randint(8, 12)
+            value = random.randint(8, 10)
         if self.level == 2:
-            value = random.randint(13, 17)
+            value = random.randint(11, 13)
         return value
