@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 import datetime
 from Kakuro.solver import *
+#from Kakuro.open_file import *
 
 
 class Game:
@@ -107,7 +108,8 @@ class Game:
                     os.startfile("Instruction.txt")
             if button_create_from_text.backlight(mouse):
                 if button_create_from_text.is_clicked(mouse):
-                    self.board.create_board_from_file(r'C:\Users\Ewunia\Documents\Studia\III rok\Python\KakuroHashi\Kakuro\text_files\test.txt')
+                    path = which_file()
+                    self.board.create_board_from_file(path)
                     self.gameloop()
             pygame.display.update()
             clock.tick(15)

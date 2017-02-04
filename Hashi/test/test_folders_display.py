@@ -1,5 +1,6 @@
 import unittest
-from Hashi.folders_display import *
+
+from folders_display import *
 
 
 class TestFolders(unittest.TestCase):

@@ -1,9 +1,11 @@
-import numpy as np
-import cv2
-from Hashi.circle import Circle
-from Hashi.folders_display import *
 import re
+
+import cv2
+import numpy as np
+
+from Hashi.circle import Circle
 from Hashi.settings import *
+from folders_display import *
 
 
 def which_file():
@@ -12,19 +14,19 @@ def which_file():
     :return: list of recognized circle
     """
     circle = list()
-    z = ''
+    path = ''
     while True:
-        m = open_common_dialog()
-        if m == '':
+        path2 = open_common_dialog()
+        if path2 == '':
             continue
         else:
-            z = m
+            path = path2
             break
     pattern = re.compile('.*txt')
     pattern1 = re.compile('.*png')
-    if re.match(pattern, z):
-        circle = recognize_txt(z)
-    if re.match(pattern1, z):
+    if re.match(pattern, path):
+        circle = recognize_txt(path)
+    if re.match(pattern1, path):
         circle = recognize()
     return circle
 
