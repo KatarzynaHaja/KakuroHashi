@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 import datetime
 from Kakuro.solver import *
-from Kakuro.folders_display import *
 
 
 class Game:
@@ -25,13 +24,13 @@ class Game:
             r = pygame.Rect(0, 0, 450, 500)
             sub = gameDisplay.subsurface(r)
             self.board.show()
-            button_check = Button(650, 380, 120, 50, button_green, "Sprawdź", 25)
+            button_check = Buttton(650, 380, 120, 50, button_green, "Sprawdź", 25)
             button_check.show()
-            button_hint = Button(650, 280, 120, 50, button_green, "Hint", 25)
+            button_hint = Buttton(650, 280, 120, 50, button_green, "Hint", 25)
             button_hint.show()
-            button_save = Button(650, 180, 120, 50, button_green, "Zapisz", 25)
+            button_save = Buttton(650, 180, 120, 50, button_green, "Zapisz", 25)
             button_save.show()
-            button_solve = Button(650, 80, 120, 50, color_of_solve, "Rozwiąż", 25)
+            button_solve = Buttton(650, 80, 120, 50, color_of_solve, "Rozwiąż", 25)
             button_solve.show()
             mouse = pygame.mouse.get_pos()
             if button_check.backlight(mouse):
@@ -86,11 +85,11 @@ class Game:
             position = ((width / 2), (height / 3))
             text_display("Kakuro", 70, black, position)
             mouse = pygame.mouse.get_pos()
-            button_play = Button(320, 250, 150, 50, button_green, "Graj", 30)
+            button_play = Buttton(320, 250, 150, 50, button_green, "Graj", 30)
             button_play.show()
-            button_instruction = Button(320, 320, 150, 50, button_green, "Instrukcja", 30)
+            button_instruction = Buttton(320, 320, 150, 50, button_green, "Instrukcja", 30)
             button_instruction.show()
-            button_create_from_text = Button(320, 390, 150, 50, button_green, "Stworz plansze", 30)
+            button_create_from_text = Buttton(320, 390, 150, 50, button_green, "Stworz plansze", 30)
             button_create_from_text.show()
             if button_play.backlight(mouse):
                 if button_play.is_clicked(mouse):
@@ -101,8 +100,7 @@ class Game:
                     os.startfile("Instruction.txt")
             if button_create_from_text.backlight(mouse):
                 if button_create_from_text.is_clicked(mouse):
-                    path = which_file()
-                    self.board.create_board_from_file(path)
+                    self.board.create_board_from_file()
                     self.gameloop()
             pygame.display.update()
             clock.tick(15)
@@ -128,10 +126,10 @@ class Game:
             position = ((width / 2), (height / 3))
             text_display("Wybierz poziom", 70, black, position)
             mouse = pygame.mouse.get_pos()
-            button_easy = Button(320, 250, 150, 50, button_green, "Latwy", 30)
+            button_easy = Buttton(320, 250, 150, 50, button_green, "Latwy", 30)
             button_easy.show()
             button_easy.backlight(mouse)
-            button_hard = Button(320, 320, 150, 50, button_green, "Trudny", 30)
+            button_hard = Buttton(320, 320, 150, 50, button_green, "Trudny", 30)
             button_hard.show()
             button_hard.backlight(mouse)
             if button_easy.is_clicked(mouse):

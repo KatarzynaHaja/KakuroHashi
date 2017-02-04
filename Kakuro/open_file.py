@@ -1,11 +1,12 @@
 from Kakuro.folders_display import *
-
+from Kakuro.board import *
 
 def which_file():
     """
-    It allows open common dialog and choose file
-    :return: path to the file
+    It allows open common dialog and choose file. It also call recognize which depends on txt or png
+    :return: list of recognized circle
     """
+    circle = list()
     path = ''
     while True:
         path2 = open_common_dialog()
@@ -14,5 +15,9 @@ def which_file():
         else:
             path = path2
             break
-    if path.endswith(".txt"):
+    pattern = re.compile('.*txt')
+    if re.match(pattern, path):
         return path
+    return path
+
+

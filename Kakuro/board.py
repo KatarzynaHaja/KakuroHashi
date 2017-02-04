@@ -2,6 +2,7 @@ from Kakuro.column import *
 from random import randint
 import random
 import re
+from Kakuro.folders_display import *
 
 
 class Board:
@@ -207,13 +208,14 @@ class Board:
                     return True
         return False
 
-    def create_board_from_file(self, file_path):
+    def create_board_from_file(self):
         """
         Functions creates board from text file
         :param file_path: path to file where board is
         :return:
         """
-        with open(file_path) as file:
+        path = which_file()
+        with open(path) as file:
             lines = file.readlines()
             for i, line in enumerate(lines):
                 line = line.strip('\n')
