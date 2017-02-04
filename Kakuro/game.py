@@ -110,6 +110,7 @@ class Game:
     def start(self):
         self.menu()
 
+
     def choose_level(self):
         """
         Function which lets user choose level

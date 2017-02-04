@@ -2,7 +2,7 @@ import random
 from operator import attrgetter
 from Hashi.bridge import Bridge
 from Hashi.recognize import *
-from Hashi.solver import solver
+from Hashi.solver import  *
 import copy
 
 
@@ -29,6 +29,7 @@ class Board:
         self.number_of_circle = number_of_circle
         self.recognition = list()
         self.user_list_bridge = list()
+        self.solver  = Solver()
 
     def generate_by_recognition(self):
         """
@@ -64,7 +65,8 @@ class Board:
         It is enable only when user clicked solver
         :return: list of user's bridges
         """
-        self.user_list_bridge = solver(self.list_circle)
+        self.user_list_bridge = self.solver.solve(self.list_circle)
+
 
     def random_board(self):
         """

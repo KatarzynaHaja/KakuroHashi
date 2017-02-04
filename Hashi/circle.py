@@ -25,6 +25,7 @@ class Circle:
         self.visited = False
         self.is_done = False
         self.is_clicked = False
+        self.combinations = list()
 
     def change_color(self, color):
         """
@@ -51,7 +52,10 @@ class Circle:
         """
         self.conections += value
         second_circle.conections += value
+        print("ilosc polaczen po dodaniu",self.conections)
+        print("ilosc polaczen po dodaniu", second_circle.conections)
         if second_circle.conections == second_circle.value:
+            print("sasiad jest pełny")
             second_circle.is_done = True
 
     def update(self, event):

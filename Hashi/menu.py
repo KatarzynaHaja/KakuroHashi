@@ -11,6 +11,7 @@ import datetime
 
 pygame.init()
 from Hashi.bridge import *
+from Hashi.solver import *
 import copy
 
 
@@ -44,6 +45,7 @@ def kind_of_game():
 
         pygame.display.update()
         clock.tick(15)
+
 
 def is_again(s):
     pygame.display.update()
@@ -257,9 +259,6 @@ def gameloop(g):
             print_bridge(g.board.user_list_bridge)
             print_bridge(g.board.list_bridge)
 
-
-
-
         if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
             b = datetime.datetime.now()
@@ -274,7 +273,6 @@ def gameloop(g):
             is_show = True
             show_solution(g.board.list_circle)
 
-
         if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
             is_hint = True
             g.number_of_hints += 1
@@ -287,14 +285,14 @@ def gameloop(g):
                 if i.number == 2:
                     i.show_more()
         if button_clear.is_clicked(mouse):
-           clear_bridges(g.board.user_list_bridge)
-           g.board.user_list_bridge.clear()
-
+            clear_bridges(g.board.user_list_bridge)
+            g.board.user_list_bridge.clear()
 
         pygame.display.update()
         clock.tick(15)
         pygame.display.update()
         clock.tick(60)
+
 
 def gameloop_solver(g):
     pygame.display.update()
@@ -307,7 +305,6 @@ def gameloop_solver(g):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
 
         mouse = pygame.mouse.get_pos()
         game_display.fill(blur_violet)
@@ -333,9 +330,7 @@ def gameloop_solver(g):
             pygame.time.delay(800)
 
         if is_finished(g.board.list_circle):
-
             is_again('c')
-
 
         if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
@@ -348,7 +343,6 @@ def gameloop_solver(g):
             pygame.image.save(sub, "generated_boards/" + fname + ".png")
         if button_solve.is_clicked(mouse):
             is_show = True
-
 
         pygame.display.update()
         clock.tick(15)
@@ -385,8 +379,6 @@ def menu():
 
         pygame.display.update()
         clock.tick(15)
-
-
 
 
 menu()
