@@ -3,7 +3,7 @@ from Kakuro.settings import *
 from Kakuro.display import *
 
 
-class Button:
+class Buttton:
     def __init__(self, xleft, yleft, w, h, color, text, size_of_letters):
         """
         :param xleft: coordinate of left
