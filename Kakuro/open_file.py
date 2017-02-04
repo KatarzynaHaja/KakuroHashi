@@ -1,4 +1,4 @@
-from folders_display import *
+from Kakuro.folders_display import *
 
 
 def which_file():

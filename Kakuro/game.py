@@ -1,16 +1,9 @@
-import random
-from pygame import font
-from Kakuro.node import *
-from Kakuro.display import *
 from Kakuro.button import *
-from Kakuro.settings import *
-from Kakuro.sumofcolumn import *
-from Kakuro.board import *
 import os
 from datetime import datetime
 import datetime
 from Kakuro.solver import *
-#from Kakuro.open_file import *
+from Kakuro.folders_display import *
 
 
 class Game:
@@ -137,22 +130,15 @@ class Game:
             button_easy = Button(320, 250, 150, 50, button_green, "Latwy", 30)
             button_easy.show()
             button_easy.backlight(mouse)
-            button_medium = Button(320, 320, 150, 50, button_green, "Średni", 30)
-            button_medium.show()
-            button_medium.backlight(mouse)
-            button_hard = Button(320, 390, 150, 50, button_green, "Trudny", 30)
+            button_hard = Button(320, 320, 150, 50, button_green, "Trudny", 30)
             button_hard.show()
             button_hard.backlight(mouse)
             if button_easy.is_clicked(mouse):
-                self.board.generate(4)
-                self.result = ""
-                self.gameloop()
-            if button_medium.is_clicked(mouse):
-                self.board.generate(6)
+                self.board.generate2(4)
                 self.result = ""
                 self.gameloop()
             if button_hard.is_clicked(mouse):
-                self.board.generate(8)
+                self.board.generate2(8)
                 self.result = ""
                 self.gameloop()
 

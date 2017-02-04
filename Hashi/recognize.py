@@ -1,11 +1,9 @@
-import re
-
 import cv2
 import numpy as np
 
 from Hashi.circle import Circle
 from Hashi.settings import *
-from folders_display import *
+from Kakuro.folders_display import *
 
 
 def which_file():
