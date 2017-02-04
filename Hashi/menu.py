@@ -288,7 +288,14 @@ def gameloop(g):
 
         if button_solve.is_clicked(mouse):
             is_show = True
-            show_solution(g.board.list_circle)
+            print_bridge(g.board.list_bridge)
+            pygame.display.update()
+            clock.tick(15)
+            pygame.time.delay(1500)
+            is_again('m')
+            # pygame.display.update()
+            # clock.tick(15)
+            # pygame.time.delay(800)
 
         if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
             is_hint = True

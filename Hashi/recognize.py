@@ -3,8 +3,54 @@ import numpy as np
 
 from Hashi.circle import Circle
 from Hashi.settings import *
-from Kakuro.folders_display import *
+from Hashi.folders_display import *
+import numpy as np
+from PIL import Image
 
+def number_recognition(file):
+    img = Image.open(file).convert('RGB')
+    arr = np.array(img)
+
+    y = arr.shape[0]
+    x = arr.shape[1]
+    print(x,y)
+    values = list()
+    row =40
+    while row < y:
+        column = 40
+        while column < x:
+            if all(i in [45, 22, 80] for i in arr[row][column]):
+                values.append(1)
+                print(row,column)
+                column += 90
+            if column <600 and all(i in [45, 22, 81] for i in arr[row][column]):
+                values.append(2)
+                column += 90
+            if column <600 and all(i in [45, 21, 80] for i in arr[row][column]):
+                values.append(3)
+                column += 90
+            if column <600 and all(i in [45, 21, 81] for i in arr[row][column]):
+                values.append(4)
+                column += 90
+            if column <600 and all(i in [44, 22, 80] for i in arr[row][column]):
+                values.append(5)
+                column += 90
+            if column <600 and all(i in [44, 21, 80] for i in arr[row][column]):
+                values.append(6)
+                column += 90
+            if column <600 and all(i in [45, 21, 81] for i in arr[row][column]):
+                values.append(7)
+                column += 90
+            if column <600 and all(i in [45, 22, 82] for i in arr[row][column]):
+                values.append(8)
+                column += 90
+            else:
+                column += 1
+
+        row +=10
+    for i in values:
+        print(i)
+    return values
 
 def which_file():
     """
@@ -25,28 +71,34 @@ def which_file():
     if re.match(pattern, path):
         circle = recognize_txt(path)
     if re.match(pattern1, path):
-        circle = recognize()
+        circle = recognize(path)
     return circle
 
 
-def recognize():
+def recognize(file):
     """
     Recognition from png
     :return: list of circle
     """
-    z = open_common_dialog()
+    z = file
     img = cv2.imread(z, 0)
     img = cv2.medianBlur(img, 5)
     cimg = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
     circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 50, param1=100, param2=15, minRadius=10, maxRadius=30)
     circles = np.uint16(np.around(circles))
     circle_list = list()
+    list_value = number_recognition(file)
     for i in circles[0, :]:
         print(i[0])
         cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
         cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
         circle_list.append(Circle(0, i[0], i[1], circle_violet))
+    print(len(circle_list))
+    for i in range(len(list_value)):
+        circle_list[i].value = list_value[i]
+
     return circle_list
+
 
 
 def recognize_txt(file):
