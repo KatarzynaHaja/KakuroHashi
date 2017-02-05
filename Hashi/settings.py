@@ -1,7 +1,10 @@
 import pygame
 
+
 def load_file():
     return pygame.image.load("background.png")
+
+
 size = width, height = 800, 500
 game_display = pygame.display.set_mode(size)
 pygame.display.set_caption('Hashi')
