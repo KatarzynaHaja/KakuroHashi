@@ -31,6 +31,7 @@ class Solver:
     def __init__(self):
         self.list_bridge = list()
         self.list_circles = list()
+        self.combinations = list()
 
     def find_possible_bridges(self, circle):
         """
@@ -39,12 +40,11 @@ class Solver:
         :return:
         """
         circle.combinations = list()
-        print(circle.value - circle.conections)
-        combinations = list(
+        self.combinations = list(
             itertools.combinations_with_replacement(ready(circle.close_neighbors),
                                                     circle.value - circle.conections))
         bad = list()
-        for i in combinations:
+        for i in self.combinations:
             for j in i:
                 if j.value - j.conections == 1:
                     if i.count(j) > 1:
@@ -54,12 +54,9 @@ class Solver:
                 if i.count(j) > 2:
                     bad.append(i)
                     break
-        for i in combinations:
+        for i in self.combinations:
             if i not in bad:
                 circle.combinations.append(i)
-        print("wyswietlam kom")
-        for i in circle.combinations:
-            print(i)
 
     def is_in(self, source, dest):
         """
@@ -81,12 +78,8 @@ class Solver:
         :return:
         """
         number = self.list_bridge[index].number
-        #print(self.list_bridge[index].circle1.conections, "przed kólko 1")
-       # print(self.list_bridge[index].circle1.conections, "przed kólko 2")
         self.list_bridge[index].circle1.conections -= number
         self.list_bridge[index].circle2.conections -= number
-        #print(self.list_bridge[index].circle1.conections, "po kólko 1")
-       # print(self.list_bridge[index].circle2.conections, "po kólko 2")
         self.list_bridge.remove(self.list_bridge[index])
 
     def remove_all(self, source, dest):
@@ -107,15 +100,9 @@ class Solver:
         :param circles: list of circle
         :return: list of bridge
         """
-        print("wchodze do solvera")
         self.list_circles = circles
-        print("tyle jest kulek", len(self.list_circles))
         self.list_circles = sort_circle(self.list_circles)
         self.recursion(0)
-        for i in self.list_bridge:
-            print("mosty", i.number)
-        for i in self.list_circles:
-            print(i.x, i.y)
         return self.list_bridge
 
     def recursion(self, index):
@@ -125,17 +112,10 @@ class Solver:
         :return: logical value
         """
         is_ok = False
-        print("obecne mosty + index", index)
-        for i in self.list_bridge:
-            print(i.circle1.x, i.circle1.y, " - ", i.circle2.x, i.circle2.y, i.number)
         if index < len(self.list_circles):
             circle = self.list_circles[index]
             self.find_possible_bridges(circle)
-            print("kulka wartość", circle.value)
             active = ready(circle.close_neighbors)
-            print("aktywni", len(active))
-            for i in active:
-                print(i.value)
 
             if circle.conections == circle.value:
                 return self.recursion(index + 1)
@@ -143,28 +123,15 @@ class Solver:
             elif len(active) > 0:
                 j = 0
                 while not is_ok and j < len(circle.combinations):
-                    print("wyswietlam pozostale kombinacje")
-                    for x in circle.combinations:
-                        print(x)
-                    if len(circle.combinations[0]) == circle.value - circle.conections:
-                        print("TAAAAAAAAAK")
-                    else:
-                        print("NIEEEEEEEEEE", len(circle.combinations[j]), circle.value - circle.conections )
 
-                    #if all(i in active for i in circle.combinations[j]):
                     if set(circle.combinations[j]).issubset(set(active)):
-                        print("dodaje mosty")
-
                         for z in circle.combinations[j]:
                             is_in_list = self.is_in(circle, z)
-                            print("robie most miedzy ", circle.x, circle.y , z.x, z.y)
                             if is_in_list[0]:
-                                print("już mamy jeden most, wiec robie 2")
                                 self.remove_bridge(is_in_list[1])
                                 self.list_bridge.append(Bridge(circle, z, violet, 2))
                                 circle.add_bridge(z, 2)
                             else:
-                                print("to jest pierwszy most miedzy ", circle, z)
                                 self.list_bridge.append(Bridge(circle, z, violet, 1))
                                 circle.add_bridge(z, 1)
 
@@ -172,14 +139,10 @@ class Solver:
                         if not is_ok:
                             for z in circle.combinations[j]:
                                 self.remove_all(circle, z)
-                                print("jakis most zostal usuniety!!!")
-                                for i in self.list_bridge:
-                                    print(i.circle1.x, i.circle1.y, " - ", i.circle2.x, i.circle2.y, i.number)
 
                     j += 1
                 return is_ok
             else:
-                print("zwracam false")
                 return False
 
         return True

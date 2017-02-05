@@ -23,7 +23,7 @@ def kind_of_game():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(pygame.image.load("background.png"), (0, 0))
+        game_display.blit(load_file(), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Wybierz tryb gry", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -60,7 +60,7 @@ def is_again(s):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(pygame.image.load("background.png"), (0, 0))
+        game_display.blit(load_file(), (0, 0))
         position = ((width / 2), (height / 3))
         text_display('Wygrana', 50, dark_violet, (position[0], position[1] - 20))
         text_display('Czy chcesz zagrać ponownie?', 50, dark_violet, (position[0] + 10, position[1] + 30))
@@ -99,7 +99,7 @@ def choose_level(typ):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(pygame.image.load("background.png"), (0, 0))
+        game_display.blit(load_file(), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Wybierz poziom", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -187,7 +187,7 @@ def is_file(typ):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(pygame.image.load("background.png"), (0, 0))
+        game_display.blit(load_file(), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Czy chcesz wczytać z pliku", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()
@@ -214,7 +214,7 @@ def is_file(typ):
                 g.board.generate_by_recognition()
                 g.board.set_neighbors()
                 g.board.set_close_neighbors()
-                gameloop(g)
+                gameloop(g, 'f')
 
             if button_no.is_clicked(mouse):
                 choose_level('m')
@@ -223,17 +223,15 @@ def is_file(typ):
         clock.tick(15)
 
 
-def gameloop(g):
+def gameloop(g, file=None):
     """
     Main game for normal game ( user and generation)
     :param g: game
+    :param file : if file or not
     :return:
     """
     pygame.display.update()
     clock.tick(15)
-    is_show = False
-    is_hint = False
-    bridge = list()
     clicked_list = list()
     while True:
 
@@ -272,11 +270,6 @@ def gameloop(g):
             pygame.time.delay(800)
             is_again('m')
 
-        if is_show is True:
-            g.board.user_list_bridge.clear()
-            print_bridge(g.board.user_list_bridge)
-            print_bridge(g.board.list_bridge)
-
         if button_save.is_clicked(mouse):
             a = datetime.datetime(2013, 12, 30, 23, 59, 59)
             b = datetime.datetime.now()
@@ -288,27 +281,49 @@ def gameloop(g):
             pygame.image.save(sub, "generated_boards/" + fname + ".png")
 
         if button_solve.is_clicked(mouse):
-            is_show = True
-            print_bridge(g.board.list_bridge)
-            pygame.display.update()
-            clock.tick(15)
-            pygame.time.delay(1500)
-            is_again('m')
+            if len(g.board.user_list_bridge) != 0:
+                text_display("Usuń mosty", 25, dark_violet, (710, 350))
+            elif file == 'f':
+                text_display("Plansza z pliku", 25, dark_violet, (710, 350))
+            else:
+                clear_bridges(g.board.user_list_bridge)
+                g.board.user_list_bridge.clear()
+                print_bridge(g.board.list_bridge)
+                pygame.display.update()
+                clock.tick(15)
+                pygame.display.update()
+                clock.tick(60)
+                pygame.time.delay(1500)
+                is_again('m')
 
-        if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
-            is_hint = True
-            g.number_of_hints += 1
-            bridge.append(g.random_bridge())
+        if button_hint.is_clicked(mouse):
+            if file == 'f' or g.number_of_hints >= 2:
+                text_display("Brak wskazówek", 25, dark_violet, (710, 240))
+                pygame.display.update()
+                clock.tick(15)
+            else:
+                g.number_of_hints += 1
+                j = 0
+                while g.board.list_bridge[j] in g.board.user_list_bridge:
+                    j += 1
+                if j < len(g.board.list_bridge):
+                    g.board.user_list_bridge.append(g.board.list_bridge[j])
+                    g.board.list_bridge[j].circle1.add_bridge(
+                        g.board.list_bridge[j].circle2,
+                        g.board.list_bridge[j].number)
+                else:
+                    text_display("Brak wskazówek", 25, dark_violet, (710, 240))
+                pygame.display.update()
+                clock.tick(15)
+                print_bridge(g.board.user_list_bridge)
+                pygame.display.update()
+                clock.tick(15)
 
-        if is_hint is True:
-            for i in bridge:
-                if i.number == 1:
-                    i.show()
-                if i.number == 2:
-                    i.show_more()
         if button_clear.is_clicked(mouse):
             clear_bridges(g.board.user_list_bridge)
             g.board.user_list_bridge.clear()
+            pygame.display.update()
+            clock.tick(15)
 
         pygame.display.update()
         clock.tick(15)
@@ -367,8 +382,6 @@ def gameloop_solver(g):
             text_display("Zapisano do pliku", 30, dark_violet, position)
             pygame.display.update()
             pygame.image.save(sub, "generated_boards/" + fname + ".png")
-        if button_solve.is_clicked(mouse):
-            is_show = True
 
         pygame.display.update()
         clock.tick(15)
@@ -390,7 +403,7 @@ def menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.event.post(event)
 
-        game_display.blit(pygame.image.load("background.png"), (0, 0))
+        game_display.blit(load_file(), (0, 0))
         position = ((width / 2), (height / 3))
         text_display("Hashi", 70, dark_violet, position)
         mouse = pygame.mouse.get_pos()

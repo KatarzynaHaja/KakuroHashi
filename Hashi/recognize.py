@@ -95,7 +95,7 @@ def recognize(file):
         circle_list.append(Circle(0, i[0], i[1], circle_violet))
     for i in range(len(list_value)):
         circle_list[i].value = list_value[i]
-   
+
     return circle_list
 
 

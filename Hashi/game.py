@@ -107,8 +107,6 @@ def check(z, g):
                 g.board.user_list_bridge.append(Bridge(z[0], z[1], violet, 1))
                 z[0].add_bridge(z[1], 1)
 
-            print(len(g.board.user_list_bridge))
-
         z[0].change_color(circle_violet)
         z[1].change_color(circle_violet)
         z.clear()
@@ -126,6 +124,9 @@ def clear_bridges(l):
         if i.number == 1:
             i.circle1.conections -= 1
             i.circle2.conections -= 1
+        i.circle1.change_color(circle_violet)
+        i.circle2.change_color(circle_violet)
+    l.clear()
 
 
 def show_solution(l):
@@ -143,6 +144,7 @@ def print_bridge(l):
     This function shows bridges.
     :param l: list of bridge
     """
+
     for i in range(len(l)):
         if l[i].number == 1:
             l[i].show()

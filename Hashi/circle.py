@@ -90,3 +90,4 @@ class Circle:
         """
         if self.conections == self.value:
             self.change_color(max_circle)
+
