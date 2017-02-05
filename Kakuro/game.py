@@ -16,7 +16,7 @@ class Game:
 
     def game_loop(self, board_generated=True):
         """
-        Function
+        Main game
         :return:
         """
         color_of_solve = button_green
@@ -116,6 +116,10 @@ class Game:
             clock.tick(15)
 
     def start(self):
+        """
+        Function starts the game
+        :return:
+        """
         self.menu()
 
     def choose_level(self):
