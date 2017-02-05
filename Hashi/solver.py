@@ -4,14 +4,25 @@ from Hashi.circle import *
 
 
 def ready(l):
-    ready = list()
+    """
+    This function returns list of active neighbours.
+    Active neigbour is when we can connect circle with it
+    :param l: list of circle
+    :return: ready circle
+    """
+    active = list()
     for i in l:
         if i.conections < i.value:
-            ready.append(i)
-    return ready
+            active.append(i)
+    return active
 
 
 def sort_circle(l):
+    """
+    Sorting circle. Keys are number of neighbours and value - connection
+    :param l: list of circle
+    :return: list of circle
+    """
     list_circle = sorted(l, key=lambda circle: (len(ready(circle.close_neighbors)), circle.value - circle.conections))
     return list_circle
 
@@ -21,13 +32,13 @@ class Solver:
         self.list_bridge = list()
         self.list_circles = list()
 
-    def sort_value(l):
-        list_circle = sorted(l,
-                             key=lambda circle: (-len(ready(circle.close_neighbors)), circle.value - circle.conections),
-                             reverse=True)
-        return list_circle
-
     def find_possible_bridges(self, circle):
+        """
+        This function looks for possible combination of connections
+        :param circle: one circle
+        :return:
+        """
+        combinations = list()
         list_one_neighbor = list()
         list_more_neighbor = list()
         for i in circle.close_neighbors:
@@ -37,7 +48,8 @@ class Solver:
                 list_more_neighbor.append(i)
             print(circle.value - circle.conections)
             combinations = list(
-                itertools.combinations_with_replacement(ready(circle.close_neighbors), circle.value - circle.conections))
+                itertools.combinations_with_replacement(ready(circle.close_neighbors),
+                                                        circle.value - circle.conections))
 
         bad = list()
         for i in combinations:
@@ -57,18 +69,22 @@ class Solver:
     def is_in(self, source, dest):
         """
         This function says if bridge is in list. It check 2 circles
-        :param l: list of bridges
         :param source: source circle
         :param dest: end circle
         :return: tuple (is it in list , index of this element)
         """
         for b in self.list_bridge:
-            if (b.circle1 == source and b.circle2 == dest) or (b.circle1==dest and b.circle2 == source):
+            if (b.circle1 == source and b.circle2 == dest) or (b.circle1 == dest and b.circle2 == source):
                 return True, int(self.list_bridge.index(b))
 
         return False, 0
 
     def remove_bridge(self, index):
+        """
+        This function removes bridge
+        :param index: index of removing bridge
+        :return:
+        """
         number = self.list_bridge[index].number
         print(self.list_bridge[index].circle1.conections, "przed kólko 1")
         print(self.list_bridge[index].circle1.conections, "przed kólko 2")
@@ -82,7 +98,6 @@ class Solver:
         """
         This function says if we should remove bridge.
         We can remove bridges if we have 2 bridges between circles.
-        :param l: list of bridges
         :param source: source circle
         :param dest: end circle
         :return: tuple ( can we remove bridge, index of bridge)
@@ -92,6 +107,11 @@ class Solver:
                 self.remove_bridge(self.list_bridge.index(b))
 
     def solve(self, circles):
+        """
+        Solver
+        :param circles: list of circle
+        :return: list of bridge
+        """
         print("wchodze do solvera")
         self.list_circles = circles
         print("tyle jest kulek", len(self.list_circles))
@@ -104,6 +124,11 @@ class Solver:
         return self.list_bridge
 
     def recursion(self, index):
+        """
+        Recursion which solves board
+        :param index: index of circle
+        :return: logical value
+        """
         is_ok = False
 
         if index < len(self.list_circles):

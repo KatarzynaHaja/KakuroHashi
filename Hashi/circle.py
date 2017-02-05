@@ -41,7 +41,7 @@ class Circle:
         :return:
         """
         pygame.draw.circle(game_display, self.color, (self.x, self.y), 30, 0)
-        if self.number ==1:
+        if self.number == 1:
             text_display(str(self.number), 30, c1, (self.x, self.y))
         if self.number == 2:
             text_display(str(self.number), 30, c2, (self.x, self.y))
@@ -59,7 +59,6 @@ class Circle:
             text_display(str(self.number), 30, c8, (self.x, self.y))
         if self.number == 9:
             text_display(str(self.number), 30, c9, (self.x, self.y))
-
 
     def add_bridge(self, second_circle, value):
         """

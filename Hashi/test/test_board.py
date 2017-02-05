@@ -54,7 +54,7 @@ class TestBoard(unittest.TestCase):
         self.board.set_bridges()
         for i in range(len(self.board.list_bridge)):
             print(self.board.list_bridge[i].number)
-            self.assertTrue(1<=self.board.list_bridge[i].number <= 2)
+            self.assertTrue(1 <= self.board.list_bridge[i].number <= 2)
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestBoard)
