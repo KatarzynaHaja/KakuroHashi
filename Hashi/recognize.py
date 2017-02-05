@@ -17,7 +17,6 @@ def number_recognition(file):
 
     y = arr.shape[0]
     x = arr.shape[1]
-    print(x, y)
     values = list()
     row = 50
     while row < y:
@@ -25,7 +24,6 @@ def number_recognition(file):
         while column < x:
             if all(i in [45, 22, 80] for i in arr[row][column]):
                 values.append(1)
-                print(row, column)
                 column += 80
             if column < 600 and all(i in [45, 22, 81] for i in arr[row][column]):
                 values.append(2)
@@ -52,8 +50,6 @@ def number_recognition(file):
                 column += 1
 
         row += 100
-    for i in values:
-        print(i)
     return values
 
 
@@ -94,14 +90,12 @@ def recognize(file):
     circle_list = list()
     list_value = number_recognition(file)
     for i in circles[0, :]:
-        print(i[0])
         cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
         cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
         circle_list.append(Circle(0, i[0], i[1], circle_violet))
-    print(len(circle_list))
     for i in range(len(list_value)):
         circle_list[i].value = list_value[i]
-
+   
     return circle_list
 
 
@@ -123,6 +117,5 @@ def recognize_txt(file):
             for j, chars in enumerate(l):
                 if chars != 'x':
                     circle_list.append(Circle(int(chars), j * int(jump_x) + 50, i * int(jump_y) + 50, circle_violet))
-        for i in range(4):
-            print(circle_list[i].x, '  ', circle_list[i].y)
+
     return circle_list
