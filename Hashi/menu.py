@@ -293,9 +293,6 @@ def gameloop(g):
             clock.tick(15)
             pygame.time.delay(1500)
             is_again('m')
-            # pygame.display.update()
-            # clock.tick(15)
-            # pygame.time.delay(800)
 
         if button_hint.is_clicked(mouse) and g.number_of_hints < 3:
             is_hint = True

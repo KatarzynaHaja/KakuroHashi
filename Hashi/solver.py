@@ -7,7 +7,7 @@ from Hashi.circle import *
 def ready(l):
     ready = list()
     for i in l:
-        if i.conections != i.value:
+        if i.conections < i.value:
             ready.append(i)
     return ready
 
@@ -44,16 +44,17 @@ class Solver:
                 list_one_neighbor.append(i)
             else:
                 list_more_neighbor.append(i)
-            print(circle.value- circle.conections)
-            if circle.value - circle.conections<0:
+            print(circle.value - circle.conections)
+            if circle.value - circle.conections < 0:
                 print("WYWALIo sie ")
                 return
-            combinations = list(itertools.combinations_with_replacement(circle.close_neighbors, circle.value - circle.conections))
+            combinations = list(
+                itertools.combinations_with_replacement(circle.close_neighbors, circle.value - circle.conections))
 
         bad = list()
         for i in combinations:
             for j in i:
-                if j.value == 1:
+                if j.value - j.conections == 1:
                     if i.count(j) > 1:
                         bad.append(i)
                         break
@@ -74,15 +75,19 @@ class Solver:
         :return: tuple (is it in list , index of this element)
         """
         for b in self.list_bridge:
-            if ((b.circle1 == source and b.circle2 == dest) or (b.circle1 == dest and b.circle2 == source)):
+            if b.circle1 == source and b.circle2 == dest:
                 return True, int(self.list_bridge.index(b))
 
         return False, 0
 
     def remove_bridge(self, index):
         number = self.list_bridge[index].number
+        print(self.list_bridge[index].circle1.conections, "przed kólko 1")
+        print(self.list_bridge[index].circle1.conections, "przed kólko 2")
         self.list_bridge[index].circle1.conections -= number
         self.list_bridge[index].circle2.conections -= number
+        print(self.list_bridge[index].circle1.conections, "po kólko 1")
+        print(self.list_bridge[index].circle2.conections, "po kólko 2")
         self.list_bridge.remove(self.list_bridge[index])
 
     def remove_all(self, source, dest):
@@ -95,8 +100,7 @@ class Solver:
         :return: tuple ( can we remove bridge, index of bridge)
         """
         for b in self.list_bridge:
-            if ((b.circle1 == source and b.circle2 == dest) or (
-                            b.circle1 == dest and b.circle2 == source)):
+            if (b.circle1 == source and b.circle2 == dest):
                 self.remove_bridge(self.list_bridge.index(b))
 
     def solve(self, circles):
@@ -106,7 +110,7 @@ class Solver:
         self.list_circles = sort_circle(self.list_circles)
         self.recursion(0)
         for i in self.list_bridge:
-            print("mosty",i.number)
+            print("mosty", i.number)
         return self.list_bridge
 
     def recursion(self, index):
@@ -121,7 +125,7 @@ class Solver:
             for i in active:
                 print(i.value)
 
-            if circle.is_done:
+            if circle.conections == circle.value:
                 return self.recursion(index + 1)
 
             elif len(active) > 0:
@@ -142,11 +146,11 @@ class Solver:
                                 print("to jest pierwszy most miedzy ", circle, z)
                                 self.list_bridge.append(Bridge(circle, z, violet, 1))
                                 circle.add_bridge(z, 1)
-
                         is_ok = self.recursion(index + 1)
                         if not is_ok:
                             for z in circle.combinations[j]:
                                 self.remove_all(circle, z)
+
                     j += 1
                 return is_ok
             else:

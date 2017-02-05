@@ -1,56 +1,61 @@
 import cv2
-import numpy as np
-
 from Hashi.circle import Circle
 from Hashi.settings import *
 from Hashi.folders_display import *
 import numpy as np
 from PIL import Image
 
+
 def number_recognition(file):
+    """
+    This function recognizes numbers which are on the circle
+    :param file: path of file
+    :return:
+    """
     img = Image.open(file).convert('RGB')
     arr = np.array(img)
 
     y = arr.shape[0]
     x = arr.shape[1]
-    print(x,y)
+    print(x, y)
     values = list()
-    row =40
+    row = 40
     while row < y:
         column = 40
         while column < x:
             if all(i in [45, 22, 80] for i in arr[row][column]):
                 values.append(1)
-                print(row,column)
+                print(row, column)
                 column += 90
-            if column <600 and all(i in [45, 22, 81] for i in arr[row][column]):
+            if column < 600 and all(i in [45, 22, 81] for i in arr[row][column]):
                 values.append(2)
                 column += 90
-            if column <600 and all(i in [45, 21, 80] for i in arr[row][column]):
+            if column < 600 and all(i in [45, 21, 80] for i in arr[row][column]):
                 values.append(3)
                 column += 90
-            if column <600 and all(i in [45, 21, 81] for i in arr[row][column]):
+            if column < 600 and all(i in [45, 21, 81] for i in arr[row][column]):
                 values.append(4)
                 column += 90
-            if column <600 and all(i in [44, 22, 80] for i in arr[row][column]):
+            if column < 600 and all(i in [44, 22, 80] for i in arr[row][column]):
                 values.append(5)
                 column += 90
-            if column <600 and all(i in [44, 21, 80] for i in arr[row][column]):
+            if column < 600 and all(i in [44, 21, 80] for i in arr[row][column]):
                 values.append(6)
                 column += 90
-            if column <600 and all(i in [45, 21, 81] for i in arr[row][column]):
+            if column < 600 and all(i in [45, 21, 81] for i in arr[row][column]):
                 values.append(7)
                 column += 90
-            if column <600 and all(i in [45, 22, 82] for i in arr[row][column]):
+            if column < 600 and all(i in [45, 22, 82] for i in arr[row][column]):
                 values.append(8)
                 column += 90
             else:
                 column += 1
 
-        row +=10
+        row += 10
     for i in values:
         print(i)
     return values
+
 
 def which_file():
     """
@@ -100,7 +105,6 @@ def recognize(file):
     return circle_list
 
 
-
 def recognize_txt(file):
     """
     Recognition from txt. It scales distance between each pair of circles
@@ -120,5 +124,5 @@ def recognize_txt(file):
                 if chars != 'x':
                     circle_list.append(Circle(int(chars), j * int(jump_x) + 50, i * int(jump_y) + 50, circle_violet))
         for i in range(4):
-            print(circle_list[i].x , '  ', circle_list[i].y)
+            print(circle_list[i].x, '  ', circle_list[i].y)
     return circle_list

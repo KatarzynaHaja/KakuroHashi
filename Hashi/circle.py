@@ -70,6 +70,8 @@ class Circle:
         """
         self.conections += value
         second_circle.conections += value
+        print(self.conections, "wartosc po dodaniu")
+        print(second_circle.conections,"wartosc po dodaniu")
         if second_circle.conections == second_circle.value:
             second_circle.is_done = True
 
