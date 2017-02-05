@@ -9,8 +9,6 @@ class Solver:
         """
         self.board = board
         self.count = 0
-        self.number_of_possibilities_columns = dict()
-        self.number_of_possibilities_rows = dict()
         self.list_of_all = list()
 
     def factorise(self, number, count):

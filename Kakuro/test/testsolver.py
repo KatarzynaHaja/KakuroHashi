@@ -1,5 +1,6 @@
 import unittest
 from Kakuro.solver import *
+from Kakuro.board import *
 
 
 class TestSolver(unittest.TestCase):
@@ -25,6 +26,13 @@ class TestSolver(unittest.TestCase):
         result = self.solver.factor(5, 2, 9, [x for x in range(1, 10)])
         list_of_factors = [[1, 4], [2, 3]]
         self.assertEquals(list_of_factors, result)
+
+    def test_solver(self):
+        board = Board()
+        board.generate(4)
+        solver = Solver(board)
+        solver.solve()
+        self.assertEquals(board.check(), "Wygrana")
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestSolver)
