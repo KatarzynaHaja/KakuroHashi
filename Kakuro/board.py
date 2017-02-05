@@ -82,7 +82,12 @@ class Board:
             self.number_of_hints += 1
             column = random.choice(list(self.columns.keys()))
             row = random.randint(0, len(self.columns[column].column) - 1)
-            while self.columns[column].column[row].number != "":
+            number_of_nodes = 0
+            counter = 0
+            for key in self.columns.keys():
+                number_of_nodes += len(self.columns[key].column)
+            while self.columns[column].column[row].number != "" and counter <= number_of_nodes:
+                counter += 1
                 column = random.choice(list(self.columns.keys()))
                 row = random.randint(0, len(self.columns[column].column) - 1)
             self.columns[column].column[row].number = self.columns[column].column[row].hidden_number

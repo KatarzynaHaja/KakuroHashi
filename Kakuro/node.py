@@ -1,4 +1,3 @@
-import pygame
 from Kakuro.display import *
 
 
@@ -57,7 +56,8 @@ class Node:
                 self.add_number(event)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if self.rect.collidepoint(pygame.mouse.get_pos()):
+                (x, y) = pygame.mouse.get_pos()
+                if self.rect.collidepoint(x, y):
                     self.selected = True
                 else:
                     self.selected = False

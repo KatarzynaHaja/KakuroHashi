@@ -1,4 +1,3 @@
-from Kakuro.board import *
 import copy
 import itertools
 
@@ -49,7 +48,6 @@ class Solver:
             return l
         else:
             available_numbers_copy = copy.copy(available_numbers)
-            l = list()
             result = list()
             for i in reversed(available_numbers_copy):
                 if i <= start and i <= number and i in available_numbers:
@@ -57,7 +55,7 @@ class Solver:
                     a = copy.copy(available_numbers)
                     a.remove(i)
                     available_numbers.remove(i)
-                    l = self.factor(temp_number, count - 1, temp_number, a)  #lista list
+                    l = self.factor(temp_number, count - 1, temp_number, a)
                     if l:
                         if count == 2:
                             l.append(i)
@@ -98,6 +96,7 @@ class Solver:
         """
         if l:
             index = 0
+            column = ""
             while index < len(self.board.columns[l[0]].factors):
                 column = self.board.columns[l[0]]
                 for i in range(0, len(column.column)):

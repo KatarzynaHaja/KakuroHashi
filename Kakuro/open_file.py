@@ -6,7 +6,7 @@ def which_file():
     It allows open common dialog and choose file. It also call recognize which depends on txt or png
     :return: list of recognized circle
     """
-    path = ''
+    path = ""
     while True:
         path2 = open_common_dialog()
         if path2 == '':

@@ -12,7 +12,3 @@ def open_common_dialog():
     path = root.fileName
     root.destroy()
     return path
-
-
-
-

@@ -1,5 +1,3 @@
-import pygame
-from Kakuro.settings import *
 from Kakuro.display import *
 
 

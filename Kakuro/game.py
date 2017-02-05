@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 import datetime
 from Kakuro.solver import *
+from Kakuro.board import *
 
 
 class Game:
