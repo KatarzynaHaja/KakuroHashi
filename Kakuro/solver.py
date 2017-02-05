@@ -80,7 +80,6 @@ class Solver:
         Function which solves the board
         :return:
         """
-        print("dzialam")
         for c in self.board.columns.keys():
             value = self.board.columns[c]
             self.factorise(value.sum.number, len(value.column))
@@ -88,10 +87,7 @@ class Solver:
         list_of_columns = [(x, len(self.board.columns[x].factors)) for x in self.board.columns.keys()]
         sorted_list = sorted(list_of_columns, key=lambda x: x[1])
         sorted_list = [x for (x, y) in sorted_list]
-        print("lista posortowana")
-        print(sorted_list)
         self.recursion(sorted_list)
-        print("koniec")
 
     def recursion(self, l):
         """
@@ -104,16 +100,11 @@ class Solver:
             index = 0
             while index < len(self.board.columns[l[0]].factors):
                 column = self.board.columns[l[0]]
-                #print("jestem w kolumnie ", l[0], "i wpisuje liczby")
                 for i in range(0, len(column.column)):
                     column.column[i].number = self.board.columns[l[0]].factors[index][i]
-                #print("ududu")
-                #for i in range(0, len(column.column)):
-                    #print(self.board.columns[l[0]].column[i].number)
                 if self.board.check_partial():
                     if self.recursion(l[1::]):
                         return True
-                #print("NIEEE")
                 index += 1
             if index == len(self.board.columns[l[0]].factors):
                 for i in range(0, len(column.column)):

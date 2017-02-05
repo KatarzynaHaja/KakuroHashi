@@ -1,8 +1,7 @@
 from Kakuro.column import *
 from random import randint
 import random
-import re
-from Kakuro.folders_display import *
+from Kakuro.open_file import *
 
 
 class Board:
@@ -56,47 +55,24 @@ class Board:
         self.number_of_columns = number_of_columns
         for i in range(1, self.number_of_columns + 1):
             if i % 2 == 1:
-                number_of_nodes = randint(3, self.number_of_columns + 1)
-            self.generate_column([100 + 40 * (i - 1), 60], [100 + 40 * (i - 1), 100], [140 + 40 * (i - 1), 100], 1,
-                                 number_of_nodes, 0, i)
-            new = self.number_of_columns - number_of_nodes
-            if new > 1:
-                self.generate_column([100 + 40 * (i - 1), 60 + 40 * number_of_nodes],
-                                     [100 + 40 * (i - 1), 100 + 40 * number_of_nodes],
-                                     [140 + 40 * (i - 1), 100 + 40 * number_of_nodes], number_of_nodes + 1,
-                                     new + number_of_nodes + 1, number_of_nodes, i)
-            else:
-                for j in range(number_of_nodes, self.number_of_columns + 1):
-                    self.empty.append((j, i))
-
-    def generate2(self, number_of_columns):
-        """
-        Function generates board
-        :param number_of_columns: number of columns that will be in a board
-        :return:
-        """
-        self.number_of_columns = number_of_columns
-        for i in range(1, self.number_of_columns + 1):
-            if i % 2 == 1:
-                number_of_nodes = randint(3, self.number_of_columns/2 + 1)
+                number_of_nodes = randint(3, self.number_of_columns / 2 + 1)
                 start = randint(0, self.number_of_columns / 2)
                 print(start)
             for e in range(0, start):
                 self.empty.append((e, i))
-            self.generate_column([100 + 40 * (i - 1), 60 + start * 40], [100 + 40 * (i - 1), 100 + start*40], [140 + 40 * (i - 1), 100+start*40], start + 1,
-                                 number_of_nodes + start, start, i)
+            self.generate_column([100 + 40 * (i - 1), 60 + start * 40], [100 + 40 * (i - 1), 100 + start * 40],
+                                 [140 + 40 * (i - 1), 100 + start * 40], start + 1, number_of_nodes + start, start, i)
             new = self.number_of_columns - number_of_nodes - start - 1
             if new > 1:
                 self.generate_column([100 + 40 * (i - 1), 60 + 40 * (number_of_nodes + start)],
                                      [100 + 40 * (i - 1), 100 + 40 * (number_of_nodes + start)],
-                                     [140 + 40 * (i - 1), 100 + 40 * (number_of_nodes + start)], number_of_nodes + 1 + start,
-                                     new + number_of_nodes + + start + 2, number_of_nodes + start, i)
+                                     [140 + 40 * (i - 1), 100 + 40 * (number_of_nodes + start)],
+                                     number_of_nodes + 1 + start, new + number_of_nodes + + start + 2,
+                                     number_of_nodes + start, i)
             else:
                 for j in range(number_of_nodes + start, self.number_of_columns + 1 + start):
                     self.empty.append((j, i))
-        print("wyswietlam klucz")
-        for e in self.rows.keys():
-            print(e)
+
     def hint(self):
         """
         Function chooses random node which is not written by user to show as a hint
@@ -147,7 +123,7 @@ class Board:
             if c.is_filled() is False:
                 end = False
         if end is False:
-            return "Nie wszystkie pola sa wypelnione"
+            return "Nie wszystkie pola są wypełnione"
         else:
             end = True
             for c in self.columns.values():
@@ -159,7 +135,7 @@ class Board:
             if end:
                 return "Wygrana"
             else:
-                return "Blad"
+                return "Błąd"
 
     def check_partial(self):
         """
@@ -211,7 +187,6 @@ class Board:
     def create_board_from_file(self):
         """
         Functions creates board from text file
-        :param file_path: path to file where board is
         :return:
         """
         path = which_file()
@@ -221,39 +196,40 @@ class Board:
                 line = line.strip('\n')
                 l = line.split(";")
                 l = l[:-1]
+                l = l[1::]
                 counter_of_columns = 0
                 digits = re.compile('\d')
                 for elem in l:
-                    if elem != "":
-                        if not bool(digits.search(elem)) and i != 0 and counter_of_columns != 0:
+                    if not bool(digits.search(elem)) and i != 0 and counter_of_columns != 0:
+                        if self.find_nearest_column(i, counter_of_columns) and \
+                                self.find_nearest_row(i, counter_of_columns):
                             (x, y) = self.find_nearest_column(i, counter_of_columns)
                             column = self.columns[(x, y)]
                             node = column.add(0, 'v')
                             row = self.rows[(self.find_nearest_row(i, counter_of_columns))]
                             row.add(node)
-
-                        else:
-                            j = 0
-                            row_or_column = 0
-                            while j < len(elem):
-                                if elem[j] != 'x' and elem[j] != " ":
-                                    number = ""
-                                    while j < len(elem) and elem[j] != " ":
-                                        number += elem[j]
-                                        j += 1
-                                    if row_or_column == 0:
-                                        column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
-                                                        [100 + 40 * counter_of_columns, 100 + 40 * i],
-                                                        [140 + 40 * counter_of_columns, 100 + 40 * i], "column",
-                                                        int(number))
-                                        self.columns[(i, counter_of_columns)] = column
-                                    else:
-                                        column = Column([60 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)],
-                                                        [100 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)],
-                                                        [100 + 40 * (counter_of_columns + 1), 140 + 40 * (i - 1)],
-                                                        "row", int(number))
-                                        self.rows[(i, counter_of_columns)] = column
-                                else:
+                    else:
+                        j = 0
+                        row_or_column = 0
+                        while j < len(elem):
+                            if elem[j] != 'x' and elem[j] != " ":
+                                number = ""
+                                while j < len(elem) and elem[j] != " ":
+                                    number += elem[j]
                                     j += 1
-                                    row_or_column += 1
+                                if row_or_column == 0:
+                                    column = Column([100 + 40 * counter_of_columns, 60 + 40 * i],
+                                                    [100 + 40 * counter_of_columns, 100 + 40 * i],
+                                                    [140 + 40 * counter_of_columns, 100 + 40 * i], "column",
+                                                    int(number))
+                                    self.columns[(i, counter_of_columns)] = column
+                                else:
+                                    column = Column([60 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)],
+                                                    [100 + 40 * (counter_of_columns + 1), 100 + 40 * (i - 1)],
+                                                    [100 + 40 * (counter_of_columns + 1), 140 + 40 * (i - 1)],
+                                                    "row", int(number))
+                                    self.rows[(i, counter_of_columns)] = column
+                            else:
+                                j += 1
+                                row_or_column += 1
                     counter_of_columns += 1

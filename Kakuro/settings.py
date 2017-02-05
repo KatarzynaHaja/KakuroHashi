@@ -13,4 +13,8 @@ green = (0, 200, 0)
 bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
 
+
+def background():
+    gameDisplay.blit(pygame.image.load("background.png"), (0, 0))
+
 clock = pygame.time.Clock()
