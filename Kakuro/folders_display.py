@@ -8,7 +8,7 @@ def open_common_dialog():
     :return: file's path
     """
     root = Tk()
-    root.fileName = filedialog.askopenfilename(filetype=(("png", ".png"), ("txt", ".txt"), ("all files", "*.*")))
+    root.fileName = filedialog.askopenfilename(filetype=(("txt", ".txt"), ("all files", "*.*")))
     path = root.fileName
     root.destroy()
     return path

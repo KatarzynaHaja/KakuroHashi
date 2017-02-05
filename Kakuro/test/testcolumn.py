@@ -83,7 +83,5 @@ class TestColumn(unittest.TestCase):
         self.c.column.append(node)
         self.assertFalse(self.c.check_partial())
 
-
-
 suite = unittest.TestLoader().loadTestsFromTestCase(TestColumn)
 print(unittest.TextTestRunner(verbosity=3).run(suite))

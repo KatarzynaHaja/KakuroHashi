@@ -1,6 +1,10 @@
 # KakuroHashi
-This project containts 2 logical game : Hashi and Kakuro. We used Python to create them. 
-If you want to compile our application you have to install pygame.
-You can download it from http://www.pygame.org/download.shtml. 
-You can also write it in your command line
- pip install pygame
+This project containts 2 logical game : Hashi and Kakuro. We used Python to create them.<br>
+<h1>Run program</h1><br>
+ To start Hashi you should run file menu in Hashi package<br>
+ To start Kakuro you should run file game in Kakuro package<br>
+<h1>Required library:</h1><br>
+  * pygame
+  * pil
+  * opencv
+  * numpy
