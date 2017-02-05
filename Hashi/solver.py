@@ -1,4 +1,3 @@
-import copy
 from Hashi.bridge import *
 import itertools
 from Hashi.circle import *
@@ -22,19 +21,11 @@ class Solver:
         self.list_bridge = list()
         self.list_circles = list()
 
-    def diff(x, y):
-        return x - y
-
     def sort_value(l):
         list_circle = sorted(l,
                              key=lambda circle: (-len(ready(circle.close_neighbors)), circle.value - circle.conections),
                              reverse=True)
         return list_circle
-
-    def clear_all(l):
-        for i in l:
-            i.is_done = False
-            i.conections = 0
 
     def find_possible_bridges(self, circle):
         list_one_neighbor = list()
@@ -45,11 +36,8 @@ class Solver:
             else:
                 list_more_neighbor.append(i)
             print(circle.value - circle.conections)
-            if circle.value - circle.conections < 0:
-                print("WYWALIo sie ")
-                return
             combinations = list(
-                itertools.combinations_with_replacement(circle.close_neighbors, circle.value - circle.conections))
+                itertools.combinations_with_replacement(ready(circle.close_neighbors), circle.value - circle.conections))
 
         bad = list()
         for i in combinations:
@@ -111,6 +99,8 @@ class Solver:
         self.recursion(0)
         for i in self.list_bridge:
             print("mosty", i.number)
+        for i in self.list_circles:
+            print(i.x, i.y)
         return self.list_bridge
 
     def recursion(self, index):
