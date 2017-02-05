@@ -62,7 +62,8 @@ def is_again(s):
 
         game_display.blit(pygame.image.load("background.png"), (0, 0))
         position = ((width / 2), (height / 3))
-        text_display("Czy chcesz zagrać ponownie?", 70, dark_violet, position)
+        text_display('Wygrana', 50, dark_violet, (position[0], position[1] - 20))
+        text_display('Czy chcesz zagrać ponownie?', 50, dark_violet, (position[0] + 10, position[1] + 30))
         mouse = pygame.mouse.get_pos()
         button_yes = Button(350, 250, 100, 50, violet, "tak", 30)
         button_yes.show()
@@ -352,7 +353,7 @@ def gameloop_solver(g):
             print_bridge(g.board.user_list_bridge)
             pygame.display.update()
             clock.tick(15)
-            pygame.time.delay(800)
+            pygame.time.delay(1500)
 
         if is_finished(g.board.list_circle):
             is_again('c')

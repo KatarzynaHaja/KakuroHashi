@@ -19,39 +19,39 @@ def number_recognition(file):
     x = arr.shape[1]
     print(x, y)
     values = list()
-    row = 40
+    row = 50
     while row < y:
         column = 40
         while column < x:
             if all(i in [45, 22, 80] for i in arr[row][column]):
                 values.append(1)
                 print(row, column)
-                column += 90
+                column += 80
             if column < 600 and all(i in [45, 22, 81] for i in arr[row][column]):
                 values.append(2)
-                column += 90
+                column += 80
             if column < 600 and all(i in [45, 21, 80] for i in arr[row][column]):
                 values.append(3)
-                column += 90
+                column += 80
             if column < 600 and all(i in [45, 21, 81] for i in arr[row][column]):
                 values.append(4)
-                column += 90
+                column += 80
             if column < 600 and all(i in [44, 22, 80] for i in arr[row][column]):
                 values.append(5)
-                column += 90
+                column += 80
             if column < 600 and all(i in [44, 21, 80] for i in arr[row][column]):
                 values.append(6)
-                column += 90
+                column += 80
             if column < 600 and all(i in [45, 21, 81] for i in arr[row][column]):
                 values.append(7)
-                column += 90
+                column += 80
             if column < 600 and all(i in [45, 22, 82] for i in arr[row][column]):
                 values.append(8)
-                column += 90
+                column += 80
             else:
                 column += 1
 
-        row += 10
+        row += 100
     for i in values:
         print(i)
     return values
