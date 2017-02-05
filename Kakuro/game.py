@@ -108,7 +108,8 @@ class Game:
                     os.startfile("kakuro_instruction.pdf")
             if button_create_from_text.backlight(mouse):
                 if button_create_from_text.is_clicked(mouse):
-                    self.board.create_board_from_file()
+                    path = which_file()
+                    self.board.create_board_from_file(path)
                     self.game_loop(False)
             pygame.display.update()
             clock.tick(15)

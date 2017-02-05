@@ -31,7 +31,6 @@ class Board:
             while (j, temp) not in self.rows.keys() and (j, temp) not in self.columns.keys() \
                     and temp != 0 and (j, temp) not in self.empty:
                 temp -= 1
-                print("odejmuje klucz", (j, temp))
             if (j, temp) not in self.rows.keys():
                 row = Column([60 + 40 * temp, 100 + 40 * (j - 1)], [100 + 40 * temp, 100 + 40 * (j - 1)],
                              [100 + 40 * temp, 140 + 40 * (j - 1)], "row")
@@ -57,7 +56,6 @@ class Board:
             if i % 2 == 1:
                 number_of_nodes = randint(3, self.number_of_columns / 2 + 1)
                 start = randint(0, self.number_of_columns / 2)
-                print(start)
             for e in range(0, start):
                 self.empty.append((e, i))
             self.generate_column([100 + 40 * (i - 1), 60 + start * 40], [100 + 40 * (i - 1), 100 + start * 40],
@@ -184,12 +182,11 @@ class Board:
                     return True
         return False
 
-    def create_board_from_file(self):
+    def create_board_from_file(self, path):
         """
         Functions creates board from text file
         :return:
         """
-        path = which_file()
         with open(path) as file:
             lines = file.readlines()
             for i, line in enumerate(lines):
