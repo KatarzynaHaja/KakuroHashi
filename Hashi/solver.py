@@ -75,7 +75,7 @@ class Solver:
         :return: tuple (is it in list , index of this element)
         """
         for b in self.list_bridge:
-            if b.circle1 == source and b.circle2 == dest:
+            if (b.circle1 == source and b.circle2 == dest) or (b.circle1==dest and b.circle2 == source):
                 return True, int(self.list_bridge.index(b))
 
         return False, 0
@@ -100,7 +100,7 @@ class Solver:
         :return: tuple ( can we remove bridge, index of bridge)
         """
         for b in self.list_bridge:
-            if (b.circle1 == source and b.circle2 == dest):
+            if (b.circle1 == source and b.circle2 == dest) or (b.circle1 == dest and b.circle2 == source):
                 self.remove_bridge(self.list_bridge.index(b))
 
     def solve(self, circles):

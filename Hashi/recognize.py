@@ -19,7 +19,7 @@ def number_recognition(file):
     x = arr.shape[1]
     print(x, y)
     values = list()
-    row = 40
+    row = 50
     while row < y:
         column = 40
         while column < x:
@@ -51,7 +51,7 @@ def number_recognition(file):
             else:
                 column += 1
 
-        row += 10
+        row += 100
     for i in values:
         print(i)
     return values
