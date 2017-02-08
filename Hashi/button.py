@@ -37,21 +37,23 @@ class Button:
         """
         self.color = color
 
-    def backlight(self, mouse):
+    def backlight(self):
         """
         This method highlight button when position of mouse is in button, square
         :param mouse:Position of mouse
         """
+        mouse = pygame.mouse.get_pos()
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
             self.change_color(bright_violet)
             self.show()
 
-    def is_clicked(self, mouse):
+    def is_clicked(self):
         """
         This function says if button is clicked. Peek of the queue is checked
         :param mouse: position of mouse
         :return: logical value : yes if button is clicked and no if not
         """
+        mouse = pygame.mouse.get_pos()
         if pygame.event.peek(pygame.MOUSEBUTTONDOWN) and self.x + self.w > mouse[0] > self.x and self.y + self.h > \
                 mouse[1] > self.y:
             pygame.event.clear()

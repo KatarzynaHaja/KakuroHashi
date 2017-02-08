@@ -20,7 +20,7 @@ class TestBoard(unittest.TestCase):
         list_x = [350, 250, 250, 350]
         list_y = [50, 150, 250, 350]
         self.board.list_circle = recognize_txt(
-            "C:/Users/Kasior/PycharmProjects/KakuroHashi/Hashi/generated_boards/plansza.txt")
+            "../generated_boards/plansza.txt")
         for i in range(4):
             self.assertEqual(self.board.list_circle[i].x, list_x[i])
             self.assertEqual(self.board.list_circle[i].y, list_y[i])
